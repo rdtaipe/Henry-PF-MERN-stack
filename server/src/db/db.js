@@ -10,5 +10,5 @@ export const connect= async()=> {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  console.log("connect to mogodb atlas ")
+  console.log("connect to mongodb atlas ")
 }
