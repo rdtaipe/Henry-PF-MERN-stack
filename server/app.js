@@ -3,8 +3,8 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import morgan from "morgan";
-import { connect } from "./api/db/db.js";
-import router from "./api/routes/index.js";
+import { connect } from "./src/db/db.js";
+import router from "./src/routes/app.js";
 
 dotenv.config();
 
