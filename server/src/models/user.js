@@ -1,23 +1,53 @@
 import { Schema, model } from 'mongoose';
 
-const userSchema = new Schema({
-    name: { type: String, required: true }, // nombre del enpleado
-    sub: { type: String, required: true }, // sub del enpleado esto nos dara el auth0 en el futoro
-    picture: { type: String, default:''}, // avatar del enpleado
-    phone: { type: Number,default:999999999}, // teléfono del enpleado
-    email:{ type: String, required: true }, // email del enpleado
-    ip: { type: String, default:''}, // ip del enpleado
-    location: { type: String, default:''}, // ubicación del enpleado
-    role: { type: String, required: true, 
-      enum: ['admin', 'user'],
-      default: 'user'}, // rol del enpleado
-    status: { type: String,
-      enum: ['active', 'inactive','suspended'],
-      default: 'active'}, // estado del enpleado
-}, {
-    timestamps: true,
-    versionKey: false
-});
+const userSchema = new Schema(
+   {
+  fullName: {
+      type: String,
+  },
+  email: {
+      type: String,
+      unique: true,
+  },
+  password: {
+      type: String,
+  },
+  birthDate: {
+      type: Date,
+  },
+  genre: {
+      type: String,
+  },
+  country: {
+      type: String,
+  },
+  address: {
+      type: String,
+  },
+  tel: {
+      type: Number,
+  },
+  image: {
+      type: String,
+  },
+  identificationType:{
+      type: Number
+  },
+  identificationNumber:{
+      type: Number
+  },
+  isAdmin: {
+      type: Boolean,
+  },
+  active: {
+      type: Boolean,
+  },
+},
+{
+  timestamp: true,
+  versionKey: false,
+}
+)
 
 
 const userModel = model('User', userSchema)
