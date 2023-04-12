@@ -21,9 +21,9 @@ const Header = () => {
           showMenu ? "left-0" : "-left-full"
         } top-0 xl:static flex-1 flex flex-col xl:flex-row items-center justify-center gap-10 transition-all duration-500 z-50`}
       > <Link to="/home">
-        <a href="#home" className="">
+       
           Home
-        </a>
+       
       </Link>
         <a href="#aboutUs" className="">
           About Us
