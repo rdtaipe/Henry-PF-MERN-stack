@@ -4,7 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import { connect } from "./src/db/db.js";
-import router from "./src/routes/app.js";
+import router from "./src/routes/routes.js";
 
 dotenv.config();
 
