@@ -28,9 +28,11 @@ const Header = () => {
         <a href="#aboutUs" className="">
           About Us
         </a>
-        <a href="#productos" className="">
-          Productos
-        </a>
+         <Link to="/form">
+       
+       Form
+    
+   </Link>
         <a href="#aboutUs" className="">
           Registrate
         </a>
