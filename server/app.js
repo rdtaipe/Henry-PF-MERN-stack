@@ -8,7 +8,6 @@ import router from "./src/routes/app.js";
 
 dotenv.config();
 
-
 const server = express();
 
 server.use(cors());
