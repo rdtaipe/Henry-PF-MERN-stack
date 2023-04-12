@@ -6,8 +6,8 @@ import user from "../models/user.js";
 const router = express.Router();
 
 const models = {
-//    product,
-//    user,
+     product,
+     user,
 };
 
 String.prototype.r = function (search, replacement) {
@@ -15,11 +15,12 @@ String.prototype.r = function (search, replacement) {
 };
 
 router.get("", async (req, res) => {
+ 
     /*
     find?
     m=house
     &key=type+price
-    &find=type:Petreos+Ceramics+Glass,price:1000
+    &filter=type:Petreos+Ceramics+Glass,price:1000
     &sort=price:a
     &limit=10
     &skip=0
@@ -27,17 +28,9 @@ router.get("", async (req, res) => {
     // fn?m=house&key=type+price&find=type:Petreos+Ceramics+Glass,price:1000&sort=price:a&limit=10&skip=0
     try {
         const value = req.query;
-        var params = {};
+        console.log(value)
+        var params =value
 
-        value.split("&").forEach((item) => {
-            var k = item.split("=")[0];
-            var v = item.split("=")[1];
-            k === 'q' ? v = v.split("+") : v = v;
-            k === 'sort' ? v = JSON.parse((v.r('{', '{"').r(':', '":').r(',', ',"'))) : v = v;
-            k === 'exact' ? v = true : v = v;
-            k === 'similar' ? v = true : v = v;
-            params[k] = v;
-        });
 
         // console.log(params)
         const newArray = [];

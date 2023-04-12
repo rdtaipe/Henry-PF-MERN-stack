@@ -19,6 +19,7 @@ const userSchema = new Schema({
     versionKey: false
 });
 
+
 const userModel = model('User', userSchema)
 
 export default userModel
