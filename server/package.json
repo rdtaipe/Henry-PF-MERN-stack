@@ -9,18 +9,15 @@
     "start": "nodemon index.js",
     "dev": "nodemon index.js"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mongoose": "^7.0.3",
-<<<<<<< HEAD
     "morgan": "^1.10.0",
-=======
-    "morgan": "^1.10.0"
-  },
-  "devDependencies": {
->>>>>>> f99554dbc0590625eccfe81a08047d5e7b827f37
     "nodemon": "^2.0.22"
   }
 }
