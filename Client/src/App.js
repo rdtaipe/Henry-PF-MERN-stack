@@ -1,4 +1,5 @@
 
+import Form from "./pages/Form";
 import Home from "./pages/Home";
 import InicialPage from "./pages/InicialPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -9,6 +10,7 @@ function App() {
         <Routes>
           <Route path="/" element={<InicialPage/>} />
          <Route path="/home" element={<Home/>} />
+         <Route path="/form" element={<Form/>} />
          
         
         </Routes>
