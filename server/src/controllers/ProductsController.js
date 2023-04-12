@@ -1,9 +1,8 @@
-
-import Products from "../models/Products.js";
+import Products from "../models/product.js";
 
 export const getProducts = async (req, res) => {
     const { name } = req.query
-    const allProducts = await productModel.find({})
+    const allProducts = await Products.find({})
     if (allProducts) {
         if (name) {
             const result = allProducts.filter((f) =>
@@ -23,7 +22,7 @@ export const getProducts = async (req, res) => {
 }
 export const getProductById = async (req, res) => {
     const { id } = req.params
-    const allProducts = await productModel.find({})
+    const allProducts = await Products.find({})
     if (allProducts) {
         if (id) {
             const result = allProducts.filter((f) => f.id === id)
@@ -75,7 +74,7 @@ export const updateProduct = async (req,res) =>{
     } 
     else {
         try {
-            await productModel.findByIdAndUpdate( 
+            await Products.findByIdAndUpdate( 
                 id,
                 {
                     name: name,
