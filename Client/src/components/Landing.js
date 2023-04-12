@@ -1,32 +1,28 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 const Landing = () => {
   return (
     <div>
-  <button class="inline-flex mt-10" href>
-      <span class="h-12 flex items-center justify-center uppercase font-semibold px-8 border border-black hover:bg-black hover:text-white transition duration-500 ease-in-out">
-        shop all
-      </span>
-      <span class="h-12 w-12 flex-shrink-0 flex items-center justify-center border border-l-0 border-black hover:bg-black hover:text-white transition duration-500 ease-in-out ">
-        <svg
-          class="h-3 w-3"
-          aria-hidden="true"
-          focusable="false"
-          data-icon="chevron-right"
-          role="img"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 256 512"
-          className="svg-inline--fa fa-chevron-right fa-w-8 fa-9x"
-        >
-          <path
-            fill="currentColor"
-            d="M24.707 38.101L4.908 57.899c-4.686 4.686-4.686 12.284 0 16.971L185.607 256 4.908 437.13c-4.686 4.686-4.686 12.284 0 16.971L24.707 473.9c4.686 4.686 12.284 4.686 16.971 0l209.414-209.414c4.686-4.686 4.686-12.284 0-16.971L41.678 38.101c-4.687-4.687-12.285-4.687-16.971 0z heigt"
-          />
-        </svg>
-      </span>
-    </button>
+      <section className="dark:bg-gray-800 dark:text-gray-100 min-h-screen flex flex-col justify-center items-center">
+        <div className="container mx-auto text-center md:py-32 md:px-10 lg:px-32 xl:max-w-3xl">
+          <h1 className="text-5xl font-bold leading-none sm:text-6xl">
+            Bienvenido a
+            <span className="dark:text-violet-400">  ChicCloset</span>
+          </h1>
+          <p className="px-8 mt-8 mb-12 text-2xl">
+            El lugar donde puedes comprar lo que siempre habías buscado
+          </p>
+          <div className="flex flex-wrap justify-center">
+            <Link to="/home">
+              <button className="px-8 py-3 m-2 text-lg font-semibold rounded dark:bg-violet-400 dark:text-gray-900">
+                Get started
+              </button>
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
-  
   );
 };
 

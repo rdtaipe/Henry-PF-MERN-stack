@@ -5,7 +5,7 @@ import {
   RiMenu3Fill,
   RiCloseLine,
 } from "react-icons/ri";
-
+import { Link } from 'react-router-dom';
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   return (
@@ -20,10 +20,11 @@ const Header = () => {
         className={`fixed bg-white w-[80%] md:w-[40%] xl:w-full h-full ${
           showMenu ? "left-0" : "-left-full"
         } top-0 xl:static flex-1 flex flex-col xl:flex-row items-center justify-center gap-10 transition-all duration-500 z-50`}
-      >
+      > <Link to="/home">
         <a href="#home" className="">
           Home
         </a>
+      </Link>
         <a href="#aboutUs" className="">
           About Us
         </a>

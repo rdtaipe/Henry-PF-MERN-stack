@@ -1,11 +1,18 @@
-import Header from "./components/Header";
-import Landing from "./components/Landing";
 
+import Home from "./pages/Home";
+import InicialPage from "./pages/InicialPage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 function App() {
   return (
     <div >
-      <Header/>
-      <Landing/>
+ <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<InicialPage/>} />
+         <Route path="/home" element={<Home/>} />
+         
+        
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
