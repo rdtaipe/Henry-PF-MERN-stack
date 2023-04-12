@@ -28,40 +28,27 @@ export const getProductById = async (req, res) => {
             const result = allProducts.filter((f) => f.id === id)
             result
                 ? res.status(200).json(result)
-                : res.status(400).json({ msj: 'Product not found' })
+                : res.status(400).json({ message: 'Product not found' })
         }
     } else {
-        res.status(400).json({ msj: 'Product not found' })
+        res.status(400).json({ message: 'Product not found' })
     }
 }
 
 export const createProducts = async (req, res) => {
-    const { name,description,stock,color,size,category,image,genre,brand,price,featured,active} = req.body
-
-    if (!name || !description || !stock || !color || !genre || !price || !size || !category || !brand) {  
-        res.status(400).json({ msj: 'All fields are required' })
+     console.log(req.body)
+    // console.log(req.params)
+    // console.log(req.query)
+    // console.log(req)
+    const newProduct = new Products(req.body);
+    if (!newProduct) {  
+        res.status(400).json({ message: 'All fields are required' })
     }
-   
     try {
-        const newProduct = new productModel({
-            name,
-            description,
-            stock,
-            color,
-            size,
-            category,
-            image: image || "https://www.pngall.com/wp-content/uploads/2016/03/Clothes-Transparent.png",
-            genre,
-            brand,
-            price,
-            active: active || true,
-            featured: featured || false
-        })
-        const product = await newProduct.save()
-        console.log(product)
-        res.status(200).json({ msj: 'product created successfully' })
-    } catch (err) {
-        console.log(err)
+      await newProduct.save();
+      res.status(201).json(newProduct);
+    } catch (error) {
+      res.status(409).json({ message: error.message });
     }
  
 }
@@ -70,7 +57,7 @@ export const updateProduct = async (req,res) =>{
     const {name,description,stock,color,size,category,image,genre,brand,price,active,featured} = req.body
 
     if ( !name || !description || !stock || !color || !size || !category || !genre || !brand ||!price) {
-        res.status(400).json({ msj: 'All fields are required' })
+        res.status(400).json({ message: 'All fields are required' })
     } 
     else {
         try {
@@ -93,11 +80,11 @@ export const updateProduct = async (req,res) =>{
                 { new: true } // este ultimo parámetro hace que nos devuelva el doc actualizado
             ) 
             .then(() => {
-                res.status(200).json({msj: 'Product Successfully Updated'})
+                res.status(200).json({message: 'Product Successfully Updated'})
             })
         } catch (err) {
             console.log(err)
-            res.status(400).json({ msj: 'The Current Product does not exist' })
+            res.status(400).json({ message: 'The Current Product does not exist' })
         }
     }
 }
