@@ -10,8 +10,8 @@ import comments from './commentsRouter.js'
 import favorites from './favoritesRouter.js'
 import purchase from './purchaseRouter.js'
 import users from './userRouter.js'
-import find from "./find.js";
-import dev from "./dev.js";
+import find from "./findRouter.js";
+import dev from "./devRouter.js";
 
 const server = express();
 //---- Products routes ------
