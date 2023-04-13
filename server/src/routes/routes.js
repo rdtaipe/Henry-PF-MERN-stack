@@ -7,5 +7,4 @@ const server = express();
 server.use('/products', products);
 server.use('/find?', find);
 
-
 export default server;

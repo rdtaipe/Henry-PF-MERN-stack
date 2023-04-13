@@ -39,20 +39,26 @@ router.get("", async (req, res) => {
                 for (const model in models) {
                     const keys = Object.keys(models[model].schema.obj)
                     const value = Object.values(models[model].schema.obj)
-                    const query = params.q && params.q !== "" && params.filter === undefined ? {
+                    console.log(params.q , params.filter)
+                    const query = params.q && params.q !== "" && !params.filter? {
                         $or: value.map((val, i) => {
                             const type = fixtype(val)
-                            if (type === "string" && typeof params.q === "string") {
-                                return { [keys[i]]: { $regex: `^${params.q}`, $options: "i" } }
-                            } else if (type === "number" && typeof params.q === "number") {
-                                return { [keys[i]]: { $gt: params.q, } }
+                            const key = [keys[i]][0]
+    
+                            if (key==="name"&& type === "string" && typeof params.q === "string") {
+                                console.log("ok","case undefined - !filter")
+
+                                return { [key]: { $regex: `^${params.q}`, $options: "i" } }
                             } else {
                                 return null
                             }
-
+    
                         }).filter(v => v !== null)
-                    } : params.filter === undefined ? {} : {
+                    } : !params.filter? {} : {
                         $and: Object.entries(params.filter).reduce((acc, [key, value]) => {
+
+                            console.log("ok","case undefined - filter")
+
                             if (value.length === 1) {
                                 const type = typeof value[0]
                                 if (type === "string") {
@@ -72,6 +78,7 @@ router.get("", async (req, res) => {
                             return acc
                         }, [])
                     }
+                    console.log(query)
                     const result = await models[model].find(query)
                         .sort(params.sort)
                         .limit(parseInt(params.limit))
@@ -89,10 +96,11 @@ router.get("", async (req, res) => {
                 const query = params.q && params.q !== "" && params.filter === undefined ? {
                     $or: value.map((val, i) => {
                         const type = fixtype(val)
-                        if (type === "string" && typeof params.q === "string") {
-                            return { [keys[i]]: { $regex: `^${params.q}`, $options: "i" } }
-                        } else if (type === "number" && typeof params.q === "number") {
-                            return { [keys[i]]: { $gt: params.q, } }
+                        const key = [keys[i]][0]
+
+                        if (key==="name"&& type === "string" && typeof params.q === "string") {
+                            console.log("ok","case string")
+                            return { [key]: { $regex: `^${params.q}`, $options: "i" } }
                         } else {
                             return null
                         }
@@ -121,7 +129,6 @@ router.get("", async (req, res) => {
                         return acc
                     }, [])
                 }
-                console.log(query)
                 const result = await model.find(query)
                     .sort(params.sort)
                     .limit(parseInt(params.limit))
