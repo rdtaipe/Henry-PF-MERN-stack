@@ -1,8 +1,8 @@
-import Products from "../models/product.js";
+import productsModel from "../models/product.js";
 
 export const getProducts = async (req, res) => {
     const { name } = req.query
-    const allProducts = await Products.find({})
+    const allProducts = await productsModel.find({})
     if (allProducts) {
         if (name) {
             const result = allProducts.filter((f) =>
@@ -22,7 +22,7 @@ export const getProducts = async (req, res) => {
 }
 export const getProductById = async (req, res) => {
     const { id } = req.params
-    const allProducts = await Products.find({})
+    const allProducts = await productsModel.find({})
     if (allProducts) {
         if (id) {
             const result = allProducts.filter((f) => f.id === id)
@@ -40,7 +40,7 @@ export const createProducts = async (req, res) => {
     // console.log(req.params)
     // console.log(req.query)
     // console.log(req)
-    const newProduct = new Products(req.body);
+    const newProduct = new productsModel(req.body);
     if (!newProduct) {  
         res.status(400).json({ message: 'All fields are required' })
     }
@@ -61,7 +61,7 @@ export const updateProduct = async (req,res) =>{
     } 
     else {
         try {
-            await Products.findByIdAndUpdate( 
+            await productsModel.findByIdAndUpdate( 
                 id,
                 {
                     name: name,
@@ -91,7 +91,7 @@ export const updateProduct = async (req,res) =>{
 
 export const deleteProduct = async (req, res) => {
     try {
-        const product = await Products.findById(req.params.id);
+        const product = await productsModel.findById(req.params.id);
         await product.remove();
         res.status(200).json({ message: "Product deleted successfully" });
     } catch (error) {
