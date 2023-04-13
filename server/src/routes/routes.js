@@ -11,6 +11,7 @@ import favorites from './favoritesRouter.js'
 import purchase from './purchaseRouter.js'
 import users from './userRouter.js'
 import find from "./find.js";
+import dev from "./dev.js";
 
 const server = express();
 //---- Products routes ------
@@ -48,5 +49,7 @@ server.use('/reviews', reviews)
 
 //-------- Filters routes ----------
 server.use('/find?', find);
+//-------- dev utils routes ----------
+server.use('/dev',dev)
 
 export default server;

@@ -47,7 +47,6 @@ router.get("", async (req, res) => {
     
                             if (key==="name"&& type === "string" && typeof params.q === "string") {
                                 console.log("ok","case undefined - !filter")
-
                                 return { [key]: { $regex: `^${params.q}`, $options: "i" } }
                             } else {
                                 return null
