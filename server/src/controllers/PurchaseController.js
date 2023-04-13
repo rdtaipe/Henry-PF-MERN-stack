@@ -1,9 +1,9 @@
-import purchaseModel from '../models/purchase'
-import userModel from '../models/user'
-import cartModel from '../models/cart'
-import productModel from '../models/product'
+import purchaseModel from '../models/purchase.js'
+import userModel from '../models/user.js'
+import cartModel from '../models/cart.js'
+import productModel from '../models/product.js'
 ///////////////////////////////////////////////
-import {GetMP} from './MP'
+import {GetMP} from './MP.js'
 
 
 export const getPurchase = async (req, res, next) =>{
@@ -36,7 +36,7 @@ export const getPurchase = async (req, res, next) =>{
 }
 
 
-export const CreatePurchase = async (req, res, next) => {
+export const createPurchase = async (req, res, next) => {
     const{paymentId,userId,products,addresId} = req.body
     if(!paymentId||!userId||!products||!addresId){
         res.status(404).json( {msj:'campos requeridos'})
