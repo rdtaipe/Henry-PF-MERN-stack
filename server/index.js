@@ -1,3 +1,4 @@
+console.clear();
 import server from "./app.js";
 
 async function startServer() {
