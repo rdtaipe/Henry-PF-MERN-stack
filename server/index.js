@@ -1,5 +1,5 @@
+console.clear();
 import server from "./app.js";
-// import net from 'net';
 
 async function startServer() {
   const port = process.env.SERVER_PORT || 5000;
