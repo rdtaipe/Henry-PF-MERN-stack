@@ -25,7 +25,8 @@ export const getProductById = async (req, res) => {
     const allProducts = await productsModel.find({})
     if (allProducts) {
         if (id) {
-            const result = allProducts.filter((f) => f.id === id)
+            // const result = allProducts.filter((f) => f.id === id)
+            const result = allProducts.find((f) => f.id === id)
             result
                 ? res.status(200).json(result)
                 : res.status(400).json({ message: 'Product not found' })
