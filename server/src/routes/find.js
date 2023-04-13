@@ -19,15 +19,15 @@ router.get("", async (req, res) => {
     find?
     m=house
     &q=a
-    &filter={"type":["Petreos","Ceramics","Glass"],"price":1000}
+    &filter={"type":["Petreos","Ceramics","Glass"],"price":[1000]}
     &sort={"price":-1}
     &limit=10
     &skip=0
     */
     // fn?m=house&key=type+price&find=type:Petreos+Ceramics+Glass,price:1000&sort=price:a&limit=10&skip=0
     const fix1 = (obj) => (Object.entries(obj).map(([key, value]) => ({ [key]: key === "filter" || key === "sort" ? JSON.parse(value) : value, })).reduce((acc, cur) => ({ ...acc, ...cur }), {}))
-   
-    const fixtype = (v) => (Object.values(v).toString().split(" ")[1].replaceAll("(","").replaceAll(")","").toLowerCase())
+
+    const fixtype = (v) => (Object.values(v).toString().split(" ")[1].replaceAll("(", "").replaceAll(")", "").toLowerCase())
 
 
     try {
@@ -40,17 +40,17 @@ router.get("", async (req, res) => {
                     const keys = Object.keys(models[model].schema.obj)
                     const value = Object.values(models[model].schema.obj)
                     const query = params.q && params.q !== "" && params.filter === undefined ? {
-                        $or: value.map((val,i)=>{
+                        $or: value.map((val, i) => {
                             const type = fixtype(val)
-                            if(type === "string"&&typeof params.q === "string"){
+                            if (type === "string" && typeof params.q === "string") {
                                 return { [keys[i]]: { $regex: `^${params.q}`, $options: "i" } }
-                            }else if(type === "number"&&typeof params.q === "number"){
+                            } else if (type === "number" && typeof params.q === "number") {
                                 return { [keys[i]]: { $gt: params.q, } }
-                            }else {
+                            } else {
                                 return null
                             }
 
-                        }).filter(v=>v!==null)
+                        }).filter(v => v !== null)
                     } : params.filter === undefined ? {} : {
                         $and: Object.entries(params.filter).reduce((acc, [key, value]) => {
                             if (value.length === 1) {
@@ -87,17 +87,17 @@ router.get("", async (req, res) => {
                 const value = Object.values(model.schema.obj)
 
                 const query = params.q && params.q !== "" && params.filter === undefined ? {
-                    $or: value.map((val,i)=>{
+                    $or: value.map((val, i) => {
                         const type = fixtype(val)
-                        if(type === "string"&&typeof params.q === "string"){
+                        if (type === "string" && typeof params.q === "string") {
                             return { [keys[i]]: { $regex: `^${params.q}`, $options: "i" } }
-                        }else if(type === "number"&&typeof params.q === "number"){
+                        } else if (type === "number" && typeof params.q === "number") {
                             return { [keys[i]]: { $gt: params.q, } }
-                        }else {
+                        } else {
                             return null
                         }
 
-                    }).filter(v=>v!==null)
+                    }).filter(v => v !== null)
                 } : params.filter === undefined ? {} : {
                     $and: Object.entries(params.filter).reduce((acc, [key, value]) => {
 
