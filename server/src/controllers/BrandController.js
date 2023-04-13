@@ -1,4 +1,4 @@
-import {brandModel} from '../models/brand'
+import brandModel from '../models/brand'
 
 
 export const allBrands = async (req,res) =>{
@@ -35,7 +35,7 @@ export const createBrand= async (req,res)=>{
     }
 }
 
-export const UpdateBrand = async (req, res) => {
+export const updateBrand = async (req, res) => {
     const { name, id } = req.body
     if (!id || !name) {
         res.status(400).json({ msj: 'something went wrong' })

@@ -1,5 +1,5 @@
-import {cartModel} from '../models/cart'
-import {userModel} from '../models/user'
+import cartModel from '../models/cart'
+import userModel from '../models/user'
 
 
 export const getCart = async (req,res)=>{
