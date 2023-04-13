@@ -1,4 +1,4 @@
-import {userModel} from '../models/user'
+import userModel from '../models/user'
 import {createCart} from './CartController'
 // import {e} from './E'
 
