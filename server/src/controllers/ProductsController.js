@@ -37,9 +37,7 @@ export const getProductById = async (req, res) => {
 
 export const createProducts = async (req, res) => {
      console.log(req.body)
-    // console.log(req.params)
-    // console.log(req.query)
-    // console.log(req)
+  
     const newProduct = new productsModel(req.body);
     if (!newProduct) {  
         res.status(400).json({ message: 'All fields are required' })
