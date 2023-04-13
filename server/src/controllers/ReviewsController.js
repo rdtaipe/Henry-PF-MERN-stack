@@ -1,4 +1,4 @@
-import scoreModel from "../models/scorerating";
+import scoreModel from "../models/scorerating.js";
 
 export const Reviews = async (req, res, next) => {
     const { productId, userId } = req.query;
