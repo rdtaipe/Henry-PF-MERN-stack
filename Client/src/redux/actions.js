@@ -18,7 +18,7 @@ import {
     POST_USER,
 } from './types';
 
-export async function setState(value) {
+export function setState(value) {
     return {type:SET_STATE,payload:value}
 }
 
