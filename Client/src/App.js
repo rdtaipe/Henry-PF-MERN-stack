@@ -6,6 +6,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Provider } from 'react-redux'
 import store from './redux/store'
 function App() {
+
+  
+
+
+
   return (
     <div >
     <Provider store={store}>
@@ -14,8 +19,6 @@ function App() {
           <Route path="/" element={<InicialPage/>} />
          <Route path="/home" element={<Home/>} />
          <Route path="/form" element={<Form/>} />
-         
-        
         </Routes>
       </BrowserRouter>
       </Provider>

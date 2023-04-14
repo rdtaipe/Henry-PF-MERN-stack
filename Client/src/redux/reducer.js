@@ -12,6 +12,7 @@ export var initialState={
             width:0,
             height:0,
         }
+
     }
 }
 export const reducer = (state = initialState, action) => {
@@ -195,14 +196,12 @@ export const reducer = (state = initialState, action) => {
                        state[keys] = value
                    }
        }
-
-
+       
         default:
             return state;
     }
-
+    
 }
-
 
 // save local storage
 const saveLocal = (key,v) => {
