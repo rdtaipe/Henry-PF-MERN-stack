@@ -1,3 +1,6 @@
+
+import axios from 'axios';
+
 import {
     SET_STATE,
     GET_PRODUCTS,
