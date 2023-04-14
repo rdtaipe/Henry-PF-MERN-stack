@@ -1,3 +1,6 @@
+
+import axios from 'axios';
+
 import {
     SET_STATE,
     GET_PRODUCTS,
@@ -18,7 +21,7 @@ import {
     POST_USER,
 } from './types';
 
-export function setState(value) {
+export function setter(value) {
     return {type:SET_STATE,payload:value}
 }
 
@@ -34,7 +37,7 @@ export function getProducts() {
 export function getProductsAdmin() {
     return async function (dispatch) {
         const allData = await axios.get('/products')
-        return dispatch({ type: GET_PRODUCTS_ADMIN, payload: allData.data })
+        return dispatch({ type: "GET_PRODUCTS_ADMIN", payload: allData.data })
     }
 }
 
