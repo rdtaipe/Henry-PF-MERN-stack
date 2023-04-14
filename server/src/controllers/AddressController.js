@@ -1,4 +1,4 @@
-import addressModel from '../models/address'
+import addressModel from '../models/address.js'
 
 
 export const getAddress= async(req,res)=>{
