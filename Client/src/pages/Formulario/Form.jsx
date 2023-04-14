@@ -2,24 +2,67 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import './Form.css'
 import  utils from '../../utils/arrays_dates.json'
-import Header from "../../components/Header";
+import {Notification} from '../../components/Notification/Notification'
+
+import axios from 'axios';
 const Form = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-   let form1=useForm();
-  // console.log(form1)
+   const location=use
 
+/*
+    ==type of dates=== 
+    name: type: String,
+    stock: type: Number,
+    color:type: String,
+    size: type: Array,
+    category: type: Array,
+    image: type: Array,
+    genre:type: String,
+    brand: type: Object,
+    price: type: Number,
+    active: type: Boolean, //true
+    featured: type: Boolean  //true
 
+*/
+  
 
-     const handleSelector=(e)=>{
-        const {name,value}=e.target;
-        //console.log(value)
-     }
- 
+    const onSubmit = async (data) => {
+    try {
+        const newObj = {
+            name: data.name,
+            stock: data.stock,
+            description: data.description,
+            color: data.color,
+            size: data.size,
+            category: data.category,
+            image: data.image,
+            genre: data.genre,
+            brand: data.brand,
+            price: data.price,
+            active: true, //true
+            featured: true  //true
+        }
 
-    const onSubmit = (e) => {
+        //console.log(newObj)
+        const response=await axios.post('http://localhost:5000/products/',newObj);
       
-       console.log(e)
+        if(response.status >200 && response.status <300)
+        {
+
+            //totificacion
+            Notification('success','product added successfully','top-end',3000);
+            console.log(response)
+             return response.data;
+           
+            //debo resetear los campos y redirigir a home
+        }
+     
+       } catch (error) {
+         console.log(error.message)
+       }
+
+     
     }
 
 
@@ -50,7 +93,7 @@ const Form = () => {
 
                {/*    
                
-               no borrar 
+               ====no borrar======== 
                <div>
                         <input
                             className="inputStyleImage"
@@ -102,9 +145,11 @@ const Form = () => {
 
 
 
+                   {/* container medio */}
                     <div className="container2">
+
                         <div>
-                            <label>stock</label>
+                            <label><span className="text" >stock</span></label>
                             <input
                                 className="input2"
                                 type="text"
@@ -124,14 +169,14 @@ const Form = () => {
 
                         
                        <div>
-                            <label htmlFor="price">Price</label>
+                            <label htmlFor="price"><span className="text">Price</span></label>
                             <input 
                                id="price"
                                 className="input2"
                                 type="text"
                               /*   min={0}
                                 step="0.01" */
-                                 placeholder="0.00"
+                                placeholder="0.00"
                                 name="price"
                                 {...register('price', {
                                     required: true,
@@ -142,59 +187,56 @@ const Form = () => {
                             {errors.price?.type === 'pattern' && <p className="error"> Only numbers </p>}
 
                         </div>
+        
+      
+                            <div >
+                                <select
+                                    className="inputSelector2"
+                                    id="genre"
+                                    name="genre"
 
-                           <div>
+                                    {...register('genre', {
+                                        required: true,
+                                    })}
+
+                                >
+                                    <option value="">genre</option>
+                                    {utils.genre.map((c) => (
+                                        <option key={c.name} value={c.name}>
+                                            {c.name}
+                                        </option>
+                                    ))}
+                                </select>
+                                {errors.genre && <p className="error">genre required</p>}
+                            </div>
+                        <div>
                             <select
-                                className="inputSelector"
-                                id="genre"
-                                name="genre"
-                              
-                                {...register('genre', {
+                                className="inputSelector2"
+                                id="size"
+                                name="size"
+
+                                {...register('size', {
                                     required: true,
                                 })}
-                         
+
                             >
-                                <option value="">Select one genre</option>
-                                {utils.genre.map((c) => (
-                                    <option key={c.name} value={c.name}>
-                                        {c.name}
+                                <option value="">size</option>
+                                {utils.size.map((s) => (
+                                    <option key={s.name} value={s.name}>
+                                        {s.name}
                                     </option>
                                 ))}
                             </select>
-                            {errors.genre && <p className="error">genre is required</p>}
+                            {errors.size && <p className="error">size required</p>}
                         </div>
+                   
+                           
+                           
+                  
+                    </div> {/* fin contenedor medio */}
 
-                      
- 
-
-                      {/*   
-                        <div className="container-sex" >
-                        <input
-                                type="radio"
-                                id="male"
-                                name="gender"
-                                value="male"
-                                {...register("gender", { required: true })}
-                            />
-                            <label htmlFor="male">Male</label>
-                            <br />
-
-                            <input
-                                type="radio"
-                                id="female"
-                                name="gender"
-                                value="female"
-                                {...register("gender", { required: true })}
-                            />
-                            <label htmlFor="female">Female</label>
-                            <br />
-                        {errors.gender && <p className="error">Sex is required</p>}
-                        </div> */}
-
-                    </div>
-                    
-  
-                 <div className="container2">
+                     {/* inicio contenedor de abajo */}                       
+                 <div className="container2"> 
                         <div>
                             <select
                                 className="inputSelector"
@@ -206,7 +248,7 @@ const Form = () => {
                                 })}
                          
                             >
-                                <option value="">Select one color</option>
+                                <option value="">Select color</option>
                                 {utils.colors.map((c) => (
                                     <option key={c.name} value={c.name}>
                                         {c.name}
@@ -215,30 +257,50 @@ const Form = () => {
                             </select>
                             {errors.color && <p className="error">Color is required</p>}
                         </div>
+                        
+                        <div>
+                            <select
+                                className="inputSelector2"
+                                id="brand"
+                                name="brand"
+
+                                {...register('brand', {
+                                    required: true,
+                                })}
+
+                            >
+                                <option value="">brand</option>
+                                {utils.brands.map((b) => (
+                                    <option key={b.name} value={b.name}>
+                                        {b.name}
+                                    </option>
+                                ))}
+                            </select>
+                            {errors.brand && <p className="error">brand required</p>}
+                        </div>
 
                         <div>
-                           
-                            <select 
+                           <select 
                             className="inputSelector"
-                             id="categories"
-                             name="categories"
+                             id="category"
+                             name="category"
                          
-                            {...register('categories',
+                            {...register('category',
                                 {
                                     required: true,
                                 })}>
 
-                                <option value="">select one category</option>
+                                <option value="">select category</option>
                                 {
                                     utils.categories.map(cat => (
                                         <option key={cat.name} value={cat.name}>{cat.value}</option>
                                     ))}
 
                             </select>
-                            {errors.categories && <p className="error" >Select a category</p>} 
+                            {errors.category && <p className="error" >Select a category</p>} 
                         </div>
 
-                    </div> 
+                    </div> {/* fin contenedor abajo */}
                   
                      <div>
                            {/*  {!input.color || !input.gender || !input.name || !input.cotegories} */}
