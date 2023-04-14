@@ -9,35 +9,20 @@ const Form = () => {
    let form1=useForm();
   // console.log(form1)
 
-/*     const [input,setInput]=useState(
-        {
-        name:"",
-        gender:{F:"female",M:"male"},
-        color:'',
-        cotegories:''
-        }
-    ) */
+
 
      const handleSelector=(e)=>{
         const {name,value}=e.target;
         //console.log(value)
      }
  
-/*     const handleGenderChange=(e)=>{
-     const {name,value}=e.target;
-
-        const isGenderSelected = input.gender !== undefined && input.gender !== '';
-       if(isGenderSelected)
-       {
-           console.log(value)
-       }
-     
-    } */
 
     const onSubmit = (e) => {
       
        console.log(e)
     }
+
+
     return (
         /*  <div className=" dark:bg-purple-900 dark:text-gray-100 min-h-screen flex flex-col justify-center items-center">
             <h2 className="text-5xl font-bold leading-none sm:text-6xl">Form</h2> */
@@ -63,18 +48,37 @@ const Form = () => {
                     </div>
 
 
-                   <div>
+               {/*    
+               
+               no borrar 
+               <div>
                         <input
                             className="inputStyleImage"
                             name="image"
                             id="image"
                             type="file"
-                               /* accept=".png, .jpg ,"  */
+                         accept=".png, .jpg ," 
                             {...register('image', {
                                 required: true
                             })}
                         />
                         {errors.image?.type === 'required' && <p className="error" >Image required</p>} 
+
+                   </div> */}
+
+
+                   <div>
+                        <input
+                            className="inputStyleImage"
+                            name="image"
+                            id="image"
+                            placeholder="ingrese url de imagen"
+                            type="url"
+                            {...register('image', {
+                                required: true
+                            })}
+                        />
+                        {errors.image?.type === 'required' && <p className="error" >url required</p>} 
 
                    </div>
                      
@@ -103,26 +107,31 @@ const Form = () => {
                             <label>stock</label>
                             <input
                                 className="input2"
-                                type="number"
+                                type="text"
                                 name="stock"
-                                min="0"
+                                placeholder="0"
+                             /*    min="0"
+                                 step="0" */
                               /*   autocomplete="off" */
                                 {...register('stock', {
                                     required: true,
                                     pattern: /^[0-9]*$/
                                 })} />
                             {errors.stock?.type === 'required' && <p className="error">stock required</p>}
-                            {errors.stock?.type === 'pattern' && <p className="error">Only can use numbers may zero</p>}
+                            {errors.stock?.type === 'pattern' && <p className="error">Only numbers </p>}
                         </div>
 
 
                         
-                 {/*        <div>
-                            <label>Price</label>
+                       <div>
+                            <label htmlFor="price">Price</label>
                             <input 
+                               id="price"
                                 className="input2"
-                                type="number"
-                                min={0}
+                                type="text"
+                              /*   min={0}
+                                step="0.01" */
+                                 placeholder="0.00"
                                 name="price"
                                 {...register('price', {
                                     required: true,
@@ -130,21 +139,42 @@ const Form = () => {
                                 })} />
                           
                             {errors.price?.type === 'required' && <p className="error">price required</p>}
-                            {errors.price?.type === 'maxLength' && <p className="error"> Only can use numbers may zeros</p>}
+                            {errors.price?.type === 'pattern' && <p className="error"> Only numbers </p>}
 
                         </div>
- */}
 
-        
+                           <div>
+                            <select
+                                className="inputSelector"
+                                id="genre"
+                                name="genre"
+                              
+                                {...register('genre', {
+                                    required: true,
+                                })}
+                         
+                            >
+                                <option value="">Select one genre</option>
+                                {utils.genre.map((c) => (
+                                    <option key={c.name} value={c.name}>
+                                        {c.name}
+                                    </option>
+                                ))}
+                            </select>
+                            {errors.genre && <p className="error">genre is required</p>}
+                        </div>
 
-                    {/*     <div className="container-sex" >
-                            <input
+                      
+ 
+
+                      {/*   
+                        <div className="container-sex" >
+                        <input
                                 type="radio"
                                 id="male"
                                 name="gender"
-                                value={input.gender}
+                                value="male"
                                 {...register("gender", { required: true })}
-                                onChange={handleGenderChange}
                             />
                             <label htmlFor="male">Male</label>
                             <br />
@@ -153,26 +183,24 @@ const Form = () => {
                                 type="radio"
                                 id="female"
                                 name="gender"
-                                value={input.gender}
+                                value="female"
                                 {...register("gender", { required: true })}
-                                onChange={handleGenderChange}
                             />
                             <label htmlFor="female">Female</label>
                             <br />
-                           {errors.gender && <p className="error">Sex is required</p>}
+                        {errors.gender && <p className="error">Sex is required</p>}
                         </div> */}
 
                     </div>
                     
   
-                {/*     <div className="container2">
+                 <div className="container2">
                         <div>
                             <select
                                 className="inputSelector"
                                 id="color"
                                 name="color"
-                                onChange={handleSelector}
-                                value={input.color}
+                            
                                 {...register('color', {
                                     required: true,
                                 })}
@@ -193,9 +221,8 @@ const Form = () => {
                             <select 
                             className="inputSelector"
                              id="categories"
-                            name="categories"
-                            onChange={handleSelector}
-                            value={input.cotegories}
+                             name="categories"
+                         
                             {...register('categories',
                                 {
                                     required: true,
@@ -211,7 +238,7 @@ const Form = () => {
                             {errors.categories && <p className="error" >Select a category</p>} 
                         </div>
 
-                    </div> */}
+                    </div> 
                   
                      <div>
                            {/*  {!input.color || !input.gender || !input.name || !input.cotegories} */}
