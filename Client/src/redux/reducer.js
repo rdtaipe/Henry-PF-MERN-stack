@@ -1,10 +1,10 @@
 import { SET_STATE } from './types';
-import { setState } from './actions'
+import { setter } from './actions'
 
 export var initialState = {
     mesi: [],
     mesi2: {},
-    actions: { setState },
+    actions: { setter },
     state: {
         workspace: {
             left: 0,
