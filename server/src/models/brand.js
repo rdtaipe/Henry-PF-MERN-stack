@@ -12,4 +12,4 @@ const brandSchema = new Schema(
     }
 )
 const brandModel = model('Brand', brandSchema)
-module.exports = brandModel
+export default brandModel

@@ -1,8 +1,10 @@
 import { Schema, model } from 'mongoose';
+
 const productSchema = new Schema(
     {
         name: {
             type: String,
+            required: true,
         },
         description: {
             type: String,
@@ -42,7 +44,7 @@ const productSchema = new Schema(
         timestamp: true,
         versionKey: false,
     }
-)
+);
 
 const productModel = model('Product', productSchema)
 export default productModel

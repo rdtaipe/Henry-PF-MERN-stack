@@ -28,5 +28,4 @@ const purchaseSchema = new Schema(
 )
 
 const purchaseModel = model('Purchase', purchaseSchema)
-
 export default purchaseModel
