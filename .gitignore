@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Logs
 logs
 *.log
@@ -106,9 +105,3 @@ dist
 
 # package-lock.json
 package-lock.json
-=======
-node_modules
-package-lock.json
-.env
-
->>>>>>> fe8202bcd70be71dc802f23bed333350115b2c36
