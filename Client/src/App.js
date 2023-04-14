@@ -1,4 +1,3 @@
-
 import Form from "./pages/Form";
 import Home from "./pages/Home";
 import InicialPage from "./pages/InicialPage";
@@ -23,3 +22,4 @@ function App() {
 }
 
 export default App;
+
