@@ -1,7 +1,8 @@
 import React from 'react'
-import Header from '../components/Header'
 import Card from '../components/Card'
 import { useDispatch, useSelector } from 'react-redux'
+import NavBar from '../components/NavBar'
+import Sidebar from '../components/Sidebar/Sidebar'
 
 const Home = () => {
   //testing redux
@@ -11,8 +12,9 @@ const Home = () => {
   console.log(state,"state")
   return (
     <div>
-        <Header/>
-        <Card/>
+      <NavBar />
+      <Sidebar/>
+      <Card />
     </div>
   )
 }
