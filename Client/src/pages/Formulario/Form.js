@@ -42,7 +42,7 @@ const Form = () => {
         /*  <div className=" dark:bg-purple-900 dark:text-gray-100 min-h-screen flex flex-col justify-center items-center">
             <h2 className="text-5xl font-bold leading-none sm:text-6xl">Form</h2> */
       <div>
-            
+      {/*        <Header/> */}
              <div className="container-form">
        
               <form className=" container-card"onSubmit={handleSubmit(onSubmit)}>
