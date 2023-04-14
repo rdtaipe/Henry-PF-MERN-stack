@@ -1,24 +1,18 @@
-import { Detail } from "./pages/Detail";
 import Form from "./pages/Form";
 import Home from "./pages/Home";
 import InicialPage from "./pages/InicialPage";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Provider } from "react-redux";
-import store from "./redux/store";
+import { Route, Routes } from "react-router-dom";
+import { Detail } from "./pages/Detail";
 
 function App() {
   return (
     <div>
-      <Provider store={store}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<InicialPage />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/form" element={<Form />} />
-            <Route path="/products/:productId" element={<Detail />} />
-          </Routes>
-        </BrowserRouter>
-      </Provider>
+      <Routes>
+        <Route path="/" element={<InicialPage />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/form" element={<Form />} />
+        <Route path="/products/:productId" element={<Detail />} />
+      </Routes>
     </div>
   );
 }
