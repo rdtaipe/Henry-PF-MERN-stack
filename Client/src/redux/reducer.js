@@ -2,6 +2,8 @@ import {SET_STATE} from './types';
 import {setState} from './actions'
 
 export var initialState={
+    mesi:[],
+    mesi2:{},
     actions:{setState},
     state:{
         workspace:{
