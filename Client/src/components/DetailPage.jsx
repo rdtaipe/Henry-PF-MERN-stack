@@ -22,6 +22,7 @@ export const DetailPage = () => {
               return <img alt={product.name} src={el} key={el} />;
             })
           : null} */}
+        {/* Map para visualizar las imagenes del DB */}
       </div>
       <div className="flex flex-col justify-center gap-10 w-9/12">
         <div>
