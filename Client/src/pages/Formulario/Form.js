@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import './Form.css'
-import  utils from './utils.json'
+import  utils from '../../utils/arrays_dates.json'
 
 const Form = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -39,10 +39,9 @@ const Form = () => {
             <h2 className="text-5xl font-bold leading-none sm:text-6xl">Form</h2> */
 
             <div className="container">
-                <h2 className="title">Form Product</h2>
-
-
-                <form className=" container-card"onSubmit={handleSubmit(onSubmit)}>
+       
+              <form className=" container-card"onSubmit={handleSubmit(onSubmit)}>
+                       <h2 className="title">Form Product</h2>
                     <div>
                       <input 
                        className="inputStyle"
@@ -228,7 +227,7 @@ const Form = () => {
                   
                      <div>
                            {/*  {!input.color || !input.gender || !input.name || !input.cotegories} */}
-                        <button className="botonStyle"  type="submit">Create Product</button>
+                        <button className="botonStyle"  type="submit">Add Product</button>
                      </div>
                 </form>
             </div>
