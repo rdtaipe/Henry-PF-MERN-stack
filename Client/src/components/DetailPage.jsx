@@ -49,7 +49,7 @@ export const DetailPage = () => {
                   return (
                     <button
                       key={el}
-                      className="font-bold bg-white px-3 py-2 border-2 border-black rounded mx-auto cursor-pointer focus:outline-none focus:ring focus:ring-purple-500"
+                      className="font-bold bg-white px-3 py-2 border-2 border-black rounded mx-auto cursor-pointer focus:outline-none focus:ring focus:ring-purple-500 hover:ring hover:ring-purple-300"
                     >
                       {el}
                     </button>
