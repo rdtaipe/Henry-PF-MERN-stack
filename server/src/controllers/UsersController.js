@@ -1,6 +1,7 @@
-import userModel from '../models/user'
-import {createCart} from './CartController'
-// import {e} from './E'
+import userModel from '../models/user.js'
+import {createCart} from './CartController.js'
+import { emailerConfig } from './emailerController.js'
+
 
 export const allUsers = async (req, res, next) => {
     const {id}= req.query
@@ -21,6 +22,8 @@ export const allUsers = async (req, res, next) => {
             const User = {
                 id: us._id,
                 fullName: us.fullName,
+
+                
                 email: us.email,
                 birthDate: us.birthDate,
                 genre: us.genre,
@@ -63,7 +66,7 @@ export const userLoggin = async (req, res, next) => {
             const cart = await createCart(response._id)
             console.log('create carrito: '+ cart)
 
-            await EmeilerConfig(User.email, User.fullName)
+            await emailerConfig(User.email, User.fullName)
             
             res.status(200).send({
                 msg:"User created succesfully",
@@ -132,7 +135,7 @@ export const createUser = async (req, res, next) => {
         console.log(result)
         const cart = await CreateCart(result._id)
         console.log('create carrito: '+ cart)
-        await EmeilerConfig(req.body.email,req.body.firstName)
+        await emailerConfig(req.body.email,req.body.firstName)
            
         res.status(201).send('User Successfully Created');
  
