@@ -4,6 +4,7 @@ import Card from '../components/Card'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Home = () => {
+  //testing redux
   const dispatch=useDispatch()
   const setter=useSelector(state=>state.actions.setter)
   const state=useSelector(state=>state)
