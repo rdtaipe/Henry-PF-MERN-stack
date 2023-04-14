@@ -6,15 +6,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Provider } from 'react-redux'
 import store from './redux/store'
 function App() {
-
-  
-
-
-
   return (
     <div >
     <Provider store={store}>
- <BrowserRouter>
+        <BrowserRouter>
         <Routes>
           <Route path="/" element={<InicialPage/>} />
          <Route path="/home" element={<Home/>} />
