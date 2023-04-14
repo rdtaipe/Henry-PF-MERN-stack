@@ -7,8 +7,7 @@ const Home = () => {
   const dispatch=useDispatch()
   const setter=useSelector(state=>state.actions.setter)
   const state=useSelector(state=>state)
-
-  
+  console.log(state,"state")
   return (
     <div>
         <Header/>
