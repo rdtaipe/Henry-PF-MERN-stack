@@ -1,0 +1,236 @@
+{
+    "colors": [
+        {
+            "name": "Red"
+        },
+        {
+            "name": "Blue"
+        },
+        {
+            "name": "Green"
+        },
+        {
+            "name": "Yellow"
+        },
+        {
+            "name": "Orange"
+        },
+        {
+            "name": "Pink"
+        },
+        {
+            "name": "Brown"
+        },
+        {
+            "name": "Grey"
+        },
+        {
+            "name": "Black"
+        },
+        {
+            "name": "White"
+        },
+        {
+            "name": "Beige"
+        },
+        {
+            "name": "Ivory"
+        },
+        {
+            "name": "Gold"
+        }
+    ]
+
+
+    ,
+
+    "size": [
+        {
+            "name": "XS"
+        },
+        {
+            "name": "S"
+        },
+        {
+            "name": "M"
+        },
+        {
+            "name": "L"
+        },
+        {
+            "name": "XL"
+        }
+    ]
+
+    ,
+
+
+"brands": [
+    {
+        "name": "Nike"
+       
+    },
+    {
+        "name": "Adidas"
+      
+    },
+    {
+        "name": "Puma"
+     
+    },
+    {
+        "name": "Reebok"
+     
+    },
+    {
+        "name": "Under Armour"
+       
+    },
+    {
+        "name": "New Balance"
+      
+    },
+    {
+        "name": "Vans"
+      
+    },
+    {
+        "name": "Converse"
+  
+    },
+    {
+        "name": "ASICS"
+   
+    },
+    {
+        "name": "Fila"
+    
+    },
+    {
+        "name": "Lacoste"
+      
+    },
+    {
+        "name": "Tommy Hilfiger"
+     
+    },
+    {
+        "name": "Calvin Klein"
+   
+    },
+    {
+        "name": "Levi's"
+     
+    },
+    {
+        "name": "Diesel"
+ 
+    },
+    {
+        "name": "H&M"
+       
+    },
+    {
+        "name": "Zara"
+      
+    },
+    {
+        "name": "Gap"
+       
+    },
+    {
+        "name": "American Eagle"
+      
+    }
+]
+  ,
+
+   "genre":[
+        {"name":"masculino"},{"name":"femenino"}
+   ]
+  ,
+
+  
+    "categories": [
+        {
+            "name": "T-Shirts",
+            "value": "tshirts"
+        },
+        {
+            "name": "Dresses",
+            "value": "dresses"
+        },
+        {
+            "name": "Jeans",
+            "value": "jeans"
+        },
+        {
+            "name": "Pants",
+            "value": "pants"
+        },
+        {
+            "name": "Shorts",
+            "value": "shorts"
+        },
+        {
+            "name": "Skirts",
+            "value": "skirts"
+        },
+        {
+            "name": "Sweaters",
+            "value": "sweaters"
+        },
+        {
+            "name": "Hoodies",
+            "value": "hoodies"
+        },
+        {
+            "name": "Jackets",
+            "value": "jackets"
+        },
+        {
+            "name": "Coats",
+            "value": "coats"
+        },
+        {
+            "name": "Blouses",
+            "value": "blouses"
+        },
+        {
+            "name": "Shirts",
+            "value": "shirts"
+        },
+        {
+            "name": "Suits",
+            "value": "suits"
+        },
+        {
+            "name": "Swimwear",
+            "value": "swimwear"
+        },
+        {
+            "name": "Activewear",
+            "value": "activewear"
+        },
+        {
+            "name": "Underwear",
+            "value": "underwear"
+        },
+        {
+            "name": "Socks",
+            "value": "socks"
+        },
+        {
+            "name": "Accessories",
+            "value": "accessories"
+        },
+        {
+            "name": "Footwear",
+            "value": "footwear"
+        }
+    ]
+
+}
+
+
+

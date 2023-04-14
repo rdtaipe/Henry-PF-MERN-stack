@@ -1,0 +1,142 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: nowrap; */
+    justify-content:space-around;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+
+.container-card{
+    display: flex;
+    flex-direction: column;
+    border:2px solid rgb(70, 66, 71);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    padding:1rem;
+
+}
+.title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: x-large;
+    color: gray
+
+}
+
+.inputStyle{
+    border:1px solid grey;
+    border-radius: 8px;
+    width: 25rem;
+    height: 2.5rem;
+    margin:4px ;
+    text-align: center;
+}
+
+.container2{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+    align-items: center;
+   /*  border: 1px solid grey;
+    border-radius: 2px;  */
+    width: 25rem;
+    height: 4rem;
+    margin: 2px;
+    padding: 4px;
+}
+
+
+.input2{
+    border: 1px solid grey;
+    border-radius: 5px;
+    width: 4rem;
+    height: 2rem;
+    margin: 2px;
+    text-align: center; 
+}
+.inputStyleArea{
+    border:1px solid grey;
+    border-radius: 4px;
+    width: 25rem;
+    height: 4rem;
+    margin-top: 4px ;
+    text-align: center;
+}
+
+
+.container-sex{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2px;
+}
+.inputSelector{
+    border: 1px solid grey;
+    border-radius: 5px;
+    width:  12rem;
+    height: 2rem;
+    margin: 2px;
+    text-align: center;
+    cursor: pointer;
+   
+}
+
+.botonStyle{
+   /*  border: 1px solid darkorchid; */
+     background-color:rgb(56, 56, 213); 
+   color:white;
+    border-radius: 8px;
+    width: 25rem;
+    height: 2.5rem;
+    margin: 4px;
+    cursor: pointer;
+}
+.botonStyle:active{
+        background-color: rgb(56, 56, 213);;
+        color:black;
+        border: 2px solid black;
+}
+
+
+.inputStyleImage {
+    border: 1px solid grey;
+    border-radius: 8px;
+    width: 25rem;
+    height: 2.5rem;
+    margin: 4px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.inputStyleImage:hover {
+   background-color:gray;
+    color:black
+}
+
+.inputStyleImage:active {
+    background-color: darkorchid;
+}
+
+
+.error {
+    background-color: #ffe5e5;
+    /* un color rojo muy suave */
+    color: #ff4d4d;
+    /* un color rojo oscuro para el texto */
+    font-size: 12px;
+    /* tamaño de fuente pequeño */
+    padding: 5px;
+    /* agregar un poco de espacio alrededor del texto */
+    text-align: center;
+    /* centrar el texto */
+    margin-top: 0px;
+    /* agregar un poco de espacio encima del texto */
+    border-radius: 10px;
+}
