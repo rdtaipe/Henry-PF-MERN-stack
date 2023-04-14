@@ -1,6 +1,6 @@
 import {SET_STATE} from './types';
 
-export async function setState(value) {
+export function setter(value) {
     return {type:SET_STATE,payload:value}
 }
 
