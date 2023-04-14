@@ -1,12 +1,12 @@
-.container{
+.container-form{
     display: flex;
     flex-direction: column;
     /* flex-wrap: nowrap; */
     justify-content:space-around;
     align-items: center;
     margin-top: 1rem;
-    background-color: #4a148c;
-    color: #424242;
+     background-color: #4a148c;     
+     color: #424242; 
     min-height: 100vh;
     min-width: 100vw;
     margin-top:0;
@@ -100,8 +100,16 @@
     margin: 2px;
     text-align: center;
     cursor: pointer;
-   
+    padding: 2px;
+    background-color:#eeeeee
 }
+
+.inputSelector option:hover,
+.inputSelector option:focus {
+    background-color: #ccc !important;
+    color: #fff !important;
+}
+
 
 .botonStyle{
    /*  border: 1px solid darkorchid; */

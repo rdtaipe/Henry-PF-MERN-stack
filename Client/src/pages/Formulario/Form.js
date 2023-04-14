@@ -2,25 +2,28 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import './Form.css'
 import  utils from '../../utils/arrays_dates.json'
-
+import Header from "../../components/Header";
 const Form = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const [input,setInput]=useState(
+   let form1=useForm();
+  // console.log(form1)
+
+/*     const [input,setInput]=useState(
         {
         name:"",
         gender:{F:"female",M:"male"},
         color:'',
         cotegories:''
         }
-    )
+    ) */
 
      const handleSelector=(e)=>{
         const {name,value}=e.target;
-        console.log(value)
+        //console.log(value)
      }
-
-    const handleGenderChange=(e)=>{
+ 
+/*     const handleGenderChange=(e)=>{
      const {name,value}=e.target;
 
         const isGenderSelected = input.gender !== undefined && input.gender !== '';
@@ -29,16 +32,18 @@ const Form = () => {
            console.log(value)
        }
      
-    }
+    } */
 
     const onSubmit = (e) => {
-       e.preventDefault();
+      
+       console.log(e)
     }
     return (
-       /*  <div className=" dark:bg-purple-900 dark:text-gray-100 min-h-screen flex flex-col justify-center items-center">
+        /*  <div className=" dark:bg-purple-900 dark:text-gray-100 min-h-screen flex flex-col justify-center items-center">
             <h2 className="text-5xl font-bold leading-none sm:text-6xl">Form</h2> */
-
-            <div className="container">
+      <div>
+            
+             <div className="container-form">
        
               <form className=" container-card"onSubmit={handleSubmit(onSubmit)}>
                        <h2 className="title">Form Product</h2>
@@ -64,7 +69,7 @@ const Form = () => {
                             name="image"
                             id="image"
                             type="file"
-                            /*   accept=".png, .jpg" */
+                               /* accept=".png, .jpg ,"  */
                             {...register('image', {
                                 required: true
                             })}
@@ -72,7 +77,7 @@ const Form = () => {
                         {errors.image?.type === 'required' && <p className="error" >Image required</p>} 
 
                    </div>
-                    
+                     
 
                    
 
@@ -85,10 +90,10 @@ const Form = () => {
                         style={{ resize: 'none' }}
                         {...register('description', {
                             required: true,
-                            maxLength: 20
+                            maxLength: 400
                         })} />
                         {errors.description?.type === 'required' && <p className="error">Description required</p>}
-                        {errors.description?.type === 'maxLength' && <p className="error">Only can use 20 letters</p>}
+                        {errors.description?.type === 'maxLength' && <p className="error">Only can use 400 letters</p>}
                     </div>
 
 
@@ -109,7 +114,10 @@ const Form = () => {
                             {errors.stock?.type === 'required' && <p className="error">stock required</p>}
                             {errors.stock?.type === 'pattern' && <p className="error">Only can use numbers may zero</p>}
                         </div>
-                        <div>
+
+
+                        
+                 {/*        <div>
                             <label>Price</label>
                             <input 
                                 className="input2"
@@ -118,38 +126,18 @@ const Form = () => {
                                 name="price"
                                 {...register('price', {
                                     required: true,
+                                    pattern: /^[0-9]*$/
                                 })} />
-                           {/*  {errors.price?.type === 'required' && <p>price required</p>}
-                            {errors.price?.type === 'maxLength' && <p> Only can use numbers may zeros</p>} */}
+                          
                             {errors.price?.type === 'required' && <p className="error">price required</p>}
                             {errors.price?.type === 'maxLength' && <p className="error"> Only can use numbers may zeros</p>}
 
                         </div>
+ */}
 
+        
 
-                             {/*      <div >
-                            
-                            <input type="radio" id="male" name="gender" value={input.M} 
-                             checked={input.gender.M === "male"} 
-                                {...register('male', {
-                                    required: true,
-                                })}
-                            onChange={handleGenderChange} />
-                            <label htmlFor="male">Male</label><br />
-                            <input type="radio" id="female" name="gender" value={input.M}  
-                         checked={input.gender.F === "female"} 
-                                {...register('female', {
-                                    required: true,
-                                })}
-                            onChange={handleGenderChange}  />
-                            <label htmlFor="female">Female</label><br />
-
-                            {errors.gender?.type === 'required' && <p className="error">sex required</p>}
-                            
-                        </div> */}
-
-
-                        <div className="container-sex" >
+                    {/*     <div className="container-sex" >
                             <input
                                 type="radio"
                                 id="male"
@@ -172,12 +160,12 @@ const Form = () => {
                             <label htmlFor="female">Female</label>
                             <br />
                            {errors.gender && <p className="error">Sex is required</p>}
-                        </div>
+                        </div> */}
 
                     </div>
                     
   
-                    <div className="container2">
+                {/*     <div className="container2">
                         <div>
                             <select
                                 className="inputSelector"
@@ -223,7 +211,7 @@ const Form = () => {
                             {errors.categories && <p className="error" >Select a category</p>} 
                         </div>
 
-                    </div>
+                    </div> */}
                   
                      <div>
                            {/*  {!input.color || !input.gender || !input.name || !input.cotegories} */}
@@ -231,8 +219,7 @@ const Form = () => {
                      </div>
                 </form>
             </div>
- 
-
+      </div>
     );
 };
 
