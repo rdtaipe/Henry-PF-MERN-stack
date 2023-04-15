@@ -38,7 +38,7 @@ const Home = () => {
       m:"product",
       filter:search===""?{}:filter,
       options:"i",
-      regex:"all", 
+      // regex:"all", 
       limit:limit*page,
       skip:limit*page-10
     }
