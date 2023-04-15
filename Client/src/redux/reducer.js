@@ -12,7 +12,7 @@ import {
   GET_COLORS,
   GET_CATEGORIES,
 } from "./types";
-import { setState } from "./actions";
+import { setter } from "./actions";
 
 export var initialState = {
   products: [],
@@ -30,7 +30,7 @@ export var initialState = {
     value: false,
   },
   openFilter: false,
-  actions: { setState },
+  actions: { setter },
   state: {
     workspace: {
       left: 0,

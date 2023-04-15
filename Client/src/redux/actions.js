@@ -13,7 +13,7 @@ import {
     GET_CATEGORIES,
   } from "./types";
   
-  export function setState(value) {
+  export function setter(value) {
     return { type: SET_STATE, payload: value };
   }
   
