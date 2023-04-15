@@ -15,9 +15,10 @@ const Home = () => {
   const {top,width}= useSelector(({state}) => state.sidebar)
   const {queryString}= useSelector(({state} )=> state.utils)
   const search = useSelector(state => state.searchName)
-
-  const [refresh, setRefresh] = useState(false)
+  const [data, setData] = useState([])
   const [page, setPage] = useState(10)
+  const [count, setCount] = useState(10)
+  const [documents, setDocuments] = useState(0)
 
 
   useEffect(() => {
@@ -35,14 +36,17 @@ const Home = () => {
       options:"i",
       regex:"all", 
       limit:page,
-      skip:page-10
+      skip:page-count
     }
 
     const query=queryString(obj)
 
     get(url+`/find?${query}`).then(res =>{
       dispatch(setter({keys:"products",value:res.data.product}))
-      setRefresh(Math.random())
+
+      setDocuments(res.data.documents)
+  
+      setData(res.data.product)
     })
   }
 
@@ -51,8 +55,8 @@ const Home = () => {
       <NavBar />
       <Sidebar />
       <div  style={{marginTop:top,marginLeft:width}} className="px-2 pt-2">
-        <Pagination setPage={n=>{
-          setPage(n*10)
+        <Pagination count={Math.ceil(documents / count)} setPage={n=>{
+          setPage(n*count)
         }}/> 
         <Grid childHeight={260} childWidth={200}>
         {products.map((item, index) => {
