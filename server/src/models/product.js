@@ -34,10 +34,10 @@ const productSchema = new Schema(
             type: Number,
         },
         active: {
-            type: Boolean,
+            type: Boolean, //true
         },
         featured: {
-            type: Boolean
+            type: Boolean  //true
         }
     },
     {

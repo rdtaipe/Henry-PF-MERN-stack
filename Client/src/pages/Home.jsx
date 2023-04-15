@@ -1,21 +1,77 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from '../components/Card'
 import { useDispatch, useSelector } from 'react-redux'
 import NavBar from '../components/NavBar'
 import Sidebar from '../components/Sidebar/Sidebar'
+import Grid from '../components/Grid'
+import Pagination from '../components/Pagination'
 
 const Home = () => {
   //testing redux
   const dispatch = useDispatch()
+  //global state
+  const { url, get } = useSelector(({ state }) => state.server)
   const setter = useSelector(state => state.actions.setter)
-  const state = useSelector(state => state)
-  console.log(state, "state")
+  const products = useSelector(state => state.products)
+  const {top,width}= useSelector(({state}) => state.sidebar)
+  const {queryString}= useSelector(({state} )=> state.utils)
+  const search = useSelector(state => state.searchName)
+  //local state
+  const [data, setData] = useState([])
+  const [page, setPage] = useState(1)
+  const [limit, setLimit] = useState(10)
+  const [count, setCount] = useState(0)
+  const [documents, setDocuments] = useState(0)
 
+
+  useEffect(() => {
+    getData()
+
+  }, [search,page])
+
+  const getData=()=>{
+    const filter={
+      name:[search]
+    }
+    
+    const obj={
+      m:"product",
+      filter:search===""?{}:filter,
+      options:"i",
+      regex:"all", 
+      limit:limit*page,
+      skip:limit*page-10
+    }
+
+    const query=queryString(obj)
+
+    get(url+`/find?${query}`).then(res =>{
+      var resData=res.data.product
+      dispatch(setter({keys:"products",value:resData}))
+      setDocuments(res.data.documents)
+      setData(resData)
+      let n=Math.ceil(res.data.documents/limit)
+
+      setCount((page===1&&resData.length<limit)?1:n)
+      if(page>1&&resData.length===0){
+        setPage(1)
+      }
+    })
+  }
+  
   return (
     <div>
       <NavBar />
-      <Sidebar/>
-      <Card />
+      <Sidebar />
+      <div  style={{marginTop:top,marginLeft:width}} className="px-2 pt-2">
+        <Pagination page={page} count={count} setPage={n=>{setPage(n)}}/> 
+        <Grid childHeight={260} childWidth={200}>
+        {products.map((item, index) => {
+            return <Card key={index} data={item} />
+          })}
+      </Grid>
+      </div>
+
     </div>
   )
 }
