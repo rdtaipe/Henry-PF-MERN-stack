@@ -1,9 +1,10 @@
 import { useState } from "react";
 import SidebarButton from "./SideBarButton";
 import axios from "axios"
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 
 function Sidebar({className}) {
+  const dispatch = useDispatch()
   const {top,width}= useSelector(({state}) => state.sidebar)
 
   const [selections, setSelections] = useState({
