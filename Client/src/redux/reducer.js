@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   SET_STATE,
   GET_PRODUCTS,
@@ -32,14 +33,22 @@ export var initialState = {
   openFilter: false,
   actions: { setter },
   state: {
-    workspace: {
-      left: 0,
-      right: 0,
-      top: 0,
-      bottom: 0,
-      width: 0,
-      height: 0,
+    server:{
+      setter:setter,
+      url: "http://localhost:5000",
+      get:(url)=>axios.get(url),
+      post:(url,house)=> axios.post(url,house),
+      put:(url,id,house)=> axios.put(url+id,house),
+      delete:(url,id)=> axios.delete(url+id),
+      find:(url,query)=> axios.get(url+query),
     },
+    sidebar:{
+      open:false,
+      top:80,     
+      left: 0,
+      width: 280,
+    }
+
   },
 };
 export const reducer = (state = initialState, action) => {
@@ -111,7 +120,7 @@ export const reducer = (state = initialState, action) => {
         } else {
           state[keys] = value;
         }
-        return { ...state };
+        return state
       }
     ////////////////////////////////////Products////////////////////////////////////////
     case GET_PRODUCTS:
