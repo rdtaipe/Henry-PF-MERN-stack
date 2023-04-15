@@ -35,7 +35,15 @@ export var initialState = {
   //use useSelector to get this functions
   actions: { setter },
   state: {
-    f:utils,
+    utils:utils,
+    find:{
+      m:"product",
+      q:null,//dont use this
+      filter:null,//[]
+      sort:null,//{}
+      limit:10,
+      skip:0,
+    },
     pagination:{
       page:1,
       pageLimit:10,
@@ -301,7 +309,7 @@ export const reducer = (state = initialState, action) => {
         filtersElect: action.payload,
       };
     case SEARCH:
-      let filterNames = state.productsFiltered.filter((e) => {
+      let filterNames = state.products.filter((e) => {
         return e.name.toUpperCase().includes(action.payload.toUpperCase());
       });
 
@@ -339,40 +347,3 @@ export const reducer = (state = initialState, action) => {
   }
 };
 
-// save local storage
-const saveLocal = (key, v) => {
-  try {
-    const data = JSON.stringify(v);
-    localStorage.setItem(key, data);
-  } catch (e) {
-    console.log(e);
-  }
-};
-const getLocal = (key) => {
-  try {
-    const data = localStorage.getItem(key);
-    return JSON.parse(data);
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-//save cookien for 24 hours
-const saveCookie = (key, v) => {
-  try {
-    const data = JSON.stringify(v);
-    document.cookie = `${key}=${data};max-age=86400`;
-  } catch (e) {
-    console.log(e);
-  }
-};
-const getCookie = (key) => {
-  try {
-    const data = document.cookie
-      .split(";")
-      .find((c) => c.trim().startsWith(`${key}=`));
-    return JSON.parse(data.split("=")[1]);
-  } catch (e) {
-    console.log(e);
-  }
-};
