@@ -110,8 +110,12 @@ router.get("", async (req, res) => {
                     .sort(params.sort)
                     .limit(parseInt(params.limit))
                     .skip(parseInt(params.skip))
+                  const documents=await model.countDocuments()
 
-                res.status(200).json({ [params.m]: result })
+                  console.log(documents)
+                   
+
+                res.status(200).json({ [params.m]: result, documents })
 
                 break;
             default:

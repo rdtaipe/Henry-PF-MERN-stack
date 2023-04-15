@@ -5,10 +5,10 @@ import Stack from '@mui/material/Stack';
 export default function PaginationComponent({spacing,count,page,onChange,setPage}) {
     
 
-    return (
+    return (count?
         <div className='relative flex justify-center'>
-            <Stack spacing={2} >
-                <Pagination count={10} onChange={(e)=>{
+            <Stack spacing={spacing?spacing:2} >
+                <Pagination count={count?count:0} defaultPage={page} onChange={(e)=>{
                     if(onChange){
                         onChange(e)
                     }
@@ -18,6 +18,6 @@ export default function PaginationComponent({spacing,count,page,onChange,setPage
                     
                 }}/>
             </Stack>
-        </div>
+        </div>:null
     )
 }
