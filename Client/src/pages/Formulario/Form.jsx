@@ -8,7 +8,7 @@ import axios from 'axios';
 const Form = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-   const location=use
+
 
 /*
     ==type of dates=== 
