@@ -289,7 +289,7 @@ export const reducer = (state = initialState, action) => {
         filtersElect: action.payload,
       };
     case SEARCH:
-      let filterNames = state.productsFiltered.filter((e) => {
+      let filterNames = state.products.filter((e) => {
         return e.name.toUpperCase().includes(action.payload.toUpperCase());
       });
 
