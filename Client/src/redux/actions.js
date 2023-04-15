@@ -13,7 +13,7 @@ import {
     GET_CATEGORIES,
   } from "./types";
   
-  export async function setState(value) {
+  export function setState(value) {
     return { type: SET_STATE, payload: value };
   }
   
