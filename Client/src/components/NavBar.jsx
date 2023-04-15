@@ -4,13 +4,16 @@ import { NavLink } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { RxAvatar } from 'react-icons/rx'
+import { useSelector } from "react-redux";
 // import cart from "path/to/cart.png";
 // import avatar from "path/to/avatar.png";
 
-const NavBar = () => {
+const NavBar = ({className}) => {
+  const {top,width}= useSelector(({state}) => state.sidebar)
+  // 
   return (
-    <nav className="flex justify-between items-center bg-[#232323]">
-      <div className="flex justify-center w-[350px] rounded-r-3xl bg-slate-600 p-3">
+    <nav className={`fixed top-0 left-0 z-10 flex justify-between items-center bg-[#232323] w-[100%] h-[${top}px] text-white`}>
+      <div className="flex justify-center w-[300px] rounded-r-3xl bg-slate-600 p-3">
         <NavLink to='/'>
         <img src={logo} alt="logo" className="w-52" />
         </NavLink>

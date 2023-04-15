@@ -1,8 +1,12 @@
 import { useState } from "react";
 import SidebarButton from "./SideBarButton";
 import axios from "axios"
+import { useSelector,useDispatch } from "react-redux";
 
-function Sidebar() {
+function Sidebar({className}) {
+  const dispatch = useDispatch()
+  const {top,width}= useSelector(({state}) => state.sidebar)
+
   const [selections, setSelections] = useState({
     "Categoría": [],
     "Marca": [],
@@ -21,7 +25,7 @@ function Sidebar() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen w-72 bg-stone-400">
+    <div style={{top:top,width:width}} className={`fixed left-0 h-full flex flex-col bg-stone-400 text-white z-10 p-2 ${className}`}>
 
         <div classname="flex flex-col">
             <SidebarButton title="Categoría" items={["Ropa", "Zapatos", "Accesorios"]} onSelect={(selectedItems) => handleSelection("Categoría", selectedItems)} />

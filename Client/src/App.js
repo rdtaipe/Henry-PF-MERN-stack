@@ -1,4 +1,4 @@
-import Form from "./pages/Form";
+import Form from "./pages/Formulario/Form";
 import Home from "./pages/Home";
 import InicialPage from "./pages/InicialPage";
 import { Route, Routes } from "react-router-dom";
