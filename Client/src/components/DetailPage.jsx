@@ -14,18 +14,6 @@ export const DetailPage = () => {
       .catch((err) => console.log(err.message));
   }, []);
 
-  // const slide = [
-  //   {
-  //     url: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/018c0d32-59ec-47bc-9244-cd484bb45d1f/air-force-1-le-zapatillas-nino-a-r2kdvj.png",
-  //   },
-  //   {
-  //     url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/37d2e58a-eff1-4264-8007-876fc894637e/air-force-1-07-zapatillas-QxRXZV.png",
-  //   },
-  //   {
-  //     url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/9de2efa3-5e50-4c07-aa4d-e6132e74e0de/air-force-1-07-zapatillas-QxRXZV.png",
-  //   },
-  // ];
-  //Hago un map con las imagenes de BD para que se vean así.
   const slide = product.image
     ? product.image.map((x) => {
         return { url: x };
@@ -108,7 +96,3 @@ export const DetailPage = () => {
     </div>
   );
 };
-
-//Deploy, auth, pasarela, cloudinary, notificaciones, local storage (Al refrescar la pagina, que siga la sesion. Al igual que al tener productos en el carrito, que no desaparezcan) (Redux persist).
-//Deploy, auth terceros, cloudinary, pasarela de pagos, local storage, notificaciones x email
-//Se puede presentar 3 requisitos, pero para la última se va a volver DEMASIADO pesado todo.
