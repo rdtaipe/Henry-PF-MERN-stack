@@ -73,7 +73,7 @@ export var initialState = {
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    //set sate super mamando utiliza recurcion para actualizar el estado de cualquier objeto o array del estado
+    //set sate super mamando utiliza recurcion para actualizar el estado de cualquier objeto o array del estado sub statado
     case SET_STATE:
       const { keys, value, only } = action.payload;
       //keys: "state.sidebar.right", value: 200, only: true
@@ -163,7 +163,7 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
       };
-
+///actualmete ya no utilizan ORDER AND FILTERS de abajo con la implematacion de /find? pero las dejo por si las moscas
     /////////////////////////////////ORDER AND FILTERS//////////////////////////////////////////////////////
     case OPEN_FILTERS:
       return {
