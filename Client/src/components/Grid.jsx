@@ -1,7 +1,7 @@
 
 import styled from 'styled-components'
 
-export function Grid({style,children, childHeight,childWidth,className}) {
+export default function Grid({style,children, childHeight,childWidth,className}) {
     
 
     return (
