@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
     SET_STATE,
     GET_PRODUCTS,
@@ -13,7 +14,7 @@ import {
     GET_CATEGORIES,
   } from "./types";
   
-  export async function setState(value) {
+  export function setter(value) {
     return { type: SET_STATE, payload: value };
   }
   
