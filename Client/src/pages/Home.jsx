@@ -9,21 +9,26 @@ import Pagination from '../components/Pagination'
 const Home = () => {
   //testing redux
   const dispatch = useDispatch()
+  //global state
   const { url, get } = useSelector(({ state }) => state.server)
   const setter = useSelector(state => state.actions.setter)
   const products = useSelector(state => state.products)
   const {top,width}= useSelector(({state}) => state.sidebar)
   const {queryString}= useSelector(({state} )=> state.utils)
   const search = useSelector(state => state.searchName)
-
-  const [refresh, setRefresh] = useState(false)
-  const [page, setPage] = useState(10)
+  //local state
+  const [data, setData] = useState([])
+  const [page, setPage] = useState(1)
+  const [limit, setLimit] = useState(10)
+  const [count, setCount] = useState(0)
+  const [documents, setDocuments] = useState(0)
 
 
   useEffect(() => {
     getData()
 
   }, [search,page])
+
   const getData=()=>{
     const filter={
       name:[search]
@@ -34,26 +39,32 @@ const Home = () => {
       filter:search===""?{}:filter,
       options:"i",
       regex:"all", 
-      limit:page,
-      skip:page-10
+      limit:limit*page,
+      skip:limit*page-10
     }
 
     const query=queryString(obj)
 
     get(url+`/find?${query}`).then(res =>{
-      dispatch(setter({keys:"products",value:res.data.product}))
-      setRefresh(Math.random())
+      var resData=res.data.product
+      dispatch(setter({keys:"products",value:resData}))
+      setDocuments(res.data.documents)
+      setData(resData)
+      let n=Math.ceil(res.data.documents/limit)
+
+      setCount((page===1&&resData.length<limit)?1:n)
+      if(page>1&&resData.length===0){
+        setPage(1)
+      }
     })
   }
-
+  
   return (
     <div>
       <NavBar />
       <Sidebar />
       <div  style={{marginTop:top,marginLeft:width}} className="px-2 pt-2">
-        <Pagination setPage={n=>{
-          setPage(n*10)
-        }}/> 
+        <Pagination page={page} count={count} setPage={n=>{setPage(n)}}/> 
         <Grid childHeight={260} childWidth={200}>
         {products.map((item, index) => {
             return <Card key={index} data={item} />
