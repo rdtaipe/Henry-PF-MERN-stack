@@ -3,7 +3,8 @@ import Card from '../components/Card'
 import { useDispatch, useSelector } from 'react-redux'
 import NavBar from '../components/NavBar'
 import Sidebar from '../components/Sidebar/Sidebar'
-import { Grid } from '../components/Grid'
+import Grid from '../components/Grid'
+import Pagination from '../components/Pagination'
 
 const Home = () => {
   //testing redux
@@ -12,38 +13,32 @@ const Home = () => {
   const setter = useSelector(state => state.actions.setter)
   const products = useSelector(state => state.products)
   const {top,width}= useSelector(({state}) => state.sidebar)
-  const [data, setData] = useState([])
-  
-  
+  const {queryString}= useSelector(({state} )=> state.f)
+
+  const [refresh, setRefresh] = useState(false)
+
+
+  const [page, setPage] = useState(10)
 
   useEffect(() => {
-    get(url+"/find?m=product").then(res =>{
-      dispatch(setter({keys:"products",value:res.data.product}))
-      setData(res.data.product)
-    })
+    getData()
+  }, [(page)])
 
-
-  }, [(products.length>0?null:products)])
-
-/*  const obj={
-  m:"product",
-  filter:{name:["aaa","bbb","ccc"]},
-  sort:{name:1},
- }
-const queryString=(obj)=>{
-  return Object.keys(obj).map(key => {
-    if (typeof obj[key] === 'object') {
-      return `${key}=${encodeURIComponent(JSON.stringify(obj[key]))}`;
+  const getData=()=>{
+    const obj={
+      m:"product",
+      limit:page,
+      skip:page-10
     }
-    return `${key}=${encodeURIComponent(obj[key])}`;
-  }).join('&');
-}
-const query=queryString(obj)
-console.log(`http://localhost:5000/find?${query}`)
-  axios.get(`http://localhost:5000/find?${query}`)
-  .then(res => {
-    console.log(res.data)
-  }) */
+    
+    const query=queryString(obj)
+
+    get(url+`/find?${query}`).then(res =>{
+      dispatch(setter({keys:"products",value:res.data.product}))
+      setRefresh(Math.random())
+    })
+  }
+
 
 //http://localhost:5000/find?m=products&filter=%5Bobject+Object%5D&sort=%5Bobject+Object%5D
 //http://localhost:5000/find?m=product&filter=%7B%22name%22%3A%5B%22aaa%22,%22bbb%22,%22ccc%22%5D%7D&sort=%7B%22name%22%3A1%7D
@@ -52,11 +47,17 @@ console.log(`http://localhost:5000/find?${query}`)
     <div>
       <NavBar/>
       <Sidebar />
-      <Grid childHeight={260} childWidth={200} style={{marginTop:top,marginLeft:width}} className="px-2 pt-2">
-        {data.map((item,index) => {
-            return <Card key={index} data={item} />
-          })}
-      </Grid>
+      <div  style={{marginTop:top,marginLeft:width}} className="px-2 pt-2">
+        <Pagination setPage={n=>{
+          setPage(n*10)
+
+        }}/>
+        <Grid childHeight={260} childWidth={200}>
+          {products.map((item,index) => {
+              return <Card key={index} data={item} />
+            })}
+        </Grid>
+      </div>
     </div>
   )
 }

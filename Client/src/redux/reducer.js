@@ -14,6 +14,7 @@ import {
   GET_CATEGORIES,
 } from "./types";
 import { setter } from "./actions";
+import { utils } from "./utils";
 
 export var initialState = {
   products: [],
@@ -31,8 +32,16 @@ export var initialState = {
     value: false,
   },
   openFilter: false,
+  //use useSelector to get this functions
   actions: { setter },
   state: {
+    f:utils,
+    pagination:{
+      page:1,
+      pageLimit:10,
+      limit:10,
+      skip:0,
+    },
     server:{
       setter:setter,
       url: "http://localhost:5000",
@@ -51,12 +60,15 @@ export var initialState = {
 
   },
 };
+
+/* dont worry this is normal day for every programers, look down */
+
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    //set sate super mamando utiliza recurcion para actualizar el estado de cualquier objeto
+    //set sate super mamando utiliza recurcion para actualizar el estado de cualquier objeto o array del estado
     case SET_STATE:
       const { keys, value, only } = action.payload;
-      //keys: "state.workspace.right", value: 200, only: true
+      //keys: "state.sidebar.right", value: 200, only: true
       if (keys) {
         if (keys.includes(".")) {
           function recursive(obj, keys, value) {
@@ -97,7 +109,7 @@ export const reducer = (state = initialState, action) => {
                 }
               }
             } else if (type === "[object Object]") {
-              //keys:"workspace.right",value:200
+              //keys:"sidebar.right",value:200
 
               if (remainingKeys.length === 1) {
                 obj[currentKey][remainingKeys[0]] = value;
