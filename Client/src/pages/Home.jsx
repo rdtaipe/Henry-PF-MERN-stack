@@ -81,7 +81,7 @@ const Home = () => {
     <div>
       <NavBar />
       <Sidebar setFilter={(e) => { setFilter(e) }} />
-      <div style={{ marginTop: top, marginLeft: width }} className="px-2">
+      <div style={{ marginTop: top, marginLeft: width }} className="px-2 min-h-[1000px]">
         <Carousel images={images} />
         <SortBar setSort={(e) => { setSort(e) }} />
         <Grid childHeight={260} childWidth={200}>

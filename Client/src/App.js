@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import InicialPage from "./pages/InicialPage";
 import { Route, Routes } from "react-router-dom";
 import { Detail } from "./pages/Detail";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/form" element={<Form />} />
         <Route path="/products/:productId" element={<Detail />} />
       </Routes>
+      <Footer/>
     </div>
   );
 }
