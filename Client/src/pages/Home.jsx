@@ -5,8 +5,20 @@ import NavBar from '../components/NavBar'
 import Sidebar from '../components/Sidebar/Sidebar'
 import Grid from '../components/Grid'
 import Pagination from '../components/Pagination'
+import Carousel from '../components/Carousel'
+import Offer1 from '../assets/imagesCarousel/Offer1.png'
+import Offer2 from '../assets/imagesCarousel/Offer2.png'
+import Offer3 from '../assets/imagesCarousel/Offer3.png'
+import Offer4 from '../assets/imagesCarousel/Offer4.png'
+import Offer5 from '../assets/imagesCarousel/Offer5.png'
+import Offer6 from '../assets/imagesCarousel/Offer6.png'
+import Offer7 from '../assets/imagesCarousel/Offer7.png'
+
 
 const Home = () => {
+
+  const images = [Offer1, Offer2, Offer3, Offer4, Offer5, Offer6, Offer7]
+
   //testing redux
   const dispatch = useDispatch()
   //global state
@@ -64,6 +76,7 @@ const Home = () => {
       <NavBar />
       <Sidebar />
       <div  style={{marginTop:top,marginLeft:width}} className="px-2 pt-2">
+        <Carousel images={images}/>
         <Pagination page={page} count={count} setPage={n=>{setPage(n)}}/> 
         <Grid childHeight={260} childWidth={200}>
         {products.map((item, index) => {

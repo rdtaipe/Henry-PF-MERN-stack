@@ -46,22 +46,20 @@ function Carousel({ images }) {
         }`}
       />
 
-<button
-  className="absolute left-0 top-1/2 transform -translate-y-1/2 hover:bg-stone-100 bg-opacity-50 px-3 py-2 h-full transition-colors duration-200"
-  onClick={goToPrevImage}
->
-  {"<"}
-</button>
+      <button
+        className="absolute left-0 top-1/2 transform -translate-y-1/2 hover:bg-stone-100 px-3 py-2 h-full transition-colors duration-200"
+        onClick={goToPrevImage}
+      >
+        {"<"}
+      </button>
 
-<button
-  className="absolute right-0 top-1/2 transform -translate-y-1/2 hover:bg-stone-100 bg-opacity-50 px-3 py-2 h-full transition-colors duration-200"
-  onClick={goToNextImage}
->
-  {">"}
-</button>
-
-
-
+      <button
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 hover:bg-stone-100 px-3 py-2 h-full transition-colors duration-200"
+        onClick={goToNextImage}
+      >
+        {">"}
+      </button>
+      
     </div>
   );
 }
