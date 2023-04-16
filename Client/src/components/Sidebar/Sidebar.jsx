@@ -5,13 +5,11 @@ import { useSelector,useDispatch } from "react-redux";
 
 const values=["category","brand","color","genre","price"]
 
-function Sidebar({className,setFilter}) {
+function Sidebar({className, setFilter}) {
   const dispatch = useDispatch()
-  const {top,width}= useSelector(({state}) => state.sidebar)
-  const {get,url}= useSelector(({state}) => state.server)
-  const [module,setModule]=useState([])
-
- 
+  const {top, width}= useSelector(({state}) => state.sidebar)
+  const {get, url}= useSelector(({state}) => state.server)
+  const [module, setModule]=useState([])
   
   const getModule=()=>{
     get(url+`/dev/module/product`).then(res =>{
@@ -20,11 +18,11 @@ function Sidebar({className,setFilter}) {
   }
 
   const [selections, setSelections] = useState({
-    "category": [],
-    "brand": [],
-    "color": [],
-    "genre": [],
-    "price": [],
+    "Category": [],
+    "Brand": [],
+    "Color": [],
+    "Genre": [],
+    "Price": [],
   });
 
   useEffect(() => {
@@ -37,13 +35,9 @@ function Sidebar({className,setFilter}) {
 
     setFilter(selections)
   
-  
   }, [(module.length>0?null:module),selections])
 
-
-
   const handleSelection = (title, selectedItems) => {
-   
 
     setSelections((prevSelections) => {
       return {
@@ -54,8 +48,10 @@ function Sidebar({className,setFilter}) {
   
   };
 
+  console.log(selections)
+
   return (
-    <div style={{top:top,width:width}} className={`fixed left-0 h-full flex flex-col bg-stone-400 text-white z-10 p-2 ${className}`}>
+    <div style={{top:top,width:width}} className={`fixed left-0 h-full flex flex-col bg-stone-400 text-white z-10 ${className}`}>
 
         <div classname="flex flex-col">
           {/* se hace un map al modulo validator con su enum */}
