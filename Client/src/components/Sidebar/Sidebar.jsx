@@ -49,7 +49,7 @@ function Sidebar({className, setFilter}) {
   };
 
   return (
-    <div style={{top:top,width:width}} className={`fixed left-0 h-full flex flex-col bg-stone-400 text-white z-10 ${className}`}>
+    <div style={{top:top,width:width}} className={`absolute left-0 h-[1000px] overflow-y-auto flex flex-col bg-stone-400 text-white z-10 ${className}`}>
 
         <div classname="flex flex-col">
           {/* se hace un map al modulo validator con su enum */}

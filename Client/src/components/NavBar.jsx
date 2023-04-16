@@ -12,7 +12,7 @@ const NavBar = ({className}) => {
   const {top,width}= useSelector(({state}) => state.sidebar)
   // 
   return (
-    <nav className={`fixed top-0 left-0 z-10 flex justify-between items-center bg-[#232323] w-[100%] h-[${top}px] text-white`}>
+    <nav className={`fixed top-0 left-0 z-50 flex justify-between items-center bg-[#232323] w-[100%] h-[${top}px] text-white`}>
       <div className="flex justify-center w-[300px] rounded-r-3xl bg-slate-600 p-3">
         <NavLink to='/'>
         <img src={logo} alt="logo" className="w-52" />
