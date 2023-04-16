@@ -38,7 +38,6 @@ function Carousel({ images }) {
 
   return (
     <div className="relative max-h-50">
-      epaaa
       <img
         src={images[currentImageIndex]}
         alt={`Image ${currentImageIndex}`}
