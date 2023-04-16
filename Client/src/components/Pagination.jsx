@@ -8,7 +8,7 @@ export default function PaginationComponent({spacing,count,page,onChange,setPage
     return (count?
         <div className='relative flex justify-center'>
             <Stack spacing={spacing?spacing:2} >
-                <Pagination count={count?count:0} defaultPage={page} onChange={(e)=>{
+                <Pagination count={count?count:0} /* defaultPage={page} */ page={page} onChange={(e)=>{
                     if(onChange){
                         onChange(e)
                     }

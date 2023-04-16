@@ -34,8 +34,16 @@ router.get("", async (req, res) => {
         
         var options = params.options && params.options !== "" ? params.options : "i"
         var regex = params.regex? params.regex=="all"? "/*" : "^": "^"
+        
+        // quita las keys dentron de filter con los arrays vacios 
+        var newFilter = params.filter? Object.entries(params.filter).reduce((acc, [key, value]) => {
+            if (value[0].length > 0) {
+                acc[key] = value
+            }
+            return acc
+        }, {}) : null
+
         var ifFilter = params.filter? Object.keys(params.filter).length>0? true: false: false
-      
 
         const query = params.q && params.q !== "" && !params.filter? {
 
@@ -44,7 +52,7 @@ router.get("", async (req, res) => {
                 const key = [keys[i]][0]
 
                 if (key==="name"&& type === "string" && typeof params.q === "string") {
-                    console.log("ok","case undefined - !filter")
+                    // console.log("ok","case undefined - !filter")
                     return { [key]: { $regex: `^${params.q}`, $options: "i" } }
                 } else {
                     return null
@@ -54,15 +62,16 @@ router.get("", async (req, res) => {
         } : ifFilter?{
             $and: Object.entries(params.filter).reduce((acc, [key, value]) => {
 
-                console.log("ok","case undefined - filter")
+                // console.log("ok","case undefined - filter")
               
                 if (value.length === 1) {
                     const type = typeof value[0]
+                    console.log(value[0], type)
                     if (type === "string") {
                         acc.push({ [key]: { $regex: `${regex}${value[0]}`, $options: options } })
                     } else if (type === "number") {
                         // $gt  $lte  $lt  $gte
-                        acc.push({ [key]: { $gt: value[0], } })
+                        acc.push({ [key]: { $lte: value[0], } })
                     }
                     else if (type === "boolean") {
                         acc.push({ [key]: value[0] })
@@ -76,7 +85,7 @@ router.get("", async (req, res) => {
             }, [])
         }: {}
 
-        console.log(query)
+        // console.log(query)
         return query
     }
     
@@ -95,7 +104,11 @@ router.get("", async (req, res) => {
                         .sort(params.sort)
                         .limit(parseInt(params.limit))
                         .skip(parseInt(params.skip))
+                        const documents=await models[model].countDocuments()
+
+                        
                     obj[model] = result;
+                    obj["documents"]=documents
                 }
 
                 res.status(200).json(obj);

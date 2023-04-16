@@ -10,8 +10,8 @@ function SidebarButton({ title, items, onSelect }) {
     setIsOpen(!isOpen);
   };
 
-  const handleCheckboxChange = (event) => {
-    const item = event.target.value;
+  const handleCheckboxChange = (event,item) => {
+  
     const newSelectedItems = event.target.checked
       ? [...selectedItems, item]
       : selectedItems.filter((i) => i !== item);
@@ -39,10 +39,12 @@ function SidebarButton({ title, items, onSelect }) {
                 type="checkbox"
                 className="form-checkbox"
                 value={item}
-                onChange={handleCheckboxChange}
+                onChange={e=>handleCheckboxChange(e,item)}
                 checked={selectedItems.includes(item)}
               />
-              <span className="ml-2 text-gray-700">{item}</span>
+              <span className="ml-2 text-gray-700">{
+                title==="price"?item.toLocaleString("en-US", {style: "currency", currency: "USD"}):item
+              }</span>
             </label>
           ))}
         </div>
