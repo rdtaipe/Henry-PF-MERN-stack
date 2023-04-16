@@ -5,6 +5,7 @@ import NavBar from '../components/NavBar'
 import Sidebar from '../components/Sidebar/Sidebar'
 import Grid from '../components/Grid'
 import Pagination from '../components/Pagination'
+import SortBar from '../components/SortBar'
 import Carousel from '../components/Carousel'
 import Offer1 from '../assets/imagesCarousel/Offer1.png'
 import Offer2 from '../assets/imagesCarousel/Offer2.png'
@@ -25,8 +26,8 @@ const Home = () => {
   const { url, get } = useSelector(({ state }) => state.server)
   const setter = useSelector(state => state.actions.setter)
   const products = useSelector(state => state.products)
-  const {top,width}= useSelector(({state}) => state.sidebar)
-  const {queryString}= useSelector(({state} )=> state.utils)
+  const { top, width } = useSelector(({ state }) => state.sidebar)
+  const { queryString } = useSelector(({ state }) => state.utils)
   const search = useSelector(state => state.searchName)
   //local state
   const [data, setData] = useState([])
@@ -36,56 +37,58 @@ const Home = () => {
   const [documents, setDocuments] = useState(0)
 
   const [filter, setFilter] = useState({})
+  const [sort, setSort] = useState({})
 
 
 
   useEffect(() => {
-    getData({ name: [search], ...filter })
+    getData({ filter:{name: [search], ...filter},sort:sort })
 
-  }, [filter,search,page])
+  }, [filter,sort, search, page])
 
 
- 
 
-  const getData=(filter)=>{
-    console.log(filter)
-    const obj={
-      m:"product",
-      filter:filter,
-      options:"i",
+
+  const getData = ({filter,sort}) => {
+  console.log(sort)
+    const obj = {
+      m: "product",
+      filter: filter,
+      options: "i",
       // regex:"all", 
-      limit:limit*page,
-      skip:limit*page-10
+      sort: sort,
+      limit: limit * page,
+      skip: limit * page - 10
     }
 
-    const query=queryString(obj)
+    const query = queryString(obj)
 
-    get(url+`/find?${query}`).then(res =>{
-      var resData=res.data.product
-      dispatch(setter({keys:"products",value:resData}))
+    get(url + `/find?${query}`).then(res => {
+      var resData = res.data.product
+      dispatch(setter({ keys: "products", value: resData }))
       setDocuments(res.data.documents)
       setData(resData)
-      let n=Math.ceil(res.data.documents/limit)
+      let n = Math.ceil(res.data.documents / limit)
 
-      setCount((page===1&&resData.length<limit)?1:n)
-      if(page>1&&resData.length===0){
+      setCount((page === 1 && resData.length < limit) ? 1 : n)
+      if (page > 1 && resData.length === 0) {
         setPage(1)
       }
     })
   }
-  
+
   return (
     <div>
       <NavBar />
       <Sidebar setFilter={(e)=>{setFilter(e)}}/>
-      <div style={{marginTop:top,marginLeft:width}} >
+      <div  style={{marginTop:top,marginLeft:width}} >
         <Carousel images={images}/>
         <Pagination page={page} count={count} setPage={n=>{setPage(n)}}/> 
-        <Grid childHeight={260} childWidth={250} className="m-5">
-          {products.map((item, index) => {
-            return <Card key={index} data={item} />
-          })}
-        </Grid>
+        <Grid childHeight={260} childWidth={200}>
+        {products.map((item, index) => {
+          return <Card key={index} data={item} />
+        })}
+      </Grid>
       </div>
 
     </div>

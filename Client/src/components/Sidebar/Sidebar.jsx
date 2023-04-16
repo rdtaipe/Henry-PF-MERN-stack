@@ -48,16 +48,6 @@ function Sidebar({className, setFilter}) {
   
   };
 
-  const handleClearFilters = () => {
-    setSelections({
-      "Category": [],
-      "Brand": [],
-      "Color": [],
-      "Genre": [],
-      "Price": [],
-    });
-  }
-
   console.log(selections)
 
   return (

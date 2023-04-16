@@ -19,6 +19,7 @@ const productSchema = new Schema(
         },
         size: {
             type: Array,
+            // enum: ['xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl'],
             default: ['xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl']
         },
         category: {//filtrado
