@@ -14,9 +14,8 @@ import Offer5 from '../assets/imagesCarousel/Offer5.png'
 import Offer6 from '../assets/imagesCarousel/Offer6.png'
 import Offer7 from '../assets/imagesCarousel/Offer7.png'
 
-
 const Home = () => {
-
+  
   const images = [Offer1, Offer2, Offer3, Offer4, Offer5, Offer6, Offer7]
 
   //testing redux
@@ -78,13 +77,13 @@ const Home = () => {
     <div>
       <NavBar />
       <Sidebar setFilter={(e)=>{setFilter(e)}}/>
-      <div  style={{marginTop:top,marginLeft:width}} className="px-2 pt-2">
+      <div  style={{marginTop:top,marginLeft:width}} >
         <Carousel images={images}/>
         <Pagination page={page} count={count} setPage={n=>{setPage(n)}}/> 
         <Grid childHeight={260} childWidth={200}>
         {products.map((item, index) => {
-            return <Card key={index} data={item} />
-          })}
+          return <Card key={index} data={item} />
+        })}
       </Grid>
       </div>
 
