@@ -35,22 +35,25 @@ const Home = () => {
   const [count, setCount] = useState(0)
   const [documents, setDocuments] = useState(0)
 
+  const [filter, setFilter] = useState({})
+
+
 
   useEffect(() => {
-    getData()
+    getData({ name: [search], ...filter })
 
-  }, [search,page])
+  }, [filter,search,page])
 
-  const getData=()=>{
-    const filter={
-      name:[search]
-    }
-    
+
+ 
+
+  const getData=(filter)=>{
+    console.log(filter)
     const obj={
       m:"product",
-      filter:search===""?{}:filter,
+      filter:filter,
       options:"i",
-      regex:"all", 
+      // regex:"all", 
       limit:limit*page,
       skip:limit*page-10
     }
@@ -74,7 +77,7 @@ const Home = () => {
   return (
     <div>
       <NavBar />
-      <Sidebar />
+      <Sidebar setFilter={(e)=>{setFilter(e)}}/>
       <div  style={{marginTop:top,marginLeft:width}} className="px-2 pt-2">
         <Carousel images={images}/>
         <Pagination page={page} count={count} setPage={n=>{setPage(n)}}/> 
