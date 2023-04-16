@@ -48,8 +48,6 @@ function Sidebar({className, setFilter}) {
   
   };
 
-  console.log(selections)
-
   return (
     <div style={{top:top,width:width}} className={`fixed left-0 h-full flex flex-col bg-stone-400 text-white z-10 ${className}`}>
 
