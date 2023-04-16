@@ -4,7 +4,7 @@ import InicialPage from "./pages/InicialPage";
 import { Route, Routes } from "react-router-dom";
 import { Detail } from "./pages/Detail";
 import Footer from "./components/Footer";
-import About from './components/AboutUs'
+import {About} from './components/AboutUs'
 
 function App() {
   return (
