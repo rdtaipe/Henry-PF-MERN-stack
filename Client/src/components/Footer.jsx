@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import { TbBrandGithub } from 'react-icons/tb'
 
@@ -19,23 +20,23 @@ const Footer = () => {
               <div className='mb-8 lg:mb-0'>
                 <p className='text-lg font-medium text-white mb-5'>Product</p>
                 <ul>
-                  <li className='mb-5'><a href='#' className='text-gray-400'>Indumentary</a></li>
-                  <li className='mb-5'><a href='#' className='text-gray-400'>Clothes</a></li>
+                  <li className='mb-5'><a href='' className='text-gray-400'>Indumentary</a></li>
+                  <li className='mb-5'><a href='' className='text-gray-400'>Clothes</a></li>
                 </ul>
               </div>
               <div className='mb-8 lg:mb-0'>
                 <p className='text-lg font-medium text-white mb-5'>Company</p>
                 <ul>
-                  <li className='mb-5'><a href='#' className='text-gray-400'>About ChicCloset</a></li>
-                  <li className='mb-5'><a href='#' className='text-gray-400'>Blog</a></li>
-                  <li className='mb-5'><a href='#' className='text-gray-400'>I want to publish a product</a></li>
+                  <li className='mb-5'><a href='/about' className='text-gray-400'>About ChicCloset</a></li>
+                  <li className='mb-5'><a href='' className='text-gray-400'>Blog</a></li>
+                  <li className='mb-5'><a href='/form' className='text-gray-400'>I want to publish a product</a></li>
                 </ul>
               </div>
               <div>
                 <p className='text-lg font-medium text-white mb-5'>Support</p>
                 <ul>
-                  <li className='mb-5'><a href='#' className='text-gray-400'>Contact Us:</a></li>
-                  <li className='mb-5'><a href='#' className='text-gray-400'>chicclosethenry@gmail.com</a></li>
+                  <li className='mb-5'><a href='' className='text-gray-400'>Contact Us:</a></li>
+                  <li className='mb-5'><a href='' className='text-gray-400'>chicclosethenry@gmail.com</a></li>
                 </ul>
               </div>
             </div>
