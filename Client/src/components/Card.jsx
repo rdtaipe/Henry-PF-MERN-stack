@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Card = ({data}) => {
   const navigate = useNavigate();
@@ -88,11 +88,11 @@ const Card = ({data}) => {
               Add to cart
             </button>
             {/* detail buton */}
-            <button className="text-lg font-semibold block px-4 text-green-100 bg-green-400 rounded-full"
+            <Link to={`/products/${_id}`} className="text-lg font-semibold block px-4 text-green-100 bg-green-400 rounded-full"
               onClick={handleNameClick}
             >
               Detail
-            </button>
+            </Link>
           </div>
         </div>
       </div>
