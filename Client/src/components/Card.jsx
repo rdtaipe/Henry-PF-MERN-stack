@@ -16,7 +16,7 @@ const Card = ({data}) => {
   };
 
   return (
-    <div className="rounded-lg justify-center items-center min-h-200 bg-blue-100 hover:shadow-xl transition duration-500 ease-in-out">
+    <div className="rounded-lg justify-center items-center min-h-200 bg-stone-300 hover:shadow-xl transition duration-500 ease-in-out">
     <div className="relative h-full">
       <div className="relative h-40">
         <img

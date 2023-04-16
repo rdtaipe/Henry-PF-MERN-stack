@@ -78,14 +78,14 @@ const Home = () => {
     <div>
       <NavBar />
       <Sidebar setFilter={(e)=>{setFilter(e)}}/>
-      <div  style={{marginTop:top,marginLeft:width}} >
+      <div style={{marginTop:top,marginLeft:width}} >
         <Carousel images={images}/>
         <Pagination page={page} count={count} setPage={n=>{setPage(n)}}/> 
-        <Grid childHeight={260} childWidth={200}>
-        {products.map((item, index) => {
-          return <Card key={index} data={item} />
-        })}
-      </Grid>
+        <Grid childHeight={260} childWidth={250} className="m-5">
+          {products.map((item, index) => {
+            return <Card key={index} data={item} />
+          })}
+        </Grid>
       </div>
 
     </div>

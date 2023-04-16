@@ -48,6 +48,16 @@ function Sidebar({className, setFilter}) {
   
   };
 
+  const handleClearFilters = () => {
+    setSelections({
+      "Category": [],
+      "Brand": [],
+      "Color": [],
+      "Genre": [],
+      "Price": [],
+    });
+  }
+
   console.log(selections)
 
   return (
@@ -59,6 +69,13 @@ function Sidebar({className, setFilter}) {
             return <SidebarButton title={e.key} items={e.attributes.enum} onSelect={(selectedItems) => handleSelection(e.key,selectedItems)} />
           })}
         </div>
+
+        <button
+          className="py-2 px-4 bg-blue-500 text-white mt-12 hover:bg-blue-600"
+          onClick={handleClearFilters}
+        >
+        Clear Filters
+        </button>
 
     </div>
 
