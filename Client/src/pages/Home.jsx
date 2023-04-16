@@ -5,6 +5,7 @@ import NavBar from '../components/NavBar'
 import Sidebar from '../components/Sidebar/Sidebar'
 import Grid from '../components/Grid'
 import Pagination from '../components/Pagination'
+import SortBar from '../components/SortBar'
 
 const Home = () => {
   //testing redux
@@ -24,6 +25,7 @@ const Home = () => {
   const [documents, setDocuments] = useState(0)
 
   const [filter, setFilter] = useState({})
+  const [sort, setSort] = useState({})
 
 
 
@@ -67,6 +69,7 @@ const Home = () => {
       <NavBar />
       <Sidebar setFilter={(e)=>{setFilter(e)}}/>
       <div  style={{marginTop:top,marginLeft:width}} className="px-2 pt-2">
+        <SortBar setSort={(e)=>{setSort(e)}}/>
         <Pagination page={page} count={count} setPage={n=>{setPage(n)}}/> 
         <Grid childHeight={260} childWidth={200}>
         {products.map((item, index) => {
