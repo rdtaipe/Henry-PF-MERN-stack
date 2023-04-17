@@ -78,11 +78,12 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <div className='bg-stone-800'>
       <NavBar />
       <Sidebar setFilter={(e) => { setFilter(e) }} />
-      <div style={{ marginTop: top, marginLeft: width }} className="px-2 min-h-[1000px]">
+      <div style={{ marginTop: top, marginLeft: width }} className="min-h-[1000px] bg-white">
         <Carousel images={images} />
+        <div className='px-2'>
         <SortBar setSort={(e) => { setSort(e) }} />
         <Grid childHeight={260} childWidth={200}>
           {products.map((item, index) => {
@@ -90,6 +91,7 @@ const Home = () => {
           })}
         </Grid>
         <Pagination page={page} count={count} setPage={n => { setPage(n) }} />
+        </div>
 
       </div>
 
