@@ -27,7 +27,7 @@ const Form = () => {
 
     
     useEffect(() => {
-        //get se trae las validaciones de los campos por loa tanto ya es necesario utils.json
+        //get se trae las validaciones de los campos por lo tanto ya no es necesario utils.json
         //esto es para no tener errores de capo validaciones en el front
         getModule()
     }, [])
