@@ -35,6 +35,7 @@ export var initialState = {
   //use useSelector to get this functions
   actions: { setter },
   state: {
+    setter:setter,
     utils:utils,
     find:{
       m:"product",
@@ -74,9 +75,18 @@ export var initialState = {
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     //set sate super mamando utiliza recurcion para actualizar el estado de cualquier objeto o array del estado sub statado
+    //ejemplo: SET_STATE, {keys:"state.sidebar.open",value:true}
+    //dispatch({type:SET_STATE,payload:{keys:"state.sidebar.open",value:true}}) o 
+    //te importas el action setter y haces dispatch(setter({keys:"state.sidebar.open",value:true}))
+    ///tambien a setter le puedes traer con un useSelector asi
+    //const {setter} = useSelector(state=>state.state) o 
+    //const {setter} = useSelector(({state})=>state)
+    //y despues haces dispatch(setter({keys:"state.sidebar.open",value:true}))
     case SET_STATE:
       const { keys, value, only } = action.payload;
-      //keys: "state.sidebar.right", value: 200, only: true
+      //keys: "state.sidebar.open", value: true, only: true
+      //keys es la ruta del objeto que se quiere actualizar
+      //value es el valor que se quiere actualizar
       if (keys) {
         if (keys.includes(".")) {
           function recursive(obj, keys, value) {
