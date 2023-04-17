@@ -5,7 +5,7 @@ import { TbBrandGithub } from 'react-icons/tb'
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 border-t border-black py-14 w-full mt-2 z-50">
+    <footer className="bg-gray-900 border-t border-black py-14 w-full z-50">
       <div className='container mx-auto px-8 mb-14'>
         <div className='grid lg:grid-cols-2'>
           <div className='mb-10 lg:mb-0'>

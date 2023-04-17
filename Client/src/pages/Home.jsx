@@ -90,10 +90,6 @@ const Home = () => {
         {products.map((item, index) => {
           return <Card key={index} data={item} />
         })}
-      </Grid>
-          {products.map((item, index) => {
-            return <Card key={index} data={item} />
-          })}
         </Grid>
         <Pagination page={page} count={count} setPage={n => { setPage(n) }} />
         </div>
