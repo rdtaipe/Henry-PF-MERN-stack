@@ -86,12 +86,14 @@ const Home = () => {
         <div className='px-2'>
         <SortBar setSort={(e) => { setSort(e) }} />
         <Grid childHeight={260} childWidth={200}>
-          {products.map((item, index) => {
-            return <Card key={index} data={item} />
-          })}
+
+        {products.map((item, index) => {
+          return <Card key={index} data={item} />
+        })}
         </Grid>
         <Pagination page={page} count={count} setPage={n => { setPage(n) }} />
         </div>
+
 
       </div>
 

@@ -3,7 +3,6 @@ import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 import Chip from '../Chip'
 
 function SidebarButton({ title, items, onSelect }) {
-
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
 
@@ -26,7 +25,8 @@ function SidebarButton({ title, items, onSelect }) {
   return (
     <div className="relative">
       
-      <button className="w-full py-4 px-6 bg-stone-800 text-white hover:bg-stone-700 focus:bg-black flex justify-between items-center pl-20"
+      <button
+        className="w-full py-4 px-6 bg-stone-800 text-white hover:bg-stone-700 focus:bg-black flex justify-between items-center pl-20"
         onClick={handleButtonClick}
       >
         <span className="font-bold">{title}</span>
@@ -36,6 +36,7 @@ function SidebarButton({ title, items, onSelect }) {
       {isOpen && (
         <div className="flex  flex-wrap w-[100%] py-2 bg-stone-100 transition-all duration-300 ">
 
+  
           {items.map((item) => (
             <div className="p-1" key={item}>
               <Chip
@@ -53,3 +54,4 @@ function SidebarButton({ title, items, onSelect }) {
 }
 
 export default SidebarButton;
+
