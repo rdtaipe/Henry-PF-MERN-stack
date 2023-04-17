@@ -1,49 +1,102 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from '../components/Card'
 import { useDispatch, useSelector } from 'react-redux'
 import NavBar from '../components/NavBar'
 import Sidebar from '../components/Sidebar/Sidebar'
-import axios from 'axios'
+import Grid from '../components/Grid'
+import Pagination from '../components/Pagination'
+import SortBar from '../components/SortBar'
+import Carousel from '../components/Carousel'
+import Offer1 from '../assets/imagesCarousel/Offer1.png'
+import Offer2 from '../assets/imagesCarousel/Offer2.png'
+import Offer3 from '../assets/imagesCarousel/Offer3.png'
+import Offer4 from '../assets/imagesCarousel/Offer4.png'
+import Offer5 from '../assets/imagesCarousel/Offer5.png'
+import Offer6 from '../assets/imagesCarousel/Offer6.png'
+import Offer7 from '../assets/imagesCarousel/Offer7.png'
+
 
 const Home = () => {
+
+  const images = [Offer1, Offer2, Offer3, Offer4, Offer5, Offer6, Offer7]
+
   //testing redux
   const dispatch = useDispatch()
+  //global state
+  const { url, get } = useSelector(({ state }) => state.server)
   const setter = useSelector(state => state.actions.setter)
-  const state = useSelector(state => state)
-  console.log(state, "state")
-  
+  const products = useSelector(state => state.products)
+  const { top, width } = useSelector(({ state }) => state.sidebar)
+  const { queryString } = useSelector(({ state }) => state.utils)
+  const search = useSelector(state => state.searchName)
+  //local state
+  const [data, setData] = useState([])
+  const [page, setPage] = useState(1)
+  const [limit, setLimit] = useState(10)
+  const [count, setCount] = useState(0)
+  const [documents, setDocuments] = useState(0)
 
-   
- 
- const obj={
-  m:"product",
-  filter:{name:["aaa","bbb","ccc"]},
-  sort:{name:1},
- }
-const queryString=(obj)=>{
-  return Object.keys(obj).map(key => {
-    if (typeof obj[key] === 'object') {
-      return `${key}=${encodeURIComponent(JSON.stringify(obj[key]))}`;
+  const [filter, setFilter] = useState({})
+  const [sort, setSort] = useState({})
+
+
+
+  useEffect(() => {
+    getData({ filter:{name: [search], ...filter},sort:sort })
+
+  }, [filter,sort, search, page])
+
+
+
+
+  const getData = ({filter,sort}) => {
+  console.log(sort)
+    const obj = {
+      m: "product",
+      filter: filter,
+      options: "i",
+      // regex:"all", 
+      sort: sort,
+      limit: limit * page,
+      skip: limit * page - 10
     }
-    return `${key}=${encodeURIComponent(obj[key])}`;
-  }).join('&');
-}
-const query=queryString(obj)
-console.log(`http://localhost:5000/find?${query}`)
-  axios.get(`http://localhost:5000/find?${query}`)
-  .then(res => {
-    console.log(res.data)
-  })
 
-  // http://localhost:5000/find?m=products&filter=%5Bobject+Object%5D&sort=%5Bobject+Object%5D
-//http://localhost:5000/find?m=product&filter=%7B%22name%22%3A%5B%22aaa%22,%22bbb%22,%22ccc%22%5D%7D&sort=%7B%22name%22%3A1%7D
+    const query = queryString(obj)
 
+    get(url + `/find?${query}`).then(res => {
+      var resData = res.data.product
+      dispatch(setter({ keys: "products", value: resData }))
+      setDocuments(res.data.documents)
+      setData(resData)
+      let n = Math.ceil(res.data.documents / limit)
+
+      setCount((page === 1 && resData.length < limit) ? 1 : n)
+      if (page > 1 && resData.length === 0) {
+        setPage(1)
+      }
+    })
+  }
 
   return (
-    <div>
+    <div className='bg-stone-800'>
       <NavBar />
-      <Sidebar/>
-      <Card />
+      <Sidebar setFilter={(e) => { setFilter(e) }} />
+      <div style={{ marginTop: top, marginLeft: width }} className="min-h-[1000px] bg-white">
+        <Carousel images={images} />
+        <div className='px-2'>
+        <SortBar setSort={(e) => { setSort(e) }} />
+        <Grid childHeight={260} childWidth={200}>
+
+        {products.map((item, index) => {
+          return <Card key={index} data={item} />
+        })}
+        </Grid>
+        <Pagination page={page} count={count} setPage={n => { setPage(n) }} />
+        </div>
+
+
+      </div>
+
     </div>
   )
 }
