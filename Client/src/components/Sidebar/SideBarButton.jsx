@@ -21,7 +21,7 @@ function SidebarButton({ title, items, onSelect }) {
     onSelect && onSelect(newSelectedItems); // Se notifica al componente padre de los items seleccionados
   };
 
-  console.log(selectedItems)
+  // console.log(selectedItems)
   return (
     <div className="relative">
       

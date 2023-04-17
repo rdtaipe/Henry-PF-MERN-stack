@@ -20,19 +20,18 @@ export const AboutUs = () => {
             <p className="text-2xl">Dress To Impress And Never Stress</p>
           </div>
           <p className="text-end text-xl">
-            <span className="font-bold">Bienvenido a ChicCloset</span>, la
-            tienda en línea donde encontrarás todos los estilos de ropa que
-            necesitas para lucir siempre a la moda. Tenemos desde ropa casual
-            hasta outfits elegantes y sofisticados. Si buscas algo relajado y
-            cómodo, tenemos una gran variedad de ropa deportiva y casual, desde
-            camisetas y pantalones holgados hasta sudaderas y joggers. Si
-            necesitas algo más formal, no te preocupes, también contamos con
-            trajes, blusas y vestidos para ocasiones especiales. Si te gustan
-            los estilos más vanguardistas, no te pierdas nuestra colección de
-            ropa de moda, con diseños exclusivos y únicos que te harán destacar
-            en cualquier lugar. Además, no olvides que también ofrecemos una
-            amplia selección de accesorios, zapatos y bolsos para complementar
-            tu look. ¡Visítanos y renueva tu guardarropa hoy mismo en
+            <span className="font-bold">Welcome To ChicCloset</span>, The online store where you will find all the styles of clothing you
+            you need to always look fashionable. We have from casual clothes
+            to elegant and sophisticated outfits. If you are looking for something relaxed and
+            comfortable, we have a wide variety of sports and casual clothing, from
+            baggy t-shirts and pants to sweatshirts and joggers. Yeah
+            you need something more formal, don't worry, we also have
+            suits, blouses and dresses for special occasions. If you like
+            the most avant-garde styles, do not miss our collection of
+            fashionable clothes, with exclusive and unique designs that will make you stand out
+            anywhere. Also, don't forget that we also offer a
+            wide selection of accessories, shoes and bags to complement
+            You look. Visit us and renew your wardrobe today at
             ChicCloset!
           </p>
         </div>
@@ -41,22 +40,22 @@ export const AboutUs = () => {
       <div>
         <div className="bg-[#8a73cf] h-[550px] flex justify-between py-10 px-10">
           <div className="w-[45%] flex flex-col justify-between">
-            <p className="text-4xl font-bold">¿Qué Buscamos?</p>
+            <p className="text-4xl font-bold">What are we looking for?</p>
             <p className="text-xl">
-              ChicCloset es una tienda de ropa que tiene como objetivo ofrecer a
-              sus clientes una amplia variedad de prendas de vestir de moda y de
-              alta calidad. Nuestro objetivo principal es brindar una
-              experiencia de compra agradable y satisfactoria para todos
-              nuestros clientes, asegurándonos de que encuentren lo que buscan y
-              se sientan cómodos en nuestra tienda. Para lograr esto, nos
-              enfocamos en proporcionar un excelente servicio al cliente,
-              asesoramiento de moda y precios competitivos. Además, nos
-              esforzamos por mantener un inventario actualizado con las últimas
-              tendencias de la moda, para que nuestros clientes siempre puedan
-              encontrar algo que les guste. En resumen, el objetivo de
-              ChicCloset es ser una tienda de ropa líder en moda y estilo, que
-              ofrezca a sus clientes una experiencia de compra única y
-              satisfactoria.
+              ChicCloset is a clothing store that aims to offer
+              its customers a wide variety of fashionable clothing and
+              high quality. Our main objective is to provide a
+              pleasant and satisfying shopping experience for everyone
+              our customers, making sure they find what they are looking for and
+              feel comfortable in our store. To achieve this, we
+              We focus on providing excellent customer service,
+              fashion advice and competitive prices. Also, we
+              We strive to keep an inventory up to date with the latest
+              fashion trends, so that our customers can always
+              find something they like. In short, the goal of
+              ChicCloset is to be a leading clothing store in fashion and style, which
+              offer your customers a unique shopping experience and
+              satisfactory.
             </p>
           </div>
           <div className="w-[50%]">
