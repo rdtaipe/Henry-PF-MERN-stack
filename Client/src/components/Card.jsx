@@ -6,8 +6,8 @@ const Card = ({data}) => {
 
   const { _id, image, name, price, stock } = data;
 
-  const discount = Math.round(Math.random() * 100);
-  const priceDiscount = Math.round(price - (price * discount) / 100);
+  const discount = Math.round(Math.random() * 20);
+  const priceDiscount = Math.round(price - (price * discount) / 20);
   const stars = Math.round(Math.random() * 5);
 
   const handleNameClick = () => {
