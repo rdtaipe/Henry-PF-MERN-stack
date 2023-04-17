@@ -38,7 +38,7 @@ const Landing = ({ images }) => {
           </p>
           <div className="flex flex-wrap justify-center ">
             <Link to="/home">
-            <button className="px-8 py-3 m-2 text-lg font-semibold rounded bg-black bg-opacity-80 text-white hover:bg-purple-100 hover:text-black transition duration-300">
+            <button className="px-8 py-3 m-2 text-lg font-semibold rounded bg-black bg-opacity-80 text-white hover:bg-white hover:text-black transition duration-300">
               Get started
             </button>
 
