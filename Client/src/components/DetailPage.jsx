@@ -85,7 +85,7 @@ export const DetailPage = () => {
               : <button
                   className="font-bold text-lg text-center bg-white px-3 py-1 border-2 border-black rounded mx-auto cursor-pointer focus:outline-none focus:ring focus:ring-purple-500 hover:ring hover:ring-purple-300"
                 >
-                  {product.size}
+                  {product.size&&product.size}
                 </button>
               }
           </div>
