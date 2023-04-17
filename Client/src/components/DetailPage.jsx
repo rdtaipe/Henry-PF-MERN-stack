@@ -72,12 +72,22 @@ export const DetailPage = () => {
           {/* <p>{product.genre}</p> */}
 
           <div className="grid grid-cols-6 gap-y-3 pt-7">
-            <button
-              key={product.size}
-              className="font-bold text-lg text-center bg-white px-3 py-1 border-2 border-black rounded mx-auto cursor-pointer focus:outline-none focus:ring focus:ring-purple-500 hover:ring hover:ring-purple-300"
-            >
-              {product.size}
-            </button>
+            {product.size&&typeof product.size === "object"? product.size.map((el) => {
+                  return (
+                    <button
+                      key={el}
+                      className="font-bold text-lg text-center bg-white px-3 py-1 border-2 border-black rounded mx-auto cursor-pointer focus:outline-none focus:ring focus:ring-purple-500 hover:ring hover:ring-purple-300"
+                    >
+                      {el}
+                    </button>
+                  );
+                })
+              : <button
+                  className="font-bold text-lg text-center bg-white px-3 py-1 border-2 border-black rounded mx-auto cursor-pointer focus:outline-none focus:ring focus:ring-purple-500 hover:ring hover:ring-purple-300"
+                >
+                  {product.size&&product.size}
+                </button>
+              }
           </div>
 
           {/* <p>{product.brand ? product.brand.name : null}</p> */}

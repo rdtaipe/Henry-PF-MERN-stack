@@ -48,7 +48,7 @@ function Sidebar({className, setFilter}) {
   
   };
 
-  console.log(selections)
+  // console.log(selections)
 
   const firstLetterCapitalized = (str) => {
     return str.charAt(0).toUpperCase() + str.substring(1)
