@@ -20,7 +20,7 @@ function SidebarButton({ title, items, onSelect }) {
   return (
     <div className="relative">
       <button
-        className="w-full py-4 px-6 bg-stone-700 text-white hover:bg-stone-600 focus:bg-black flex justify-between items-center pl-20"
+        className="w-full py-4 px-6 bg-stone-800 text-white hover:bg-stone-700 focus:bg-black flex justify-between items-center pl-20"
         onClick={handleButtonClick}
       >
         <span className="font-bold">{title}</span>
@@ -28,7 +28,12 @@ function SidebarButton({ title, items, onSelect }) {
       </button>
 
       {isOpen && (
+
         <div className="z-10 w-full py-2 bg-stone-300 shadow-lg flex flex-col pl-20 transition-all duration-300">
+
+        <div className="z-10 w-full py-2 bg-stone-800 shadow-lg flex flex-col pl-20 transition-all duration-300">
+
+
           {items.map((item) => (
             <label key={item} className="inline-flex items-center w-full px-2">
               <input
