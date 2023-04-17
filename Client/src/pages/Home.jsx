@@ -33,8 +33,7 @@ const Home = () => {
   const [data, setData] = useState([])
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(10)
-  const [count, setCount] = useState(0)
-  const [documents, setDocuments] = useState(0)
+  const [count, setCount] = useState(0)//check
 
   const [filter, setFilter] = useState({})
   const [sort, setSort] = useState({})
@@ -57,7 +56,7 @@ const Home = () => {
       options: "i",
       // regex:"all", 
       sort: sort,
-      limit: limit * page,
+      limit: 10,
       skip: limit * page - 10
     }
 
@@ -65,10 +64,14 @@ const Home = () => {
 
     get(url + `/find?${query}`).then(res => {
       var resData = res.data.product
+      var documents = res.data.documents
       dispatch(setter({ keys: "products", value: resData }))
-      setDocuments(res.data.documents)
       setData(resData)
-      let n = Math.ceil(res.data.documents / limit)
+
+      let n = Math.ceil(documents/ limit)
+      // console.log(n)
+      // console.log(10 * page)
+      // console.log(10 * page - 10)
 
       setCount((page === 1 && resData.length < limit) ? 1 : n)
       if (page > 1 && resData.length === 0) {

@@ -48,7 +48,7 @@ function Sidebar({className, setFilter}) {
   
   };
 
-  console.log(selections)
+  // console.log(selections)
 
   const firstLetterCapitalized = (str) => {
     return str.charAt(0).toUpperCase() + str.substring(1)
@@ -60,7 +60,7 @@ function Sidebar({className, setFilter}) {
       <div classname="flex flex-col">
         {/* se hace un map al modulo validator con su enum */}
         {module.map((e,i)=>{
-          return <SidebarButton title={firstLetterCapitalized(e.key)} items={e.attributes.enum} onSelect={(selectedItems) => handleSelection(e.key, selectedItems)} />
+          return <SidebarButton title={firstLetterCapitalized(e.key)} items={e.attributes.input} onSelect={(selectedItems) => handleSelection(e.key, selectedItems)} />
         })}
       </div>
 
