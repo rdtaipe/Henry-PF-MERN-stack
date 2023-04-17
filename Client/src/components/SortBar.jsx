@@ -33,7 +33,7 @@ export default function SortBar({ setSort }) {
         setSort({ [item.key]: type.value ? 1 : -1 })
     }
     return (
-        <div className='relative w-full h-[40px] flex flex-row justify-between items-center rounded-md p-2 bg-stone-400 text-white z-10'>
+        <div className='relative w-full h-[40px] flex flex-row justify-between items-center rounded-md p-2 bg-stone-500 text-white z-10'>
             {module && module.map((e, i) => {
                 return <MenuItem
                     disableGutters
