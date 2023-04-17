@@ -75,7 +75,7 @@ export var initialState = {
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     //set sate super mamando utiliza recurcion para actualizar el estado de cualquier objeto o array del estado sub statado
-    //ejemplo: SET_STATE, {keys:"state.sidebar.open",value:true}
+    //ejemplo: SET_STATE, payload:{keys:"state.sidebar.open",value:true}
     //dispatch({type:SET_STATE,payload:{keys:"state.sidebar.open",value:true}}) o 
     //te importas el action setter y haces dispatch(setter({keys:"state.sidebar.open",value:true}))
     ///tambien a setter le puedes traer con un useSelector asi
