@@ -93,10 +93,18 @@ import {
           dispatch({ type: BRAND_ELECT, payload: brand })
       }
   }
+  
   export function getColors() {
       return async function (dispatch) {
           const json = await axios.get('/colors')
           return dispatch({ type: GET_COLORS, payload: json.data })
       }
+      
   }
+  export const updateScore = (id, score) => {
+    return {
+      type: 'UPDATE_SCORE',
+      payload: { id, score }
+    };
+  };
   

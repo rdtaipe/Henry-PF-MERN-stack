@@ -39,6 +39,25 @@ const Form = () => {
         getModule()
     }, [])
 
+
+
+    /*
+        ==type of dates=== 
+        name: type: String,
+        stock: type: Number,
+        color:type: String,/[String],
+        size: type: Array,
+        category: type:/[String],
+        image: type: Array,
+        genre:type: String,[String],
+        brand: type: Object,[String],
+        price: type: Number,[Number],
+        active: type: Boolean, //true
+        featured: type: Boolean  //true
+    
+    */
+
+
     const onSubmit = async (data) => {
        // estos son los datos del evento 
 
