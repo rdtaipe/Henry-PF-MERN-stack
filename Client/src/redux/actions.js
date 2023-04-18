@@ -37,26 +37,15 @@ import {
     };
   }
   
-  export function createProduct(formData) {
-      /*   console.log(formData.get('name'));
-            console.log(formData.get('description'));
-            console.log(formData.get('category'));
-            console.log(formData.get('image'));
-            console.log(formData.get('active'));
-            console.log(formData.get('feactured'));
-            console.log(formData.get('color'));
-            console.log(formData.get('size')); */
+  export function createProduct(payload) {
     return async function (dispatch) {
-          let response = await axios.post("http://localhost:5000/products/", formData);
-
-           return dispatch({
-           type: POST_PRODUCT,
-           payload: response,     //esto llega al formulario y me deja manejar la respuesta 
-      }); 
-  
-
-   } 
-}
+      let json = await axios.post("/products", payload);
+      return dispatch({
+        type: POST_PRODUCT,
+        payload: json.data,
+      });
+    };
+  }
   ///////////////////Filters & Order/////////////////////////////////
   export function getOpenFilters(value) {
     return { type: OPEN_FILTERS, payload: value };

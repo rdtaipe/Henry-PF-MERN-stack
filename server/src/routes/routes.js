@@ -12,7 +12,6 @@ import purchase from './purchaseRouter.js'
 import users from './userRouter.js'
 import find from "./findRouter.js";
 import dev from "./devRouter.js";
-import mercadopago from './MercadoPagoRoute.js';
 
 const server = express();
 //---- Products routes ------
@@ -23,9 +22,6 @@ server.use('/products', products);
 server.use('/address', address)
 //---- Purchase routes ------
 server.use('/purchase', purchase)
-
-//---- MercadoPago routes ------
-server.use('/payment', mercadopago)
 
 //---- Categories routes ------
 server.use('/category', category)

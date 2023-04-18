@@ -5,13 +5,8 @@
     justify-content:space-around;
     align-items: center;
     margin-top: 1rem;
-     background-color: rgb(124 58 237);; 
-    
+     background-color: #4a148c;     
      color: #424242; 
-    /*  background-image: url("../../assets/imagesProduct/form1.jpg");
-     background-position:center;
-     background-repeat: no-repeat;
-     background-size: cover; */
     min-height: 100vh;
     min-width: 100vw;
     margin-top:0;
@@ -23,13 +18,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border:2px solid #3e2723;
+    border:2px solid rgb(70, 66, 71);
     border-radius: 10px;
     display: flex;
+
     padding:1rem;
     background-color:white;
-     color:#424242;
-    opacity: 0.90;
+    color:#424242;
 
 }
 .title{
@@ -39,7 +34,6 @@
     align-items: center; 
     font-size: x-large;
     background-color: white;
-    /* color:#3e2723; */
 /*     border: 2px solid rgb(70, 66, 71);
     border-radius: 8px; */
     width: 25rem;
@@ -123,6 +117,8 @@
 }
 
 
+
+
 .input2 {
     border: 1px solid grey;
     border-radius: 5px;
@@ -161,7 +157,7 @@
 
 .botonStyle{
    /*  border: 1px solid darkorchid; */
-    background-color:black;
+    background-color:#01579b;
    color:white;
     border-radius: 8px;
     width: 25rem;
@@ -170,8 +166,8 @@
     cursor: pointer;
 }
 .botonStyle:active{
-        background-color:#01579b;
-        color:white;
+        background-color: rgb(56, 56, 213);;
+        color:black;
         border: 2px solid black;
 }
 
@@ -192,8 +188,7 @@
 }
 
 .inputStyleImage:active {
-    background-color: black;
-    color:white;
+    background-color: darkorchid;
 }
 
 
@@ -212,8 +207,4 @@
     /* agregar un poco de espacio encima del texto */
     border-radius: 20px;
 
-}
-
-.index_boton{
-    z-index: 99999;
 }

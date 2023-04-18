@@ -3,20 +3,15 @@ import { useForm } from "react-hook-form";
 import './Form.css'
 
 import { Notification } from '../../components/Notification/Notification'
-import { useSelector,useDispatch } from 'react-redux'
-import {createProduct}from '../../redux/actions'
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux'
 
+import axios from 'axios';
 import { Link } from "react-router-dom";
 const Form = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { url, get } = useSelector(({ state }) => state.server)
-    const dispatch=useDispatch();
-    const navigate = useNavigate();
+
     const [module, setModule] = useState(null)
-
-
-   //el get module carga los datos a alos array de los selectores
 
     const getModule = () => {
         get(url + `/dev/module/product`).then(res => {
@@ -35,7 +30,6 @@ const Form = () => {
     useEffect(() => {
         //get se trae las validaciones de los campos por lo tanto ya no es necesario utils.json
         //esto es para no tener errores de capo validaciones en el front
-    
         getModule()
     }, [])
 
@@ -59,12 +53,10 @@ const Form = () => {
 
 
     const onSubmit = async (data) => {
-       // estos son los datos del evento 
-
-        const { name, stock, description, color, size, category, genre, brand, price } = data;
-
-      /*       const newObj = {
-                name:data.name,
+        console.log(data)
+        try {
+            const newObj = {
+                name: data.name,
                 stock: data.stock,
                 description: data.description,
                 color: data.color,
@@ -78,70 +70,36 @@ const Form = () => {
                 featured: true  //true
             }
 
-           console.log(newObj) */
+            console.log(newObj)
+            const response = await axios.post('http://localhost:5000/products/', newObj);
 
-        try {
-                //ahora con imagenes debemos usar formData para crear un solo objeto
-                const formData = new FormData();
-                let active=true;
-                let feactured=true;
-                formData.append('name', name);
-                formData.append('stock', stock);
-                formData.append('description', description);
-                formData.append('color', color);
-                formData.append('size', size);
-                formData.append('category', category);
-                formData.append('image', data.image[0]);
-                formData.append('genre', genre);
-                formData.append('brand', brand);
-                formData.append('price', price);
-                formData.append('active', active);
-                formData.append('feactured', feactured); 
-          
-           
-         
-/*             console.log(formData.get('name'));
-            console.log(formData.get('description'));
-            console.log(formData.get('category'));
-            console.log(formData.get('image'));
-            console.log(formData.get('active'));
-            console.log(formData.get('feactured'));
-            console.log(formData.get('color'));
-            console.log(formData.get('size')); */
+            if (response.status > 200 && response.status < 300) {
 
+                //totificacion
+                Notification('success', 'product added successfully', 'top-end', 3000);
+                console.log(response)
+                return response.data;
 
-            //console.log(formData.get('image'))
-            let response = await dispatch(createProduct( formData ));
-
-                console.log(response);
-                if (response.payload.status > 200 && response.payload.status < 300) {
-                    Notification('success', 'product added successfully', 'top-end', 3000); 
-                    // console.log(response)
-                    setTimeout(() => {
-                       //podria setear los valores pero no hace falta 
-                        navigate('/home');
-      
-                    }, 3000);  
-                   
-                }
-            } catch (error) {
-                console.log({error:error.message})
-                if(error.message)
-                {
-                 Notification('error',"No se ha podido crear el producto 😔","bottom-end",3000)
-                }
-
+                //debo resetear los campos y redirigir a home
             }
-         
 
+        } catch (error) {
+            console.log(error.message)
         }
+
+
+    }
+
+
     return (
+        /*  <div className=" dark:bg-purple-900 dark:text-gray-100 min-h-screen flex flex-col justify-center items-center">
+            <h2 className="text-5xl font-bold leading-none sm:text-6xl">Form</h2> */
        module&&<div>
             {/*        <Header/> */}
             <div className="container-form">
-                <Link to='/home' className="flex items-center justify-center absolute bg-[#dadada] top-[100px] left-[300px] w-[150px] h-[70px] rounded-full hover:bg-[#000] hover:text-white hover:transform hover:scale-110 transition-all duration-500  index_boton">Back To Home</Link>
-                <form className=" container-card" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data" >
-                    <h2 className="title">Products</h2>
+                <Link to='/home' className="flex items-center justify-center absolute bg-[#dadada] top-[100px] left-[300px] w-[150px] h-[70px] rounded-full hover:bg-[#000] hover:text-white hover:transform hover:scale-110 transition-all duration-500">Back To Home</Link>
+                <form className=" container-card" onSubmit={handleSubmit(onSubmit)}>
+                    <h2 className="title">Form Product</h2>
                     <div>
                         <input
                             className="inputStyle"
@@ -157,25 +115,26 @@ const Form = () => {
                         {errors.name?.type === 'maxLength' && <p className="error">Only can use 35 letters</p>}
                     </div>
 
-                    <div>
+
+                    {/*    
+               
+               ====no borrar======== 
+               <div>
                         <input
                             className="inputStyleImage"
                             name="image"
                             id="image"
                             type="file"
-                         /*    accept=".png, .jpg ,"  */
+                         accept=".png, .jpg ," 
                             {...register('image', {
                                 required: true
                             })}
                         />
                         {errors.image?.type === 'required' && <p className="error" >Image required</p>} 
 
-                   </div> 
+                   </div> */}
 
 
-             {/*     
-                     input para usar sin cloudinary 
-                
                     <div>
                         <input
                             className="inputStyleImage"
@@ -189,7 +148,7 @@ const Form = () => {
                         />
                         {errors.image?.type === 'required' && <p className="error" >url required</p>}
 
-                    </div> */}
+                    </div>
 
 
 
