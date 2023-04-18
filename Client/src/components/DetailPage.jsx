@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import Stars from "./Stars";
+import CommentBox from "./CommentBox";
 
 
 export const DetailPage = () => {
@@ -103,7 +104,7 @@ export const DetailPage = () => {
             Agregar Al Carrito
           </button>
         </div>
-  
+  <CommentBox/>
       </div>
     </div>
   );
