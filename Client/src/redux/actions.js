@@ -39,13 +39,16 @@ import {
   
   export function createProduct(payload) {
     return async function (dispatch) {
-      let json = await axios.post("/products", payload);
-      return dispatch({
-        type: POST_PRODUCT,
-        payload: json.data,
+          let response = await axios.post("http://localhost:5000/products/", payload);
+
+           return dispatch({
+           type: POST_PRODUCT,
+           payload: response,     //esto llega al formulario y me deja manejar la respuesta 
       });
-    };
-  }
+  
+
+    }
+}
   ///////////////////Filters & Order/////////////////////////////////
   export function getOpenFilters(value) {
     return { type: OPEN_FILTERS, payload: value };

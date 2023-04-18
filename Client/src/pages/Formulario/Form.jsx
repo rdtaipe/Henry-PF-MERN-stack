@@ -3,15 +3,20 @@ import { useForm } from "react-hook-form";
 import './Form.css'
 
 import { Notification } from '../../components/Notification/Notification'
-import { useSelector } from 'react-redux'
+import { useSelector,useDispatch } from 'react-redux'
+import {createProduct}from '../../redux/actions'
+import { useNavigate } from 'react-router-dom';
 
-import axios from 'axios';
 import { Link } from "react-router-dom";
 const Form = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { url, get } = useSelector(({ state }) => state.server)
-
+    const dispatch=useDispatch();
+    const navigate = useNavigate();
     const [module, setModule] = useState(null)
+
+
+   //el get module carga los datos a alos array de los selectores
 
     const getModule = () => {
         get(url + `/dev/module/product`).then(res => {
@@ -30,31 +35,12 @@ const Form = () => {
     useEffect(() => {
         //get se trae las validaciones de los campos por lo tanto ya no es necesario utils.json
         //esto es para no tener errores de capo validaciones en el front
+    
         getModule()
     }, [])
 
-
-
-    /*
-        ==type of dates=== 
-        name: type: String,
-        stock: type: Number,
-        color:type: String,/[String],
-        size: type: Array,
-        category: type: Array,/[String],
-        image: type: Array,
-        genre:type: String,[String],
-        brand: type: Object,[String],
-        price: type: Number,[Number],
-        active: type: Boolean, //true
-        featured: type: Boolean  //true
-    
-    */
-
-
     const onSubmit = async (data) => {
-        console.log(data)
-        try {
+       // console.log(data)
             const newObj = {
                 name: data.name,
                 stock: data.stock,
@@ -70,36 +56,41 @@ const Form = () => {
                 featured: true  //true
             }
 
-            console.log(newObj)
-            const response = await axios.post('http://localhost:5000/products/', newObj);
+           // console.log(newObj)
 
-            if (response.status > 200 && response.status < 300) {
+            try {
+                let response = await dispatch(createProduct(newObj));
 
-                //totificacion
-                Notification('success', 'product added successfully', 'top-end', 3000);
-                console.log(response)
-                return response.data;
+                //console.log(response);
+                if (response.payload.status > 200 && response.payload.status < 300) {
+                    Notification('success', 'product added successfully', 'top-end', 3000);
+                    // console.log(response)
 
-                //debo resetear los campos y redirigir a home
+                    setTimeout(() => {
+                       //podria setear los valores pero no hace falta 
+                        navigate('/home');
+      
+                    }, 3000);
+                   
+                }  
+            } catch (error) {
+                console.log({error:error.message})
+                if(error.message)
+                {
+                 Notification('error',"No se ha podido crear el producto 😔","bottom-end",3000)
+                }
+
             }
+         
 
-        } catch (error) {
-            console.log(error.message)
         }
-
-
-    }
-
-
     return (
-        /*  <div className=" dark:bg-purple-900 dark:text-gray-100 min-h-screen flex flex-col justify-center items-center">
-            <h2 className="text-5xl font-bold leading-none sm:text-6xl">Form</h2> */
        module&&<div>
             {/*        <Header/> */}
             <div className="container-form">
-                <Link to='/home' className="flex items-center justify-center absolute bg-[#dadada] top-[100px] left-[300px] w-[150px] h-[70px] rounded-full hover:bg-[#000] hover:text-white hover:transform hover:scale-110 transition-all duration-500">Back To Home</Link>
+                <Link to='/home' className="flex items-center justify-center absolute bg-[#dadada] top-[100px] left-[300px] w-[150px] h-[70px] rounded-full hover:bg-[#000] hover:text-white hover:transform hover:scale-110 transition-all duration-500  index_boton">Back To Home</Link>
                 <form className=" container-card" onSubmit={handleSubmit(onSubmit)}>
-                    <h2 className="title">Form Product</h2>
+                    <h2 className="title">Products</h2>
                     <div>
                         <input
                             className="inputStyle"
