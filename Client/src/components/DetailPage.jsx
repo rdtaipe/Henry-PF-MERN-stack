@@ -20,8 +20,8 @@ export const DetailPage = () => {
 
   const slide = product.image
     ? product.image.map((x) => {
-        return { url: x };
-      })
+      return { url: x };
+    })
     : "https://example.com/zapatos-deportivos-nike1.jpg";
 
   const [currentIndex, setCurrentIndex] = useState(0);

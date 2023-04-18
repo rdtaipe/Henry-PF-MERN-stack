@@ -17,24 +17,23 @@ const SearchBar = () => {
     setName(e.target.value);
     dispatch(search(e.target.value));
   }
-
-
+  
   return (
     <div className="flex">
       <input
-        className="w-[350px] rounded-3xl mr-1 p-1 pl-2 placeholder:italic text-black outline-none shadow-sm"
-        placeholder="Search for any product..."
+        className="w-[350px] rounded-3xl p-0.5 pl-7 text-black outline-none mr-[120px]"
+        placeholder="Search for any product"
         type='search'
         value={name}
         onChange={(e) => handleInputChange(e)}
       />
-      <button
+      {/* <button
         className="flex justify-center items-center bg-slate-600 w-[35px] h-[35px] rounded-full"
         type="submit"
         onClick={(e) => handleSubmit(e)}
       >
         <AiOutlineSearch size={25} />
-      </button>
+      </button> */}
     </div>
   );
 };
