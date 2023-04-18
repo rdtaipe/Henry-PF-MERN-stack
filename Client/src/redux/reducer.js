@@ -12,13 +12,16 @@ import {
   BRAND_ELECT,
   GET_COLORS,
   GET_CATEGORIES,
+  UPDATE_SCORE,
 } from "./types";
 import { setter } from "./actions";
 import { utils } from "./utils";
 
 export var initialState = {
   products: [],
-  details: [],
+  details: [
+      { score: 0 },  
+  ],
   productsFiltered: [],
   brandFilteredMemory: [],
   filtersElect: [],
@@ -31,6 +34,7 @@ export var initialState = {
   viewChat: {
     value: false,
   },
+  
   openFilter: false,
   //use useSelector to get this functions
   actions: { setter },
@@ -351,6 +355,11 @@ export const reducer = (state = initialState, action) => {
         ...state,
         selectedBrands: action.payload,
       };
+      case UPDATE_SCORE:
+        return{
+          
+        }
+      
 
     default:
       return state;
