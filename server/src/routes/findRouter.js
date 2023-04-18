@@ -101,6 +101,7 @@ router.get("", async (req, res) => {
                     const query = fixQuery(keys, value, params)
 
                     const result = await models[model].find(query)
+                        .collation({ locale: 'en', strength: 2 })
                         .sort(params.sort)
                         .limit(parseInt(params.limit))
                         .skip(parseInt(params.skip))
@@ -120,6 +121,7 @@ router.get("", async (req, res) => {
                 const query = fixQuery(keys, value, params)
 
                 const result = await model.find(query)
+                    .collation({ locale: 'en', strength: 2 })
                     .sort(params.sort)
                     .limit(parseInt(params.limit))
                     .skip(parseInt(params.skip))

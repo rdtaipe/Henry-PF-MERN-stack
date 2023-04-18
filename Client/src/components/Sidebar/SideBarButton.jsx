@@ -21,12 +21,12 @@ function SidebarButton({ title, items, onSelect }) {
     onSelect && onSelect(newSelectedItems); // Se notifica al componente padre de los items seleccionados
   };
 
-  console.log(selectedItems)
+  // console.log(selectedItems)
   return (
     <div className="relative">
       
       <button
-        className="w-full py-4 px-6 bg-stone-800 text-white hover:bg-stone-700 focus:bg-black flex justify-between items-center pl-20"
+        className="w-full py-4 px-6 bg-stone-800 text-white hover:bg-stone-600 focus:bg-black transition-all duration-300 flex justify-between items-center pl-20"
         onClick={handleButtonClick}
       >
         <span className="font-bold">{title}</span>

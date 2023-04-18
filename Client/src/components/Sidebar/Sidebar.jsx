@@ -48,14 +48,14 @@ function Sidebar({className, setFilter}) {
   
   };
 
-  console.log(selections)
+  // console.log(selections)
 
   const firstLetterCapitalized = (str) => {
     return str.charAt(0).toUpperCase() + str.substring(1)
   }
 
   return (
-    <div style={{top:top,width:width,}} className={`absolute left-0 h-[auto] overflow-y-auto flex flex-col bg-stone-800 text-white  ${className}`}>
+    <div style={{top:top,width:width}} className={`absolute left-0 h-[950px] overflow-y-auto flex flex-col bg-stone-500 text-white z-10 ${className}`}>
 
       <div classname="flex flex-col">
         {/* se hace un map al modulo validator con su enum */}

@@ -6,6 +6,7 @@ import { Notification } from '../../components/Notification/Notification'
 import { useSelector } from 'react-redux'
 
 import axios from 'axios';
+import { Link } from "react-router-dom";
 const Form = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { url, get } = useSelector(({ state }) => state.server)
@@ -40,7 +41,7 @@ const Form = () => {
         stock: type: Number,
         color:type: String,/[String],
         size: type: Array,
-        category: type: Array,/[String],
+        category: type:/[String],
         image: type: Array,
         genre:type: String,[String],
         brand: type: Object,[String],
@@ -96,7 +97,7 @@ const Form = () => {
        module&&<div>
             {/*        <Header/> */}
             <div className="container-form">
-
+                <Link to='/home' className="flex items-center justify-center absolute bg-[#dadada] top-[100px] left-[300px] w-[150px] h-[70px] rounded-full hover:bg-[#000] hover:text-white hover:transform hover:scale-110 transition-all duration-500">Back To Home</Link>
                 <form className=" container-card" onSubmit={handleSubmit(onSubmit)}>
                     <h2 className="title">Form Product</h2>
                     <div>
