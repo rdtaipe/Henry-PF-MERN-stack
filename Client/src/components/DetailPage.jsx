@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
+import Stars from "./Stars";
+
 
 export const DetailPage = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState([]);
+  const [score, setScore] = useState(0);
+
 
   useEffect(() => {
     axios
@@ -32,6 +36,9 @@ export const DetailPage = () => {
     const isLastSlide = currentIndex === slide.length - 1;
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
+  };
+  const updateScore = (newScore) => {
+    setScore(newScore);
   };
 
   return (
@@ -68,7 +75,7 @@ export const DetailPage = () => {
             <span className="font-bold">Colores Disponibles:</span>{" "}
             {product.color}
           </p>
-
+          <Stars score={score} onScoreClick={updateScore} />
           {/* <p>{product.genre}</p> */}
 
           <div className="grid grid-cols-6 gap-y-3 pt-7">
@@ -96,6 +103,7 @@ export const DetailPage = () => {
             Agregar Al Carrito
           </button>
         </div>
+  
       </div>
     </div>
   );
