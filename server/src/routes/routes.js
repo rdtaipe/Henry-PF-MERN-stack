@@ -13,7 +13,7 @@ import users from './userRouter.js'
 import find from "./findRouter.js";
 import dev from "./devRouter.js";
 import mercadopago from './MercadoPagoRoute.js';
-
+import email from './emailRouter.js'
 const server = express();
 //---- Products routes ------
 server.use('/products', products);
@@ -50,7 +50,8 @@ server.use('/favorites', favorites)
 
 //-------- Reviews routes ----------
 server.use('/reviews', reviews)
-
+//---------Email routes-------------
+server.use('/email', email)
 //-------- Filters routes ----------
 server.use('/find?', find);
 //-------- dev utils routes ----------
