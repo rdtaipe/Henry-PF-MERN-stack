@@ -36,7 +36,7 @@ const NavBar = ({className}) => {
         
         <div className="flex items-center ml-[50px]">
 
-            <NavLink to='/Cart' className="hover: transition-all duration-500">
+            <NavLink to='/cart' className="hover: transition-all duration-500">
               <div className="text-black bg-white w-[45px] h-[80px] flex justify-center items-center hover:bg-stone-400 transition-all duration-200">
                 <button>
                   <AiOutlineShoppingCart size={25}/>
@@ -49,6 +49,7 @@ const NavBar = ({className}) => {
               <RxAvatar size={30}/>
             </button>
           </div>
+          
         </div>
       </div>
     </nav >
