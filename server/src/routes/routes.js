@@ -12,6 +12,7 @@ import purchase from './purchaseRouter.js'
 import users from './userRouter.js'
 import find from "./findRouter.js";
 import dev from "./devRouter.js";
+import auth from "./authRouter.js";
 
 const server = express();
 //---- Products routes ------
@@ -51,5 +52,8 @@ server.use('/reviews', reviews)
 server.use('/find?', find);
 //-------- dev utils routes ----------
 server.use('/dev',dev)
+
+//-------- Auth Routes ----------
+server.use("/auth", auth)
 
 export default server;
