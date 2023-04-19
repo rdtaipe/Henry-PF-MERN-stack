@@ -40,7 +40,10 @@ const Home = () => {
 
   //save token in local-storage
   const {token} = useParams()
-  localStorage.setItem("token",token.replace(/_/g, "."))
+  if(token){
+    localStorage.setItem("token",token?.replace(/_/g, "."))
+  }
+  
 
   useEffect(() => {
     getData({ filter:{name: [search], ...filter},sort:sort })

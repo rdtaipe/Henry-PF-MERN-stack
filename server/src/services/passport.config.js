@@ -88,7 +88,7 @@ passport.use(
     async (accessToken, refreshToken, profile, done) => {
       const { id, displayName, emails } = profile;
       const email = emails[0].value;
-
+ 
       // Aquí puede guardar la información del usuario en su base de datos
       const userExists = await userModel.find({ email: email });
 
@@ -98,9 +98,9 @@ passport.use(
 
       const newUser = await userModel.create({
         password: id,
-        username: displayName,
+        fullName: displayName,
         email: email,
-        image: photo[0].value,
+        /* image: profile.photo[0].value, */
       });
 
       return done(null, newUser);
