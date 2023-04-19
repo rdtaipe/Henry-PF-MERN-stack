@@ -73,7 +73,7 @@ export const DetailPage = () => {
           {/* <p>{product.stock}</p> */}
 
           <p>
-            <span className="font-bold">Colores Disponibles:</span>{" "}
+            <span className="font-bold">Option Colors:</span>{" "}
             {product.color}
           </p>
           <Stars score={score} onScoreClick={updateScore} />

@@ -21,7 +21,7 @@ function CommentBox() {
   return (
     <div className="max-w-xl mx-auto rounded-lg overflow-hidden shadow-lg">
       <h2 className="font-bold text-xl text-white p-4 bg-gray-700">Comments:</h2>
-      <div className="p-4 bg-gray-700 max-h-60 overflow-y-scroll custom-scrollbar">
+      <div className="p-2 bg-gray-700 max-h-30 overflow-y-scroll custom-scrollbar">
   {comments.slice(0).reverse().map((comment, index) => (
     <div key={index} className="flex py-2">
       <div>
