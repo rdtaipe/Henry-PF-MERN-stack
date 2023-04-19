@@ -14,6 +14,8 @@ import find from "./findRouter.js";
 import dev from "./devRouter.js";
 import auth from "./authRouter.js";
 
+import mercadopago from './MercadoPagoRoute.js';
+import email from './emailRouter.js'
 const server = express();
 //---- Products routes ------
 server.use('/products', products);
@@ -23,6 +25,9 @@ server.use('/products', products);
 server.use('/address', address)
 //---- Purchase routes ------
 server.use('/purchase', purchase)
+
+//---- MercadoPago routes ------
+server.use('/payment', mercadopago)
 
 //---- Categories routes ------
 server.use('/category', category)
@@ -47,7 +52,8 @@ server.use('/favorites', favorites)
 
 //-------- Reviews routes ----------
 server.use('/reviews', reviews)
-
+//---------Email routes-------------
+server.use('/email', email)
 //-------- Filters routes ----------
 server.use('/find?', find);
 //-------- dev utils routes ----------

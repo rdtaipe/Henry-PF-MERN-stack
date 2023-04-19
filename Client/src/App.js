@@ -6,8 +6,10 @@ import { Detail } from "./pages/Detail";
 import Footer from "./components/Footer";
 import { About } from "./pages/About";
 import Auth_BORRAR_ from "./pages/Auth_BORRAR_";
+import Cart from "./pages/Cart";
 
 function App() {
+  
   return (
     <div>
       <Routes>
@@ -16,6 +18,7 @@ function App() {
         <Route path="/token/:token" element={<Home />} />
         <Route path="/form" element={<Form />} />
         <Route path="/about" element={<About />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/products/:productId" element={<Detail />} />
 
         {/* borrar */}

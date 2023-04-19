@@ -15,7 +15,7 @@ import Offer5 from '../assets/imagesCarousel/Offer5.png'
 import Offer6 from '../assets/imagesCarousel/Offer6.png'
 import Offer7 from '../assets/imagesCarousel/Offer7.png'
 import { useParams } from 'react-router-dom'
-
+//  import { setter } from '../redux/actions'
 
 const Home = () => {
 
@@ -24,7 +24,7 @@ const Home = () => {
   const dispatch = useDispatch()
   //global state
   const { url, get } = useSelector(({ state }) => state.server)
-  const setter = useSelector(state => state.actions.setter)
+  const {setter} = useSelector(({state}) => state)
   const products = useSelector(state => state.products)
   const { top, width } = useSelector(({ state }) => state.sidebar)
   const { queryString } = useSelector(({ state }) => state.utils)
@@ -44,10 +44,10 @@ const Home = () => {
 
   useEffect(() => {
     getData({ filter:{name: [search], ...filter},sort:sort })
-
+    // dispatch(setter({ keys: "state.sidebar.width", value: 100 }))
   }, [filter,sort, search, page])
 
-
+console.log(setter)
 
 
   const getData = ({filter,sort}) => {
@@ -85,17 +85,21 @@ const Home = () => {
   return (
     <div className='bg-stone-800'>
       <NavBar />
+      
       <Sidebar setFilter={(e) => { setFilter(e) }} />
-      <div style={{ marginTop: top, marginLeft: width }} className="min-h-[1000px] bg-white">
+      <div style={{ marginTop: top, marginLeft: width }} className="bg-white">
+   
         <Carousel images={images} />
         <div className='px-2'>
+  
         <SortBar setSort={(e) => { setSort(e) }} />
         <Grid childHeight={260} childWidth={200}>
-
+    
         {products.map((item, index) => {
           return <Card key={index} data={item} />
         })}
         </Grid>
+        
         <Pagination page={page} count={count} setPage={n => { setPage(n) }} />
         </div>
 

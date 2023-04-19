@@ -41,7 +41,7 @@ const Form = () => {
         stock: type: Number,
         color:type: String,/[String],
         size: type: Array,
-        category: type: Array,/[String],
+        category: type:/[String],
         image: type: Array,
         genre:type: String,[String],
         brand: type: Object,[String],

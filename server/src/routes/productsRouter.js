@@ -6,11 +6,10 @@ import {
   updateProduct,
   deleteProduct,
 } from "../controllers/ProductsController.js";
-import verifyToken from "../middlewares/verifyToken.js";
 
 const router = express.Router();
 ////////////////////////////////////
-router.get("/", verifyToken, getProducts);
+router.get("/", getProducts);
 router.post("/", createProducts);
 /////////////////////////////////////
 router.get("/:id", getProductById);

@@ -22,7 +22,6 @@ server.use(
 
 server.use(cors());
 server.use(morgan("dev"));
-server.use(bodyParser.json());
 // server use json type of data
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
