@@ -21,16 +21,16 @@ function CommentBox() {
   return (
     <div className="max-w-xl mx-auto rounded-lg overflow-hidden shadow-lg">
       <h2 className="font-bold text-xl text-white p-4 bg-gray-700">Comments:</h2>
-      <div className="p-4 bg-gray-700 max-h-60 overflow-y-scroll scrollbar-thumb-transparent scrollbar-track-transparent">
-        {comments.slice(0).reverse().map((comment, index) => (
-          <div key={index} className="flex py-2">
-            <div>
-              <p className="font-semibold text-gray-100">{`Usuario`}</p>
-              <p className="text-gray-100">{comment}</p>
-            </div>
-          </div>
-        ))}
+      <div className="p-4 bg-gray-700 max-h-60 overflow-y-scroll custom-scrollbar">
+  {comments.slice(0).reverse().map((comment, index) => (
+    <div key={index} className="flex py-2">
+      <div>
+        <p className="font-semibold text-gray-100">{`Usuario`}</p>
+        <p className="text-gray-100">{comment}</p>
       </div>
+    </div>
+  ))}
+</div>
       <form className="p-4 bg-gray-700" onSubmit={handleCommentSubmit}>
         <div className="flex items-center">
           <input className="w-full rounded-full border border-gray-100 py-2 px-4 focus:outline-none focus:border-blue-400" type="text" value={newComment} onChange={handleCommentChange} placeholder="Product feedback ... " />
