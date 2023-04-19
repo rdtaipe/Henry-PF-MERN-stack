@@ -8,6 +8,7 @@ lerna-debug.log*
 Client/package-lock.json
 Client/yarn.lock
 Client/node_modules
+server/node_modules
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
