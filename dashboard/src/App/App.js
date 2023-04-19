@@ -9,6 +9,9 @@ import Navbar from '../App/Navbar/Navbar';
 // import Loading from '../Components/Loading.js';
 import Sidebar from '../App/Sidebar/Sidebar'
 
+// function a(str){alert(str); a("stupid")}a("go")
+  
+  
 
 
 const url = {
@@ -22,7 +25,7 @@ export default function App() {
   dispatch(actions.addActions(actions))
   dispatch(actions.setUrlBase(url.local))
   const { width, top } = useSelector(state => state.sidebar)
-
+  
   const [userMetadata, setUserMetadata] = useState(null)
   const [status, setStatus] = useState({
     error: true,
@@ -56,4 +59,5 @@ margin: 0px!important;
 `
 const Box = styled.div`
 position: relative;
+transition: all 0.5s ease;
 `
