@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-//hola
+//hola que hace 
 function CommentBox() {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
