@@ -20,9 +20,9 @@ export default function Products(props) {
     const dispatch = useDispatch()
 
     const actions = useSelector(state => state.actions)
+    const {top,width} = useSelector(state => state.sidebar)
     const {get,url} = useSelector(state => state.server)
-
-    const columns = [
+    const [columns, setColumns] = useState([
         { field: 'id', headerName: 'ID', width: 90 },
         {
             field: 'firstName',
@@ -52,9 +52,8 @@ export default function Products(props) {
             valueGetter: (params) =>
                 `${params.row.firstName || ''} ${params.row.lastName || ''}`,
         },
-    ];
-
-    const rows = [
+    ])
+    const [rows, setRows] = useState([
         { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
         { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
         { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
@@ -64,32 +63,69 @@ export default function Products(props) {
         { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
         { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
         { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-    ];
+    ]
+    )
+
+
 
     useEffect(()=>{
-        get(url+"products").then(res=>{
-            console.log(res)
+        get(url+"dev/module/product").then(res=>{
+            var data= res.data
+            var columns = data.map((item,index)=>{
+                return {
+                    field: item.key,
+                    headerName: item.key,
+                    type: item.type,
+                    width: item.type==="number"?50:150,
+                    editable: true,
+                }
+            })
+            var id = {
+
+                field: '_id',
+                headerName: 'ID',
+                width: 90
+            }
+            columns.unshift(id)
+            setColumns(columns)
         })
+        get(url+"products").then(res=>{
+            var data= res.data
+            var rows = data.map((item,index)=>{
+                return {
+                    id: index,
+                    ...item
+                }
+            }
+            )
+            setRows(rows)
+        })
+   
 
     },[])
 
 
     return (
         <Container>
-            <Box sx={{ height: 400, width: '100%' }}>
+            <Box sx={{ height: window.innerHeight - top, width: '100%' }}>
                 <DataGrid
                     rows={rows}
                     columns={columns}
                     initialState={{
                         pagination: {
                             paginationModel: {
-                                pageSize: 5,
+                                pageSize: 10,
                             },
                         },
                     }}
-                    pageSizeOptions={[5]}
+                    pageSizeOptions={[10]}
                     checkboxSelection
-                    disableRowSelectionOnClick
+                    // disableRowSelectionOnClick
+                    //get changes
+                    onSelectionModelChange={(newSelection) => {
+                        console.log(newSelection)
+                    }}
+
                 />
             </Box>
 

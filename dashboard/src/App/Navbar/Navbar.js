@@ -33,7 +33,7 @@ const Navbar = () => {
     dispatch(actions.changeTheme())
   }
   const handleOpenHidenMenu = () => {
-     dispatch(setter({keys:"sidebar.width",value:width===240?40:240}))
+     dispatch(setter({keys:"sidebar.width",value:width===240?50:240}))
   }
 
 
