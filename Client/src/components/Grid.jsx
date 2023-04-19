@@ -5,7 +5,7 @@ export default function Grid({style,children, childHeight,childWidth,className})
     
 
     return (
-        <Container style={style} childHeight={childHeight} childWidth={childWidth} className={className}>
+        <Container style={style} childHeight={childHeight} childWidth={childWidth} className={`min-h-[800px]`}>
             {
             children
             }

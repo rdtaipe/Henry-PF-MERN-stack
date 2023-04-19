@@ -15,10 +15,10 @@ const getPay = async (req, res) => {
   products.forEach((prod) => {
     const item = {
       id: prod._id,
-      title: prod.description,
+      title: prod.name,
       currency_id: "ARS",
       picture_url: prod.image[0],
-      description: prod.description,
+      description: prod.name,
       category_id: "art",
       quantity: 1,
       unit_price: prod.price,
