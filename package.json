@@ -1,7 +1,7 @@
 {
     "scripts": {
         "server": "cd server && npm i && npm run dev",
-        "demo":"cd demo && npm i && npm start",
+        "dashboard":"cd dashboard && npm i && npm start",
         "client": "cd client && npm i && npm start"
     }
 }
