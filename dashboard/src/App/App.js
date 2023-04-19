@@ -1,32 +1,59 @@
-import React from 'react'
-import { useAuth0 } from '@auth0/auth0-react'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate,Outlet } from 'react-router-dom'
+import { actions } from '../Redux/Store'
+import styled from 'styled-components'
+//components
+
+import Navbar from '../App/Navbar/Navbar';
+// import Loading from '../Components/Loading.js';
+import Sidebar from '../App/Sidebar/Sidebar'
 
 
-export default function App(props) {
-    const { user, loginWithRedirect, loginWithPopup,  logout, } = useAuth0()
-    const { isAuthenticated } = useAuth0()
-    const  handleLogin = () => {
-        //  loginWithRedirect()
-        //navigate to http://localhost:5001/test
-        window.location.href = "http://localhost:5001/loguin"
-      
-    }
 
-    const  handleLogout = () => {
-        // logout()
-         window.location.href = "http://localhost:5001/logout"
-    }
-  
-
-    return (
-        <div>
-            <button onClick={handleLogin}>loguin</button> or
-            <button onClick={handleLogin}>Singup</button> or
-            <button onClick={handleLogout}>loguot</button>
-
-            <div>{isAuthenticated ? JSON.stringify(user) : "no user"}
-
-            </div>
-        </div>
-    )
+const url = {
+  local: "http://localhost:5000/",
+  production: "https://api.localhost.com/"
 }
+
+export default function App() {
+  const Navigate = useNavigate()
+  const dispatch = useDispatch()
+  dispatch(actions.addActions(actions))
+  dispatch(actions.setUrlBase(url.local))
+  const { width, top } = useSelector(state => state.sidebar)
+
+  const [userMetadata, setUserMetadata] = useState(null)
+  const [status, setStatus] = useState({
+    error: true,
+    message: "waiting_authorization"
+  })
+  
+  useEffect(() => {
+
+  }, [])
+
+  return (
+    <Constainer>
+      <Navbar />
+      <Sidebar />
+      <Box style={{ marginTop: top, marginLeft: width, width: `calc(100vw - ${width}px)`,height: `calc(100% - ${top}px)` }}>
+        <Outlet />
+      </Box>
+    </Constainer>
+  )
+
+};
+
+
+
+const Constainer = styled.div`
+position: relative;
+width: 100vw;
+padding: 0px!important;
+margin: 0px!important;
+
+`
+const Box = styled.div`
+position: relative;
+`

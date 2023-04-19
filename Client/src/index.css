@@ -164,3 +164,19 @@ body {
 .shopping-cart--hidden {
   display: none;
 }
+.custom-scrollbar::-webkit-scrollbar {
+    width: 7px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background-color: #4b044e;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #33012d;
+    border-radius: 20px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #550734;
+  }
