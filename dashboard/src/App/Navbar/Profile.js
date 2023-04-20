@@ -12,7 +12,8 @@ const Profile = ({anchorElUser,setAnchorElUser}) => {
   const dispatch=useDispatch()
   const Navigate=useNavigate()
   const actions=useSelector(state=>state.actions)
-  const userMetadata = useSelector(state=>state.user.obj)
+  const {data} = useSelector(state=>state.user)
+  const userMetadata=data()
   const {logout}=useAuth0()
 
   const settings = [
@@ -24,7 +25,6 @@ const Profile = ({anchorElUser,setAnchorElUser}) => {
 const handleLogout=()=>{
   logout()
   dispatch(actions.setUser({key:'obj',value:{}}))
-  dispatch(actions.setUser({key:'token',value:""}))
   Navigate('/')
   
 }
@@ -40,6 +40,7 @@ const handleLogout=()=>{
 
   }, [userMetadata]);
 
+  console.log(userMetadata,"userMetadata")
   return (
 
     userMetadata&&<>
