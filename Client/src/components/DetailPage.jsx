@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import Stars from "./Stars";
+import CommentBox from "./CommentBox";
 
 
 export const DetailPage = () => {
@@ -72,7 +73,7 @@ export const DetailPage = () => {
           {/* <p>{product.stock}</p> */}
 
           <p>
-            <span className="font-bold">Colores Disponibles:</span>{" "}
+            <span className="font-bold">Option Colors:</span>{" "}
             {product.color}
           </p>
           <Stars score={score} onScoreClick={updateScore} />
@@ -103,7 +104,7 @@ export const DetailPage = () => {
             Agregar Al Carrito
           </button>
         </div>
-  
+  <CommentBox/>
       </div>
     </div>
   );

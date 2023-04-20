@@ -1,55 +1,66 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model } from "mongoose";
+import bcrypt from "bcryptjs";
 
 const userSchema = new Schema(
-   {
-  fullName: {
+  {
+    fullName: {
       type: String,
-  },
-  email: {
+    },
+    email: {
       type: String,
       unique: true,
-  },
-  password: {
+    },
+    password: {
       type: String,
-  },
-  birthDate: {
+    },
+    birthDate: {
       type: Date,
-  },
-  genre: {
+    },
+    genre: {
       type: String,
-  },
-  country: {
+    },
+    country: {
       type: String,
-  },
-  address: {
+    },
+    address: {
       type: String,
-  },
-  tel: {
+    },
+    tel: {
+      type: String,
+    },
+    image: {
+      type: String,
+    },
+    identificationType: {
       type: Number,
-  },
-  image: {
-      type: String,
-  },
-  identificationType:{
-      type: Number
-  },
-  identificationNumber:{
-      type: Number
-  },
-  isAdmin: {
+    },
+    identificationNumber: {
+      type: Number,
+    },
+    isAdmin: {
       type: Boolean,
-  },
-  active: {
+      default: false,
+    },
+    active: {
       type: Boolean,
+      default: true,
+    },
   },
-},
-{
-  timestamp: true,
-  versionKey: false,
-}
-)
+  {
+    timestamp: true,
+    versionKey: false,
+  }
+);
 
+userSchema.methods.encryptPassword = async (password) => {
+  const salt = await bcrypt.genSalt(10);
+  return await bcrypt.hash(password, salt);
+};
 
-const userModel = model('User', userSchema)
+userSchema.methods.matchPassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
 
-export default userModel
+const userModel = model("User", userSchema);
+
+export default userModel;

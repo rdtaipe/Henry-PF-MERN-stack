@@ -1,11 +1,21 @@
 import React from 'react';
 import CartItem from './CartItem';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import { Notification } from '../Notification/Notification';
 import { IoCartOutline } from 'react-icons/io5';
+import { useContext } from 'react';
+import { Context } from '../MercadoPago/ContextProvider';
 
-const CartPage = () => {
+const CartPage = ({ onClick }) => {
+  const [isVisible, setIsVisible] = useState(true);
+  const { preferenceId, orderData, setOrderData } = useContext(Context);
+
+  useEffect(() => {
+    if (preferenceId) setIsVisible(false);
+  }, [preferenceId])
+
   const itemsHardcode = [
     {
       "_id": "6439de0491db8fd7a8381bf2",
@@ -31,7 +41,7 @@ const CartPage = () => {
       "color": "Grey",
       "size": "s",
       "image": [
-      "https://sevensport.vteximg.com.br/arquivos/ids/617725-500-500/HG7233_1.jpg?v=638054353800600000"
+        "https://sevensport.vteximg.com.br/arquivos/ids/617725-500-500/HG7233_1.jpg?v=638054353800600000"
       ],
       "genre": "female",
       "brand": "Tommy Hilfiger",
@@ -48,14 +58,14 @@ const CartPage = () => {
       "size": "m",
       "category": "T-shirts",
       "image": [
-      "https://hmperu.vtexassets.com/arquivos/ids/3446960-483-725/Camisa-de-lino-Regular-Fit---Beige---H-M-PE.jpg"
+        "https://hmperu.vtexassets.com/arquivos/ids/3446960-483-725/Camisa-de-lino-Regular-Fit---Beige---H-M-PE.jpg"
       ],
       "genre": "male",
       "brand": "Levi's",
       "price": 40,
       "active": true,
       "featured": true
-      },
+    },
   ];
 
   // const items = useSelector((state) => state.items) se
@@ -66,7 +76,7 @@ const CartPage = () => {
   const [totalPrice, setTotalPrice] = useState(
     itemsLocal.reduce((acc, curr) => acc + curr.price, 0) // Obtener la suma de los precios de los artículos seleccionados
   );
-  
+
   const [summary, setSummary] = useState(() => {
     return itemsLocal.reduce((prev, curr) => {
       return {
@@ -80,7 +90,7 @@ const CartPage = () => {
       };
     }, {});
   });
-  
+
   console.log(summary)
 
   function handleSummary(value) {
@@ -104,7 +114,7 @@ const CartPage = () => {
     setItemsLocal(newItems);
     setTotalItems(totalItems - deletedItemQuantity);
     setSummary(prevSummary => {
-      const {[deletedItem._id]: deleted, ...rest} = prevSummary;
+      const { [deletedItem.name]: deleted, ...rest } = prevSummary;
       return rest;
     });
     Notification('warning', deletedItem.name + ' deleted from the cart', 'top-end', 5000);
@@ -119,77 +129,73 @@ const CartPage = () => {
   };
 
   return (
-    <div className="container mx-auto flex items-center justify-center px-4 mt-16 min-h-screen">
+    <div className={`container mx-auto flex items-center justify-center px-4 mt-12 min-h-screen ${!isVisible ? 'hidden' : ''}`}>
       {itemsLocal.length === 0 ? (
 
-      <div style={{borderRadius: "18px"}} className="shadow-2xl text-center bg-stone-300 py-12 px-8 sm:px-16 md:px-24 lg:px-56 max-w-4xl mx-auto flex flex-col items-center justify-center">
-        
-        <h1 className="text-2xl font-bold leading-none sm:text-3xl dark:text-black">
+        <div style={{ borderRadius: "18px" }} className="shadow-2xl text-center bg-stone-300 py-12 px-8 sm:px-16 md:px-24 lg:px-56 max-w-4xl mx-auto flex flex-col items-center justify-center">
+          <h1 className="text-2xl font-bold leading-none sm:text-3xl dark:text-black">
             There's nothing on your cart, let's get chic!
-        </h1>
-
-        <div className="flex items-center justify-center my-10">
-            <IoCartOutline size={250}/>
-        </div>
-
-        <Link to="/home" className="bg-gray-800 text-white py-2 px-4 sm:px-12 rounded mt-6 hover:bg-blue-900 transition inline-block">
-            Go to main page
-        </Link>
-
-      </div>
-
-
-  ) : (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-20 mb-24">
-
-      <div className="space-y-6">
-
-        <h1 className="text-2xl font-bold leading-none sm:text-3xl dark:text-black">
-            Cart ({itemsLocal.length} products)
-        </h1>
-
-        {itemsLocal.map((item) => (
-          <CartItem
-            key={item._id}
-            item={item}
-            handleTotalItems={handleTotalItems}
-            handleTotalPrice={handleTotalPrice}
-            handleSummary={handleSummary}
-            handleDelete={() => handleDelete(item._id)} // Pasa la función handleDelete como prop
-          />
-        ))}
-
-      </div>
-
-      <div className="ml-16 flex flex-col">
-
-        <h1 className="text-2xl font-bold leading-none sm:text-3xl dark:text-black">
-          Order Summary
-        </h1>
-
-        <div style={{borderRadius: "15px"}} className="border-2 border-stone-200 bg-white px-5 py-5 mt-6 dark:text-black shadow-xl">
-          {Object.entries(summary).map(([itemId, itemSummary]) => (
-            <div key={itemId} className="flex justify-between mb-2">
-              <span>{itemSummary.name} x {itemSummary.quantity}</span>
-              <span>${itemSummary.total.toFixed(2)}</span>
-            </div>
-          ))}
-          <div className="flex justify-between border-t pt-2 mt-6">
-            <span className="font-bold">Total ({totalItems} items)</span>
-            <span>${totalPrice.toFixed(2)}</span>
+          </h1>
+          <div className="flex items-center justify-center my-10">
+            <IoCartOutline size={250} />
           </div>
+          <Link to="/home" className="bg-gray-800 text-white py-2 px-4 sm:px-12 rounded mt-6 hover:bg-blue-900 transition inline-block">
+            Go to main page
+          </Link>
         </div>
 
-        <button className="bg-gray-800 text-white py-2 rounded mt-10 hover:bg-blue-900 transition">
-            Go to payment
-        </button>
 
-      </div>
+      ) : (
+        <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
+
+          <div className="space-y-6">
+
+            <h1 className="text-2xl font-bold leading-none sm:text-3xl dark:text-black">
+              Cart ({itemsLocal.length} products)
+            </h1>
+
+            {itemsLocal.map((item) => (
+              <CartItem
+                key={item._id}
+                item={item}
+                handleTotalItems={handleTotalItems}
+                handleTotalPrice={handleTotalPrice}
+                handleSummary={handleSummary}
+                handleDelete={() => handleDelete(item._id)} // Pasa la función handleDelete como prop
+              />
+            ))}
+
+          </div>
+
+          <div className="ml-16 flex flex-col">
+
+            <h1 className="text-2xl font-bold leading-none sm:text-3xl dark:text-black">
+              Order Summary
+            </h1>
+
+            <div style={{ borderRadius: "15px" }} className="border-2 border-stone-200 bg-white px-5 py-5 mt-6 dark:text-black">
+              {Object.entries(summary).map(([itemId, itemSummary]) => (
+                <div key={itemId} className="flex justify-between mb-2">
+                  <span>{itemId} x {itemSummary.quantity}</span>
+                  <span>${itemSummary.total.toFixed(2)}</span>
+                </div>
+              ))}
+              <div className="flex justify-between border-t pt-1 mt-6">
+                <span className="font-bold">Total ({totalItems} items)</span>
+                <span>${totalPrice.toFixed(2)}</span>
+              </div>
+            </div>
+
+            <button onClick={onClick} className="bg-gray-800 text-white py-2 rounded mt-10 hover:bg-blue-900 transition">
+              Go to payment
+            </button>
+
+          </div>
 
 
+        </div>
+      )}
     </div>
-  )}
-</div>
 
   );
 };
