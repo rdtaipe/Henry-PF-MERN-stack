@@ -39,14 +39,12 @@ export const DetailPage = () => {
     setScore(newScore);
   };
 
-  //grid grid-cols-2 content-center align-middle justify-around
-
   return (
-    <div className="h-screen flex flex-col justify-center mb-10 mt-20">
+    <div className="h-full flex flex-col justify-center mt-[140px]">
       <div className="flex justify-evenly items-center">
         <div
           style={{ backgroundImage: `url(${slide[currentIndex].url})` }}
-          className="w-[45%] h-[500px] rounded-2xl bg-center bg-cover duration-500 flex justify-between"
+          className="w-[50%] lg:w-[38%] h-[550px] rounded-2xl bg-center bg-cover duration-500 flex justify-between"
         >
           <div className="w-fit h-fit relative top-[50%] text-2xl rounded-full p-2 ml-2 bg-black/20 text-white cursor-pointer">
             <BsChevronCompactLeft onClick={prevSlide} size={30} />
@@ -93,14 +91,14 @@ export const DetailPage = () => {
             </div>
             <div className="flex justify-center">
               <button className="w-[250px] md:w-[300px] lg:w-[450px] mt-10 font-semibold bg-gray-900 h-10 text-center border-2 border-black rounded hover:bg-blue-900 text-white">
-                Agregar Al Carrito
+                Add To Cart
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="py-10 mt-10 flex justify-around bg-slate-200/20">
+      <div className="flex justify-around bg-slate-500/20 py-8 mt-8">
         <div className="w-[40%]">
           <p className="pb-5 font-bold text-lg">
             Product Description:{" "}
@@ -126,7 +124,7 @@ export const DetailPage = () => {
         </div>
       </div>
 
-      <div className="w-full relative top-10">
+      <div className="w-full my-8">
         <CommentBox />
       </div>
     </div>
