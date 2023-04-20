@@ -11,24 +11,27 @@ export const utils = {
     // save local storage
     saveLocal: (key, v) => {
         try {
-            const data = JSON.stringify(v);
-            localStorage.setItem(key, data);
+            console.log(v, "v")
+            var fix = typeof v === 'object' ? JSON.stringify(v) : v
+            localStorage.setItem(key, fix)
         } catch (e) {
-            console.log(e);
+            var parce = JSON.parse(v)
+            localStorage.setItem(key, parce)
         }
     },
     getLocal: (key) => {
         try {
-            const data = localStorage.getItem(key);
-            return JSON.parse(data);
+            var res = localStorage.getItem(key)
+            return JSON.parse(res)
         } catch (e) {
-            console.log(e);
+            return localStorage.getItem(key)
+
         }
     },
 
     //save cookien for 24 hours
     saveCookie: (key, v, t) => {
-        var time=t?t:86400;
+        var time = t ? t : 86400;
         try {
             const data = JSON.stringify(v);
             document.cookie = `${key}=${data};max-age=${time}`;

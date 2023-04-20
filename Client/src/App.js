@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import { About } from "./pages/About";
 import Auth_BORRAR_ from "./pages/Auth_BORRAR_";
 import Cart from "./pages/Cart";
+import Authorize from "./pages/Authorize";
 
 function App() {
   
@@ -20,10 +21,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/products/:productId" element={<Detail />} />
-
-        {/* borrar */}
-        <Route path="/authBorrar" element={<Auth_BORRAR_ />} />
-        {/*  */}
+        <Route path="/authorize" element={<Authorize/>} />
       </Routes>
       <Footer />
     </div>

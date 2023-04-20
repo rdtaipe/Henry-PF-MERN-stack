@@ -5,8 +5,6 @@ import { allUsers, userProfile, userLoggin, Admins, createUser, updateUser, upda
 import { userAuthorize } from '../controllers/authorize.js'
 const router = express.Router();
 
-
-
 // router.use(checkJwt)
 router.get('/authorize', userAuthorize);
 
