@@ -16,7 +16,7 @@ const Card = ({data}) => {
   };
 
   return (
-    <div className="rounded-lg justify-center items-center w-[200px] min-h-200 bg-stone-300 hover:shadow-xl transition duration-500 ease-in-out">
+    <div className="rounded-lg justify-center items-center w-[200px] min-h-200 bg-stone-300 hover:shadow-xl hover:scale-105 transition duration-500 ease-in-out mb-1">
     <div className="relative h-full">
       <div className="relative h-40">
         <img
@@ -84,11 +84,11 @@ const Card = ({data}) => {
             </p>
           </div>
           <div className="absolute bottom-3 flex justify-between mt-2">
-            <button className="text-sm font-semibold block px-4 text-gray-500  rounded-full ">
+            <button className="text-sm font-semibold block px-4 text-gray-500  rounded-full hover:scale-105">
               Add to cart
             </button>
             {/* detail buton */}
-            <Link to={`/products/${_id}`} className="text-lg font-semibold block px-4 text-green-100 bg-green-400 rounded-full"
+            <Link to={`/products/${_id}`} className="text-lg font-semibold block px-4 text-white bg-gray-900 rounded-full hover:scale-105 hover:bg-blue-900"
               onClick={handleNameClick}
             >
               Detail

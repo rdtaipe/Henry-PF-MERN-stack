@@ -50,11 +50,10 @@ const Home = () => {
     // dispatch(setter({ keys: "state.sidebar.width", value: 100 }))
   }, [filter,sort, search, page])
 
-console.log(setter)
 
 
   const getData = ({filter,sort}) => {
-  console.log(sort)
+
     const obj = {
       m: "product",
       filter: filter,
@@ -74,10 +73,6 @@ console.log(setter)
       setData(resData)
 
       let n = Math.ceil(documents/ limit)
-      // console.log(n)
-      // console.log(10 * page)
-      // console.log(10 * page - 10)
-
       setCount((page === 1 && resData.length < limit) ? 1 : n)
       if (page > 1 && resData.length === 0) {
         setPage(1)

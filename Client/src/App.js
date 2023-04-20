@@ -8,6 +8,7 @@ import { About } from "./pages/About";
 import Auth_BORRAR_ from "./pages/Auth_BORRAR_";
 import Cart from "./pages/Cart";
 import User from "./pages/User";
+import Authorize from "./pages/Authorize";
 
 function App() {
   
@@ -22,10 +23,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/user" element={<User />} />
         <Route path="/products/:productId" element={<Detail />} />
-
-        {/* borrar */}
-        <Route path="/authBorrar" element={<Auth_BORRAR_ />} />
-        {/*  */}
+        <Route path="/authorize" element={<Authorize/>} />
       </Routes>
       <Footer />
     </div>

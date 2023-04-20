@@ -3,48 +3,27 @@ import bcrypt from "bcryptjs";
 
 const userSchema = new Schema(
   {
-    fullName: {
+    fullName: {type: String,},
+    email: {type: String,required: true },
+    password: {type: String,},
+    genre: {type: String,},
+    country: {type: String,},
+    address: {type: String,},
+    name: { type: String, required: true }, 
+    sub: { type: String, required: true,unique: true },
+    picture: { type: String, default: '' }, 
+    phone: { type: Number, default: '' },
+    location: { type: String, default: '' }, 
+    role: {
+      type: String, required: true,
+      enum: ['admin', 'user'],
+      default: 'user'
+    },
+    status: {
       type: String,
-    },
-    email: {
-      type: String,
-      unique: true,
-    },
-    password: {
-      type: String,
-    },
-    birthDate: {
-      type: Date,
-    },
-    genre: {
-      type: String,
-    },
-    country: {
-      type: String,
-    },
-    address: {
-      type: String,
-    },
-    tel: {
-      type: String,
-    },
-    image: {
-      type: String,
-    },
-    identificationType: {
-      type: Number,
-    },
-    identificationNumber: {
-      type: Number,
-    },
-    isAdmin: {
-      type: Boolean,
-      default: false,
-    },
-    active: {
-      type: Boolean,
-      default: true,
-    },
+      enum: ['active', 'inactive', 'suspended'],
+      default: 'active'
+    }, 
   },
   {
     timestamp: true,
