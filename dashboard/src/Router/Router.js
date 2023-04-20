@@ -10,6 +10,7 @@ import Employees from '../Pages/Employees/Employees.js'
 import Roles from '../Pages/Roles/Roles.js'
 import Permissions from '../Pages/Permissions/Permissions.js'
 import App from '../App/App.js';
+import Authorize from '../Components/Authorize'
 
 export default createBrowserRouter([
     // defauld rute
@@ -43,6 +44,11 @@ export default createBrowserRouter([
         }
       ]
     },
+    {
+      path: '/authorize',
+      element:<Authorize /> ,
+
+    }
     
     
     ]);
