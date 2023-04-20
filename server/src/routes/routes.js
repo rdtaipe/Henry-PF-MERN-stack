@@ -12,6 +12,8 @@ import purchase from './purchaseRouter.js'
 import users from './userRouter.js'
 import find from "./findRouter.js";
 import dev from "./devRouter.js";
+import auth from "./authRouter.js";
+
 import mercadopago from './MercadoPagoRoute.js';
 import email from './emailRouter.js'
 const server = express();
@@ -56,5 +58,8 @@ server.use('/email', email)
 server.use('/find?', find);
 //-------- dev utils routes ----------
 server.use('/dev',dev)
+
+//-------- Auth Routes ----------
+server.use("/auth", auth)
 
 export default server;

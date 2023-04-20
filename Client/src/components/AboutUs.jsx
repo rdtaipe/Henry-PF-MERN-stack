@@ -4,7 +4,7 @@ export const AboutUs = () => {
   return (
     <div className="h-fit pt-[80px]">
       <div className="h-[350px] w-full bg-[#232323] flex justify-center items-center">
-        <p className="text-[#A78BFA] font-bold font-serif text-7xl">About Us</p>
+        <p className="text-[#315386] font-bold font-serif text-7xl">About Us</p>
       </div>
 
       <div className="flex justify-between flex-col-reverse items-center px-10 py-10 xl:flex-row">
@@ -21,8 +21,7 @@ export const AboutUs = () => {
             <p className="text-2xl">Dress To Impress And Never Stress</p>
           </div>
           <p className="text-xl">
-            <span className="font-bold">Welcome To ChicCloset</span>, The online
-            store where you will find all the styles of clothing you you need to
+            <span className="font-bold">Welcome To ChicCloset</span>, The online store where you will find all the clothing styles that you you need to
             always look fashionable. We have from casual clothes to elegant and
             sophisticated outfits. If you are looking for something relaxed and
             comfortable, we have a wide variety of sports and casual clothing,
@@ -37,7 +36,6 @@ export const AboutUs = () => {
           </p>
         </div>
       </div>
-
       <div className="bg-[#8a73cf] flex px-10 py-10 xl:flex-row xl:justify-between xl:items-stretch xl:text-left sm:flex-col sm:items-center sm:text-center">
         <div className="xl:w-[44%] sm:w-full flex flex-col justify-between xl:pt-3 sm:gap-3 sm:pb-5">
           <div>
@@ -67,37 +65,6 @@ export const AboutUs = () => {
           />
         </div>
       </div>
-
-      {/* <div>
-        <div className="bg-[#8a73cf] h-[550px] flex justify-between py-10 px-10">
-          <div className="w-[45%] flex flex-col justify-between">
-            <p className="text-4xl font-bold">What are we looking for?</p>
-            <p className="text-xl">
-              ChicCloset is a clothing store that aims to offer
-              its customers a wide variety of fashionable clothing and
-              high quality. Our main objective is to provide a
-              pleasant and satisfying shopping experience for everyone
-              our customers, making sure they find what they are looking for and
-              feel comfortable in our store. To achieve this, we
-              We focus on providing excellent customer service,
-              fashion advice and competitive prices. Also, we
-              We strive to keep an inventory up to date with the latest
-              fashion trends, so that our customers can always
-              find something they like. In short, the goal of
-              ChicCloset is to be a leading clothing store in fashion and style, which
-              offer your customers a unique shopping experience and
-              satisfactory.
-            </p>
-          </div>
-          <div className="w-[50%]">
-            <img
-              src="https://media.informabtl.com/wp-content/uploads/2017/10/marcas-de-ropa-ma%CC%81s-valiosas-2017-retail.jpg"
-              alt="Image Clothes"
-              className="rounded h-[500px]"
-            />
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };

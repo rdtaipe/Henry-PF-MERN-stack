@@ -79,20 +79,20 @@ export const DetailPage = () => {
                   return (
                     <button
                       key={el}
-                      className="font-bold text-lg text-center bg-white px-3 py-1 border-2 border-black rounded mx-auto cursor-pointer focus:outline-none focus:ring focus:ring-purple-500 hover:ring hover:ring-purple-300 uppercase"
+                      className="font-bold text-lg text-center bg-white px-3 py-1 border-2 border-black rounded mx-auto cursor-pointer focus:outline-none focus:ring focus:ring-gray-900 hover:ring hover:ring-gray-600 uppercase"
                     >
                       {el}
                     </button>
                   );
                 })
               ) : (
-                <button className="font-bold text-lg text-center bg-white px-3 py-1 border-2 border-black rounded mx-auto cursor-pointer focus:outline-none focus:ring focus:ring-purple-500 hover:ring hover:ring-purple-300 uppercase">
+                <button className="font-bold text-lg text-center bg-white px-3 py-1 border-2 border-black rounded mx-auto cursor-pointer focus:outline-none focus:ring focus:ring-gray-900 hover:ring hover:ring-gray-600 uppercase">
                   {product.size && product.size}
                 </button>
               )}
             </div>
             <div className="flex justify-center">
-              <button className="w-[250px] md:w-[300px] lg:w-[450px] mt-10 font-semibold bg-purple-500 h-10 text-center border-2 border-black rounded hover:bg-purple-700 text-white">
+              <button className="w-[250px] md:w-[300px] lg:w-[450px] mt-10 font-semibold bg-gray-900 h-10 text-center border-2 border-black rounded hover:bg-blue-900 text-white">
                 Agregar Al Carrito
               </button>
             </div>

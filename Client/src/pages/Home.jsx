@@ -14,12 +14,12 @@ import Offer4 from '../assets/imagesCarousel/Offer4.png'
 import Offer5 from '../assets/imagesCarousel/Offer5.png'
 import Offer6 from '../assets/imagesCarousel/Offer6.png'
 import Offer7 from '../assets/imagesCarousel/Offer7.png'
+import { useParams } from 'react-router-dom'
 //  import { setter } from '../redux/actions'
 
 const Home = () => {
 
   const images = [Offer1, Offer2, Offer3, Offer4, Offer5, Offer6, Offer7]
-
   //testing redux
   const dispatch = useDispatch()
   //global state
@@ -38,7 +38,12 @@ const Home = () => {
   const [filter, setFilter] = useState({})
   const [sort, setSort] = useState({})
 
-
+  //save token in local-storage
+  const {token} = useParams()
+  if(token){
+    localStorage.setItem("token",token?.replace(/_/g, "."))
+  }
+  
 
   useEffect(() => {
     getData({ filter:{name: [search], ...filter},sort:sort })

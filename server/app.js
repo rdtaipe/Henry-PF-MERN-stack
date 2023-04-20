@@ -1,25 +1,24 @@
 import express from "express";
+import session from "express-session";
 import cors from "cors";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import { connect } from "./src/db/db.js";
 import router from "./src/routes/routes.js";
-
-import path from "path"
-import expressSession from "express-session"
-import passport from "passport"
-import Auth0Strategy from "passport-auth0"
+import bodyParser from "body-parser";
+import passport from "passport";
+import "./src/services/passport.config.js";
 
 dotenv.config();
-
-const session = {
-    secret: process.env.SESSION_SECRET,
-    cookie: {},
-    resave: false,
-    saveUninitialized: false
-  };
-
 const server = express();
+
+server.use(
+  session({
+    secret: "clave_secreta",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 server.use(cors());
 server.use(morgan("dev"));
@@ -27,6 +26,8 @@ server.use(morgan("dev"));
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
+server.use(passport.initialize());
+server.use(passport.session());
 server.use(router);
 
 connect();
