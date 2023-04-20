@@ -18,7 +18,7 @@ const NavBar = ({ className }) => {
   const [profileState, setProfileState] = useState({ button: <Link to={"/authorize"}>Loguin</Link>, icon: <RxAvatar size={25} className="mr-[10px]" /> })
 
   useEffect(() => {
-    
+
     if (userAutorized) {
       setProfileState({ button: <button onClick={hadleLogout}>Loguot</button>, icon: <img src={userData.picture} alt="avatar" className="w-[25px] h-[25px] rounded-full mr-[10px]" /> })
     } else if (status === 'authorize') {
@@ -59,7 +59,7 @@ const NavBar = ({ className }) => {
         <div className="flex items-center ml-[50px]">
 
           <NavLink to='/cart' className="hover: transition-all duration-500">
-            <div className="text-black bg-white w-[auto] h-[40px] flex justify-center items-center hover:bg-stone-400 transition-all duration-200 rounded-[4px] px-[5px] mr-[5px]">
+            <div className="text-black bg-white w-[auto] h-[40px] flex justify-center items-center hover:bg-stone-400 transition-all duration-200 rounded-[4px] px-[8px] mr-[5px]">
               <button>
                 <AiOutlineShoppingCart size={25} />
               </button>
