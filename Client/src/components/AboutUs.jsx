@@ -4,7 +4,7 @@ export const AboutUs = () => {
   return (
     <div className="h-fit pt-[80px]">
       <div className="h-[350px] w-full bg-[#232323] flex justify-center items-center">
-        <p className="text-[#A78BFA] font-bold font-serif text-7xl">About Us</p>
+        <p className="text-[#315386] font-bold font-serif text-7xl">About Us</p>
       </div>
       <div className="flex justify-between px-10 py-10">
         <div className="w-[50%]">
@@ -20,11 +20,11 @@ export const AboutUs = () => {
             <p className="text-2xl">Dress To Impress And Never Stress</p>
           </div>
           <p className="text-end text-xl">
-            <span className="font-bold">Welcome To ChicCloset</span>, The online store where you will find all the styles of clothing you
+            <span className="font-bold">Welcome To ChicCloset</span>, The online store where you will find all the clothing styles that you
             you need to always look fashionable. We have from casual clothes
             to elegant and sophisticated outfits. If you are looking for something relaxed and
             comfortable, we have a wide variety of sports and casual clothing, from
-            baggy t-shirts and pants to sweatshirts and joggers. Yeah
+            baggy t-shirts and pants to sweatshirts and sweatpants. Let's say
             you need something more formal, don't worry, we also have
             suits, blouses and dresses for special occasions. If you like
             the most avant-garde styles, do not miss our collection of
@@ -38,7 +38,7 @@ export const AboutUs = () => {
       </div>
 
       <div>
-        <div className="bg-[#8a73cf] h-[550px] flex justify-between py-10 px-10">
+        <div className="bg-[#21385A] h-[550px] flex justify-between py-10 px-10 mb-20 text-[#ffff]">
           <div className="w-[45%] flex flex-col justify-between">
             <p className="text-4xl font-bold">What are we looking for?</p>
             <p className="text-xl">
@@ -52,10 +52,9 @@ export const AboutUs = () => {
               fashion advice and competitive prices. Also, we
               We strive to keep an inventory up to date with the latest
               fashion trends, so that our customers can always
-              find something they like. In short, the goal of
+              find something they like. In short terms, the goal of
               ChicCloset is to be a leading clothing store in fashion and style, which
-              offer your customers a unique shopping experience and
-              satisfactory.
+              offers the customers a unique and satisfactory shopping experience.
             </p>
           </div>
           <div className="w-[50%]">
