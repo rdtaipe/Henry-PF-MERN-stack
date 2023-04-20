@@ -1,0 +1,64 @@
+[
+
+{
+        "fullname": "Viola Amherd",
+         "email":"viola@gmail.com",
+         "genre":"female",
+         "country":"Mexico",
+         "address":"luna 3700,gualajara",
+         "tel":"265415641564564",
+        "isAdmin": false,
+         "active": false
+    },
+{
+        "fullname": "henry Ratii",
+         "email":"henry@gmail.com",
+         "genre":"male",
+         "country":"Argentina",
+         "address":"iryoyen 1500,bs as",
+         "tel":"265415641564564",
+        "isAdmin": false,
+         "active": true
+    },
+{
+        "fullname": "Jacob Amherd",
+         "email":"jacob@gmail.com",
+         "genre":"male",
+         "country":"argentina",
+         "address":" perto madero 3700,merlo",
+         "tel":"3515641564564",
+        "isAdmin": false,
+         "active": true
+    },
+{
+        "fullname": "Richard Merr",
+         "email":"richard@gmail.com",
+         "genre":"male",
+         "country":"USA",
+         "address":"beverly girls 90210,Los angeles",
+         "tel":"58136456456456",
+        "isAdmin": false,
+         "active": true
+    },
+{
+        "fullname": "Javier Milei",
+         "email":"javi@gmail.com",
+         "genre":"male",
+         "country":"argentina",
+         "address":"bv alberdi 3700,caba",
+         "tel":"265415641564564",
+        "isAdmin": false,
+         "active": true
+    },
+{
+        "fullname": "ariel zarate",
+         "email":"arieltecnico@gmail.com",
+         "genre":"male",
+         "country":"argentina",
+         "address":"se me olvido,jaja",
+         "tel":"265415641564564",
+        "isAdmin": true,
+         "active": true
+    }
+   
+]
