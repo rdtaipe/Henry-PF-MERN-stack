@@ -43,11 +43,11 @@ export const DetailPage = () => {
   };
 
   return (
-    <div className="h-screen pt-20 grid grid-cols-2 content-center align-middle justify-around">
+    <div className="h-screen pt-20 mt-20 grid grid-cols-2 content-center align-middle justify-around ">
       <div>
         <div
           style={{ backgroundImage: `url(${slide[currentIndex].url})` }}
-          className="mx-auto w-9/12 h-[590px] rounded-2xl bg-center bg-cover duration-500 flex justify-between"
+          className="mx-auto w-9/12 h-[500px] rounded-2xl bg-center bg-cover duration-500 flex justify-between"
         >
           <div className="w-fit h-fit relative top-[50%] text-2xl rounded-full p-2 ml-2 bg-black/20 text-white cursor-pointer">
             <BsChevronCompactLeft onClick={prevSlide} size={30} />
@@ -84,14 +84,14 @@ export const DetailPage = () => {
                   return (
                     <button
                       key={el}
-                      className="font-bold text-lg text-center bg-white px-3 py-1 border-2 border-black rounded mx-auto cursor-pointer focus:outline-none focus:ring focus:ring-purple-500 hover:ring hover:ring-purple-300"
+                      className="font-bold text-lg text-center bg-white px-3 py-1 border-2 border-black rounded mx-auto cursor-pointer focus:outline-none focus:ring focus:ring-gray-900 hover:ring hover:ring-gray-900"
                     >
                       {el}
                     </button>
                   );
                 })
               : <button
-                  className="font-bold text-lg text-center bg-white px-3 py-1 border-2 border-black rounded mx-auto cursor-pointer focus:outline-none focus:ring focus:ring-purple-500 hover:ring hover:ring-purple-300"
+                  className="font-bold text-lg text-center bg-white px-3 py-1 border-2 border-black rounded mx-auto cursor-pointer focus:outline-none focus:ring focus:ring-gray-900 hover:ring hover:ring-gray-900"
                 >
                   {product.size&&product.size}
                 </button>
@@ -100,7 +100,7 @@ export const DetailPage = () => {
 
           {/* <p>{product.brand ? product.brand.name : null}</p> */}
 
-          <button className="mt-10 font-semibold bg-purple-500 h-10 text-center border-2 border-black rounded hover:transform hover:scale-105 transition-all duration-500 text-white">
+          <button className="mt-10 font-semibold bg-gray-900 h-10 text-center border-2 border-black rounded hover:transform hover:scale-105 hover:bg-blue-900 transition-all duration-500 text-white">
             Agregar Al Carrito
           </button>
         </div>
