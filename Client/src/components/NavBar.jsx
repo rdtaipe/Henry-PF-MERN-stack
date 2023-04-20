@@ -73,9 +73,7 @@ const NavBar = ({ className }) => {
             <div className="text-black bg-white w-[auto] h-[40px] flex justify-center items-center hover:bg-stone-400 transition-all duration-200 ml-[5px] mr-[30px] rounded-[4px] px-[10px]">
               {profileState.icon}
               {profileState.button}
-
             </div>
-
           </div>
         </div>
       </div>
