@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import { Notification } from '../Notification/Notification';
+import { FaShoppingCart } from 'react-icons/fa';
+import { BiCart } from 'react-icons/bi';
+import { GiShoppingCart } from 'react-icons/gi';
 import { IoCartOutline } from 'react-icons/io5';
 import { useContext } from 'react';
 import { Context } from '../MercadoPago/ContextProvider';
@@ -81,9 +84,7 @@ const CartPage = ({ onClick }) => {
     return itemsLocal.reduce((prev, curr) => {
       return {
         ...prev,
-        [curr._id]: {
-          name: curr.name,
-          _id: curr._id,
+        [curr.name]: {
           quantity: 1,
           total: curr.price
         }
@@ -92,13 +93,14 @@ const CartPage = ({ onClick }) => {
   });
 
   console.log(summary)
+  console.log(itemsLocal)
+  console.log(totalItems)
+  console.log(totalPrice)
 
   function handleSummary(value) {
     setSummary(prevSummary => ({
       ...prevSummary,
       [value.item]: {
-        name: value.name,
-        _id: value._id,
         quantity: value.quantity,
         total: value.total
       }
@@ -108,7 +110,7 @@ const CartPage = ({ onClick }) => {
   function handleDelete(id) {
     const deletedItem = itemsLocal.find(item => item._id === id);
     const newItems = itemsLocal.filter(item => item._id !== id);
-    const deletedItemQuantity = summary[deletedItem._id].quantity;
+    const deletedItemQuantity = summary[deletedItem.name].quantity;
     let newTotalPrice = totalPrice - (deletedItem.price * deletedItemQuantity);
     setTotalPrice(newTotalPrice);
     setItemsLocal(newItems);
