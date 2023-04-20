@@ -110,6 +110,7 @@ passport.use(
 
 // Serializar el usuario para almacenarlo en una sesión
 passport.serializeUser((user, done) => {
+  console.log(user)
   done(null, user[0]._id.toString());
 });
 

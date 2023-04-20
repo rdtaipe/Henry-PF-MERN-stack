@@ -1,7 +1,9 @@
 import { useState,useEffect } from 'react';
-import { AiOutlineSearch } from 'react-icons/ai';
 import { useDispatch,useSelector } from 'react-redux';
 import { search } from '../redux/actions';
+import SearchIcon from '@mui/icons-material/Search'
+import {IconButton } from '@mui/material'
+
 
 const SearchBar = () => {
 
@@ -19,21 +21,17 @@ const SearchBar = () => {
   }
   
   return (
-    <div className="flex">
+    <div className="flex w-[350px] h-[40px] rounded-[4px] bg-[white]">
+      <IconButton type="button" className='bg-[#f0f2f5] rounded-[4px] w-[40px] h-[40px] flex justify-center items-center' onClick={(e) => handleSubmit(e)}>
+        <SearchIcon className='text-black ' />
+      </IconButton>
       <input
-        className="w-[350px] rounded-3xl p-0.5 pl-7 text-black outline-none mr-[120px]"
+        className=" pr-1 text-black outline-none w-[100%] h-[100%] rounded-[4px]"
         placeholder="Search for any product"
         type='search'
         value={name}
         onChange={(e) => handleInputChange(e)}
       />
-      {/* <button
-        className="flex justify-center items-center bg-slate-600 w-[35px] h-[35px] rounded-full"
-        type="submit"
-        onClick={(e) => handleSubmit(e)}
-      >
-        <AiOutlineSearch size={25} />
-      </button> */}
     </div>
   );
 };
