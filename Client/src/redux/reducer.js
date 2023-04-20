@@ -20,7 +20,7 @@ import { utils } from "./utils";
 export var initialState = {
   products: [],
   details: [
-      { score: 0 },  
+    { score: 0 },
   ],
   productsFiltered: [],
   brandFilteredMemory: [],
@@ -34,49 +34,78 @@ export var initialState = {
   viewChat: {
     value: false,
   },
-  
+
   openFilter: false,
   //use useSelector to get this functions
   actions: { setter },
   state: {
-    setter:setter,
-    utils:utils,
-    find:{
-      m:"product",
-      q:null,//dont use this
-      filter:null,//[]
-      sort:null,//{}
-      limit:10,
-      skip:0,
+    setter: setter,
+    utils: utils,
+    find: {
+      m: "product",
+      q: null,//dont use this
+      filter: null,//[]
+      sort: null,//{}
+      limit: 10,
+      skip: 0,
     },
-    pagination:{
-      page:1,
-      pageLimit:10,
-      limit:10,
-      skip:0,
+    pagination: {
+      page: 1,
+      pageLimit: 10,
+      limit: 10,
+      skip: 0,
     },
-    server:{
-      setter:setter,
+    server: {
+      setter: setter,
       url: "http://localhost:5000",
-      get:(url)=>axios.get(url),
-      post:(url,house)=> axios.post(url,house),
-      put:(url,id,house)=> axios.put(url+id,house),
-      delete:(url,id)=> axios.delete(url+id),
-      find:(url,query)=> axios.get(url+query),
+      dashboardUrl: "http://localhost:3001",
+      clientUrl: "http://localhost:3000",
+      //routes action 
+      get: (url) => axios.get(url),
+      post: (url, house) => axios.post(url, house),
+      put: (url, id, house) => axios.put(url + id, house),
+      delete: (url, id) => axios.delete(url + id),
+      find: (url, query) => axios.get(url + query),
     },
-    sidebar:{
-      open:false,
-      top:80,     
+    user: {
+      setStatus: (status) => { utils.saveLocal("userStatus", status) },
+      status: () => !utils.getLocal("userStatus") ? { error: true, message: "waiting_authorization" } : utils.getLocal("userStatus"),
+      token: () => !utils.getCookie("token") ? null : utils.getCookie("token"),
+      isAutorized: () => !utils.getLocal("autorized") ? false : utils.getLocal("autorized"),
+      data: () => !utils.getLocal("userData") ? {} : utils.getLocal("userData"),
+      authorize: async (token, user, url) => {
+        const domain = url + "/users/authorize"
+        const headers = { authorization: `Bearer ${token}`, user: user }// for every request
+        const getUserMetadataResponse = await axios.get(domain, {
+          headers: headers,
+        });
+        const data = getUserMetadataResponse.data.user
+        utils.saveLocal("userStatus", { error: false, message: "Authorized" })
+        utils.saveLocal("autorized", true)
+        utils.saveLocal("userData", data)
+        utils.saveCookie("token", token)
+        return data
+      },
+      unauthorize: () => {
+        utils.saveLocal("userStatus", { error: true, message: "Unauthorized" })
+        utils.saveLocal("autorized", false)
+        utils.saveLocal("userData", {})
+        utils.saveCookie("token", "")
+      },
+    },
+    sidebar: {
+      open: false,
+      top: 80,
       left: 0,
       width: 280,
     },
-    test:{
-      obj:{
-        a:1,
-        value:true,
-        b:[
-          {id:"asd",a:1},
-          {id:"asd",a:1},
+    test: {
+      obj: {
+        a: 1,
+        value: true,
+        b: [
+          { id: "asd", a: 1 },
+          { id: "asd", a: 1 },
         ]
       }
     }
@@ -189,7 +218,7 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
       };
-///actualmete ya no utilizan ORDER AND FILTERS de abajo con la implematacion de /find? pero las dejo por si las moscas
+    ///actualmete ya no utilizan ORDER AND FILTERS de abajo con la implematacion de /find? pero las dejo por si las moscas
     /////////////////////////////////ORDER AND FILTERS//////////////////////////////////////////////////////
     case OPEN_FILTERS:
       return {
@@ -367,11 +396,11 @@ export const reducer = (state = initialState, action) => {
         ...state,
         selectedBrands: action.payload,
       };
-      case UPDATE_SCORE:
-        return{
-          
-        }
-      
+    case UPDATE_SCORE:
+      return {
+
+      }
+
 
     default:
       return state;

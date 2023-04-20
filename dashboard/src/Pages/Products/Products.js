@@ -67,7 +67,6 @@ export default function Products(props) {
     )
 
 
-
     useEffect(()=>{
         get(url+"dev/module/product").then(res=>{
             var data= res.data

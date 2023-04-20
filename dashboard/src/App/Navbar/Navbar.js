@@ -16,7 +16,7 @@ import Toolbar from '@mui/material/Toolbar';
 
 import { ColorModeContext, base } from "../../Redux/Utils/theme.js";
 
-// import Profile from "./Profile.js";
+import Profile from "./Profile.js";
 import FindBar from "../../Components/FindBar.js";
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -28,6 +28,7 @@ const Navbar = () => {
   const animation = useSelector(state => state.animation)
   const {setter}=useSelector(state=>state.actions)
   const actions = useSelector(state => state.actions)
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleChangeTheme = () => {
     dispatch(actions.changeTheme())
@@ -73,7 +74,7 @@ const Navbar = () => {
         <SettingsOutlinedIcon />
       </IconButton>
       </Box>
-      {/* <Profile anchorElUser={anchorElUser} setAnchorElUser={setAnchorElUser}/> */}
+     <Profile anchorElUser={anchorElUser} setAnchorElUser={setAnchorElUser}/>
       </Box>
     </Toolbar>
   </AppBar>
