@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { FaPlus, FaMinus } from 'react-icons/fa';
 import Chip from '../Chip'
 
 
@@ -13,7 +12,7 @@ const CartItem = ({ item, handleTotalItems, handleTotalPrice, handleSummary, han
         setTotal(total + item.price);
         handleTotalItems(1); // Aumentar en 1 el total de items en el componente padre
         handleTotalPrice(item.price); // Aumentar el precio del artículo en el componente padre
-        handleSummary({ item: [item.name], quantity: quantity + 1, total: total + item.price }); // Pasar valores actualizados al componente padre
+        handleSummary({ item: [item._id], name: item.name, _id: item._id, quantity: quantity + 1, total: total + item.price }); // Pasar valores actualizados al componente padre
     };
   
     const handleDecrement = () => {
@@ -22,20 +21,20 @@ const CartItem = ({ item, handleTotalItems, handleTotalPrice, handleSummary, han
             setTotal(total - item.price);
             handleTotalItems(-1); // Disminuir en 1 el total de items en el componente padre
             handleTotalPrice(-item.price); // Disminuir el precio del artículo en el componente padre
-            handleSummary({ item: [item.name], quantity: quantity - 1, total: total - item.price }); // Pasar valores actualizados al componente padre
+            handleSummary({ item: [item._id], name: item.name, _id: item._id, quantity: quantity - 1, total: total - item.price }); // Pasar valores actualizados al componente padre
         }
     };
 
   return (
-    <div style={{borderRadius: "10px"}} className="shadow-2xl flex flex-col md:flex-row justify-between items-center pl-2 pr-4 py-4 mb-1 bmd:mb-0 g-white hover:bg-gray-200 transition ">
+    <div style={{borderRadius: "10px"}} className="hover:shadow-2xl shadow-xl flex flex-col md:flex-row justify-between items-center pl-2 pr-4 py-4 mb-1 bmd:mb-0 g-white bg-white hover:bg-gray-200 transition ">
         
         <div className="flex flex-col md:flex-row items-center md:mr-8">
 
-            <div style={{minWidth: "150px"}} className='w-32 h-36 bg-white flex justify-center items-center'>
+            <div style={{minWidth: "150px", borderRadius: "10px"}} className='w-32 h-36 bg-white flex justify-center items-center'>
                 <img
                     src={item.image[0]}
                     alt={item.name}
-                    className="h-full object-contain max-h-full"
+                    className="h-full object-contain max-h-full p-1"
                 />
             </div>
 
@@ -49,14 +48,6 @@ const CartItem = ({ item, handleTotalItems, handleTotalPrice, handleSummary, han
             </div>
 
         </div>
-
-        {/* <div className="flex flex-col md:flex-row items-center md:mr-8">
-            <img src="https://via.placeholder.com/80" alt="Product" className="mr-4 mb-4 md:mb-0" />
-            <div>
-            <h2 className="font-bold text-lg">{brand} - {name}</h2>
-            <p className="text-gray-600">{description}</p>
-            </div>
-        </div> */}
 
         <div className="flex flex-col items-center sm:items-start">
 
@@ -76,7 +67,6 @@ const CartItem = ({ item, handleTotalItems, handleTotalPrice, handleSummary, han
                 
                 <div className="p-1">
                     <Chip
-                        key={"-"}
                         label={"-"}
                         onClick={handleDecrement}
                     />
