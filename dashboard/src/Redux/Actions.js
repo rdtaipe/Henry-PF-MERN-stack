@@ -1,20 +1,23 @@
 import axios, { Axios } from 'axios'
 import colors from './Utils/colors'
-import { base,themeSettings } from './Utils/theme'
+import { base, themeSettings } from './Utils/theme'
+import { utils } from './Utils/Utils'
 
 export const InitialState = {
     actions: {},
     server: {
         url: "http://localhost:5000/",
+        dashboardUrl: "http://localhost:3001/",
+        clientUrl: "http://localhost:3000/",
         //routes action   
-        get:(url)=>axios.get(url),
-        post:(url,house)=> axios.post(url,house),
-        put:(url,id,house)=> axios.put(url+id,house),
-        delete:(url,id)=> axios.delete(url+id),
-        find:(url,query)=> axios.get(url+query),
+        get: (url) => axios.get(url),
+        post: (url, house) => axios.post(url, house),
+        put: (url, id, house) => axios.put(url + id, house),
+        delete: (url, id) => axios.delete(url + id),
+        find: (url, query) => axios.get(url + query),
         auth: {
             get: ({ url }) => {
-                var token = getCookie("token")
+                var token = utils.getCookie("token")
                 var headers = { Authorization: `Bearer ${token}` }// for every request
                 console.log(token)
                 return axios.get(url, {
@@ -22,15 +25,18 @@ export const InitialState = {
                 })
 
             },
-            post: ({ url, token, send }) => {
+            post: ({ url, send }) => {
+                var token = utils.getCookie("token")
                 var headers = { Authorization: `Bearer ${token}` }// for every request
                 return axios.post(url, { ...send, headers: headers })
             },
-            put: ({ url, token, send }) => {
+            put: ({ url, send }) => {
+                var token = utils.getCookie("token")
                 var headers = { Authorization: `Bearer ${token}` }// for every request
                 return axios.put(url, { ...send, headers: headers })
             },
-            delete: ({ url, token, send }) => {
+            delete: ({ url, send }) => {
+                var token = utils.getCookie("token")
                 var headers = { Authorization: `Bearer ${token}` }// for every request
                 return axios.delete(url, { ...send, headers: headers })
             },
@@ -43,28 +49,51 @@ export const InitialState = {
         width: 240,
         height: window.innerHeight,
         items: [
-            { id:"Dashboard", type: "item", name: "Dashboard", active: false},
-            { id:"Products", type: "item", name: "Products", active: false },
-            { id:"Users", type: "item", name: "Users", active: false },
-            { id:"Sales", type: "item", name: "Sales", active: false },
-            { id:"Employees", type: "item", name: "Employees", active: false },
-            { id:"Roles", type: "item", name: "Roles", active: false },
-            { id:"Permissions", type: "item", name: "Permissions", active: false },
+            { id: "Dashboard", type: "item", name: "Dashboard", active: false },
+            { id: "Products", type: "item", name: "Products", active: false },
+            { id: "Users", type: "item", name: "Users", active: false },
+            { id: "Sales", type: "item", name: "Sales", active: false },
+            { id: "Employees", type: "item", name: "Employees", active: false },
+            { id: "Roles", type: "item", name: "Roles", active: false },
+            { id: "Permissions", type: "item", name: "Permissions", active: false },
         ]
     },
     user: {
-        token: () => !getCookie("token") ? null : getCookie("token"),
-        autorized: () => !getLocal("autorized") ? false : getLocal("autorized"),
-        obj: {},
+        setStatus: (status) => { utils.saveLocal("userStatus", status) },
+        status: () => !utils.getLocal("userStatus") ? { error: true, message: "waiting_authorization" } : utils.getLocal("userStatus"),
+        token: () => !utils.getCookie("token") ? null : utils.getCookie("token"),
+        isAutorized: () => !utils.getLocal("autorized") ? false : utils.getLocal("autorized"),
+        data: () => !utils.getLocal("userData") ? {} : utils.getLocal("userData"),
+        authorize: async (token, user, url) => {
+            const domain = url + "users/authorize"
+            const headers = { authorization: `Bearer ${token}`, user: user }// for every request
+            const getUserMetadataResponse = await axios.get(domain, {
+                headers: headers,
+            });
+            const data = getUserMetadataResponse.data.user
+            utils.saveLocal("userStatus", { error: false, message: "Authorized" })
+            utils.saveLocal("autorized", true)
+            utils.saveLocal("userData", data)
+            utils.saveCookie("token", token)
+            console.log(utils.getLocal("userData"),"user data")
+            return data
+        },
+        unauthorize: () => {
+            utils.saveLocal("userStatus", { error: true, message: "Unauthorized" })
+            utils.saveLocal("autorized", false)
+            utils.saveLocal("userData", {})
+            utils.saveCookie("token", "")
+        },
     },
+    utils: utils,
     theme: {
-        mode: () => { return getLocal('theme') },
+        mode: () => { return utils.getLocal('theme') },
         setMode: "",
         colors: { ...colors },
         use: () => {
             return State.theme.colors[State.theme.mode()]
         },
-        base:base,
+        base: base,
     },
     animation: {
         open: ".4,0,0,1"
@@ -136,60 +165,27 @@ export const Reducers = {
             }
         }
     },
-    changeTheme:(state,action)=>{
-        const theme=getLocal("theme")
-         saveLocal("theme",theme === "dark" ? "light" : "dark")
-        state.theme.setMode=getLocal("theme")
+    changeTheme: (state, action) => {
+        const theme = utils.getLocal("theme")
+        utils.saveLocal("theme", theme === "dark" ? "light" : "dark")
+        state.theme.setMode = utils.getLocal("theme")
     },
     setActiveSidebarItem: (state, action) => {
-     
-        state.sidebar.items.map(item=>{
-            if(item.name.toLowerCase()===action.payload.toLowerCase()){
-                item.active=true
-            }else{
-                item.active=false
+
+        state.sidebar.items.map(item => {
+            if (item.name.toLowerCase() === action.payload.toLowerCase()) {
+                item.active = true
+            } else {
+                item.active = false
             }
         })
-    
-  
-},
+
+
+    },
 
 }
 
-// save local storage
-const saveLocal = (key, v) => {
-    try {
-        localStorage.setItem(key, v)
-    } catch (e) {
-        var parce = JSON.parse(v)
-        localStorage.setItem(key, parce)
-    }
-}
-const getLocal = (key) => {
-    try {
-        return localStorage.getItem(key)
-    } catch (e) {
-        var res=localStorage.getItem(key)
-        return JSON.parse(res)
-    }
-}
-localStorage.getItem('theme') === null ? saveLocal('theme', 'light') : null
+localStorage.getItem('theme') === null ? utils.saveLocal('theme', 'light') : null
 
 
 //save cookien for 24 hours
-const saveCookie = (key, v) => {
-    try {
-        const data = JSON.stringify(v)
-        document.cookie = `${key}=${data};max-age=86400`
-    } catch (e) {
-        console.log(e)
-    }
-}
-const getCookie = (key) => {
-    try {
-        const data = document.cookie.split(';').find(c => c.trim().startsWith(`${key}=`))
-        return JSON.parse(data.split('=')[1])
-    } catch (e) {
-        console.log(e)
-    }
-}
