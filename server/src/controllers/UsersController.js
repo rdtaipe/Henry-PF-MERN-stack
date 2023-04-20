@@ -4,7 +4,7 @@ import { emailerConfig } from './emailerController.js'
 
 
 export const allUsers = async (req, res, next) => {
-    const {id}= req.query
+   /*  const {id}= req.query
     try {
         if(!id){
             res.status(400).send({msg:"No ID passed. Cannot access data"})
@@ -42,7 +42,13 @@ export const allUsers = async (req, res, next) => {
     } catch (error) {
         console.error("Error occurred. Users couldn't be shown.")
         next(error)
-    }
+    } */
+    try {
+        const users = await userModel.find()
+        res.json(users)
+    } catch (error) {
+        res.status(400).json(error.message)
+    }   
 }
 
 
