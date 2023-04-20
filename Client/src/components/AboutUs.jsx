@@ -21,22 +21,23 @@ export const AboutUs = () => {
             <p className="text-2xl">Dress To Impress And Never Stress</p>
           </div>
           <p className="text-xl">
-            <span className="font-bold">Welcome To ChicCloset</span>, The online store where you will find all the clothing styles that you you need to
-            always look fashionable. We have from casual clothes to elegant and
-            sophisticated outfits. If you are looking for something relaxed and
-            comfortable, we have a wide variety of sports and casual clothing,
-            from baggy t-shirts and pants to sweatshirts and joggers. Yeah you
-            need something more formal, don't worry, we also have suits, blouses
-            and dresses for special occasions. If you like the most avant-garde
-            styles, do not miss our collection of fashionable clothes, with
-            exclusive and unique designs that will make you stand out anywhere.
-            Also, don't forget that we also offer a wide selection of
-            accessories, shoes and bags to complement You look. Visit us and
-            renew your wardrobe today at ChicCloset!
+            <span className="font-bold">Welcome To ChicCloset</span>, The online
+            store where you will find all the clothing styles that you you need
+            to always look fashionable. We have from casual clothes to elegant
+            and sophisticated outfits. If you are looking for something relaxed
+            and comfortable, we have a wide variety of sports and casual
+            clothing, from baggy t-shirts and pants to sweatshirts and
+            sweatpants. Let's say you need something more formal, don't worry,
+            we also have suits, blouses and dresses for special occasions. If
+            you like the most avant-garde styles, do not miss our collection of
+            fashionable clothes, with exclusive and unique designs that will
+            make you stand out anywhere. Also, don't forget that we also offer a
+            wide selection of accessories, shoes and bags to complement You
+            look. Visit us and renew your wardrobe today at ChicCloset!
           </p>
         </div>
       </div>
-      <div className="bg-[#8a73cf] flex px-10 py-10 xl:flex-row xl:justify-between xl:items-stretch xl:text-left sm:flex-col sm:items-center sm:text-center">
+      <div className="bg-[#21385A] flex px-10 py-10 xl:flex-row xl:justify-between xl:items-stretch xl:text-left sm:flex-col sm:items-center sm:text-center text-[#ffff]">
         <div className="xl:w-[44%] sm:w-full flex flex-col justify-between xl:pt-3 sm:gap-3 sm:pb-5">
           <div>
             <p className="text-4xl font-bold">What are we looking for?</p>
@@ -50,10 +51,9 @@ export const AboutUs = () => {
             this, we We focus on providing excellent customer service, fashion
             advice and competitive prices. Also, we We strive to keep an
             inventory up to date with the latest fashion trends, so that our
-            customers can always find something they like. In short, the goal of
-            ChicCloset is to be a leading clothing store in fashion and style,
-            which offer your customers a unique shopping experience and
-            satisfactory.
+            customers can always find something they like. In short terms, the
+            goal of ChicCloset is to be a leading clothing store in fashion and
+            style, which offer the customers a unique shopping experience.
           </p>
         </div>
 
