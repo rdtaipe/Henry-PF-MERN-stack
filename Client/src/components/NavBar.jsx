@@ -38,7 +38,8 @@ const NavBar = ({ className }) => {
           <img src={logo} alt="logo" className="w-36" />
         </NavLink>
       </div>
-      <div style={{width:`calc(100% - ${width}px)`}} className="flex items-center justify-between pr-[2%]">
+      
+      <div style={{ width: `calc(100% - ${width}px)` }} className="flex items-center justify-between pr-[2%]">
 
         <div className="flex items-center">
           <NavLink to='/home' className="text-white hover:text-stone-400 hover:transform transition-all duration-500">
@@ -50,17 +51,16 @@ const NavBar = ({ className }) => {
           <NavLink to='/form' className="text-white hover:text-stone-400 hover:transform transition-all duration-500">
             Form
           </NavLink>
-        </div>
-     
 
-      <div className="flex items-center">
+        </div>
+
+
+        <div className="text-white">
+          <SearchBar />
+        </div>
 
         <div className="flex items-center">
-          <div className="text-white">
-            <SearchBar />
-          </div>
 
-          <div className="flex items-center ml-[50px]">
 
             <NavLink to='/cart' className="hover: transition-all duration-500">
               <div className="text-black bg-white w-[auto] h-[40px] flex justify-center items-center hover:bg-stone-400 transition-all duration-200 rounded-[4px] px-[8px] mr-[5px]">
@@ -76,10 +76,11 @@ const NavBar = ({ className }) => {
 
             </div>
 
-          </div>
+         
         </div>
+
       </div>
-    </div>
+
     </nav >
   );
 };
