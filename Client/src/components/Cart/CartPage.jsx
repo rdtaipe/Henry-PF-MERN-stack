@@ -131,10 +131,10 @@ const CartPage = ({ onClick }) => {
   };
 
   return (
-    <div className={`container mx-auto flex items-center justify-center px-4 mt-12 min-h-screen ${!isVisible ? 'hidden' : ''}`}>
+    <div style={{height: "900px"}} className={`container mx-auto flex items-center bg-stone-100 justify-center px-4 mt-12  ${!isVisible ? 'hidden' : ''}`}>
       {itemsLocal.length === 0 ? (
 
-        <div style={{ borderRadius: "18px" }} className="shadow-2xl text-center bg-stone-300 py-12 px-8 sm:px-16 md:px-24 lg:px-56 max-w-4xl mx-auto flex flex-col items-center justify-center">
+        <div style={{ borderRadius: "18px" }} className="shadow-2xl text-center bg-stone-200 py-12 px-8 sm:px-16 md:px-24 lg:px-56 max-w-4xl mx-auto flex flex-col items-center justify-center">
           <h1 className="text-2xl font-bold leading-none sm:text-3xl dark:text-black">
             There's nothing on your cart, let's get chic!
           </h1>
@@ -148,7 +148,7 @@ const CartPage = ({ onClick }) => {
 
 
       ) : (
-        <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 gap-6 bg-stone-100'>
 
           <div className="space-y-6">
 
@@ -175,14 +175,14 @@ const CartPage = ({ onClick }) => {
               Order Summary
             </h1>
 
-            <div style={{ borderRadius: "15px" }} className="border-2 border-stone-200 bg-white px-5 py-5 mt-6 dark:text-black">
+            <div style={{ borderRadius: "10px" }} className="border-none shadow-md bg-stone-200 px-5 py-5 mt-6 dark:text-black">
               {Object.entries(summary).map(([itemId, itemSummary]) => (
                 <div key={itemId} className="flex justify-between mb-2">
                   <span>{itemId} x {itemSummary.quantity}</span>
                   <span>${itemSummary.total.toFixed(2)}</span>
                 </div>
               ))}
-              <div className="flex justify-between border-t pt-1 mt-6">
+              <div className="flex justify-between border-t border-stone-500 pt-4 mt-6">
                 <span className="font-bold">Total ({totalItems} items)</span>
                 <span>${totalPrice.toFixed(2)}</span>
               </div>

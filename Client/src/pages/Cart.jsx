@@ -79,7 +79,7 @@ const Cart = () => {
 
   return (
     <InternalProvider context={{ preferenceId, orderData, setOrderData }}>
-      <div className="bg-stone-200">
+      <div className="bg-stone-100">
         <NavBar />
         <CartPage onClick={handleClick} />
         <Payment/>

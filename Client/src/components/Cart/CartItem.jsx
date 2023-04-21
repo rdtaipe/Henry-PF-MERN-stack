@@ -27,11 +27,11 @@ const CartItem = ({ item, handleTotalItems, handleTotalPrice, handleSummary, han
     };
 
   return (
-    <div style={{borderRadius: "10px"}} className="shadow-xl hover:shadow-2xl flex flex-col md:flex-row justify-between items-center pl-2 pr-4 py-4 mb-1 bmd:mb-0 g-white hover:bg-gray-200 transition ">
+    <div style={{borderRadius: "10px"}} className="shadow-xl hover:shadow-2xl flex flex-col md:flex-row justify-between items-center pl-2 pr-4 py-4 mb-1 bmd:mb-0 bg-stone-200 transition ">
         
         <div className="flex flex-col md:flex-row items-center md:mr-8">
 
-            <div style={{minWidth: "150px"}} className='w-32 h-36 bg-white flex justify-center items-center'>
+            <div style={{minWidth: "150px", borderRadius: "5px"}} className='w-32 h-36 bg-white flex justify-center items-center'>
                 <img
                     src={item.image[0]}
                     alt={item.name}
