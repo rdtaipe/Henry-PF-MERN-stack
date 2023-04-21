@@ -29,7 +29,7 @@ const CartItem = ({ item, handleTotalItems, handleTotalPrice, handleSummary, han
   return (
     <div style={{borderRadius: "10px"}} className="shadow-xl hover:shadow-2xl flex flex-col md:flex-row justify-between items-center pl-2 pr-4 py-4 mb-1 bmd:mb-0 bg-stone-200 transition ">
         
-        <div className="flex flex-col md:flex-row items-center md:mr-8">
+        <div className="flex flex-col lg:flex-row items-center md:mr-8">
 
             <div style={{minWidth: "150px", borderRadius: "5px"}} className='w-32 h-36 bg-white flex justify-center items-center'>
                 <img
@@ -40,7 +40,7 @@ const CartItem = ({ item, handleTotalItems, handleTotalPrice, handleSummary, han
             </div>
 
 
-            <div style={{minWidth: "200px"}} className='py-4 px-8'>
+            <div style={{minWidth: "200px"}} className='py-4 px-6'>
                 <h3 className="text-l font-bold ">{item.name}</h3>
                 <p className="text-sm font-medium">Brand: {item.brand}</p>
                 <p className="text-sm mr-5" style={{maxWidth: "200px"}}>{truncatedDescription}</p>
@@ -58,7 +58,7 @@ const CartItem = ({ item, handleTotalItems, handleTotalPrice, handleSummary, han
             </div>
         </div> */}
 
-        <div className="flex flex-col items-center sm:items-start">
+        <div className="flex flex-col items-center justify-center sm:items-start">
 
             <div style={{borderRadius: "999px"}} className="flex items-center mb-2 mt-2 bg-stone-100">
                 
