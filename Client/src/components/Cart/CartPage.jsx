@@ -116,25 +116,18 @@ const CartPage = ({ onClick }) => {
   }
 
   function handleDelete(id) {
-    const deletedItem = itemsLocal.find(item => item._id === id);
-    const newItems = itemsLocal.filter(item => item._id !== id);
-    const deletedItemQuantity = summary[deletedItem.name].quantity;
-    let newTotalPrice = totalPrice - (deletedItem.price * deletedItemQuantity);
-    setTotalPrice(newTotalPrice);
-    setItemsLocal(newItems);
-    setTotalItems(totalItems - deletedItemQuantity);
-    setSummary(prevSummary => {
-      const { [deletedItem.name]: deleted, ...rest } = prevSummary;
-      return rest;
-    });
-    const updatedCart = itemsLocal.reduce((cart, item) => {
-      return {
-        ...cart,
-        [item.id]: item,
-      };
-    }, {});
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
-    Notification('warning', deletedItem.name + ' deleted from the cart', 'top-end', 5000);
+
+    // Obtener el array de objetos de la Local Storage
+    const cartItems = JSON.parse(localStorage.getItem('cart'));
+
+    // Recorrer el array de objetos y encontrar el objeto con el ID específico
+    const updatedCartItems = cartItems.filter((item) => item.id !== id);
+
+    setItemsLocal(updatedCartItems);
+
+    // Guardar el array actualizado en la Local Storage
+    localStorage.setItem('cart', JSON.stringify(updatedCartItems));
+
   }
 
   const handleTotalItems = (value) => {
@@ -178,7 +171,7 @@ const CartPage = ({ onClick }) => {
                 handleTotalItems={handleTotalItems}
                 handleTotalPrice={handleTotalPrice}
                 handleSummary={handleSummary}
-                handleDelete={() => handleDelete(item._id)} // Pasa la función handleDelete como prop
+                handleDelete={() => handleDelete(item.id)} // Pasa la función handleDelete como prop
               />
             ))}
 
@@ -198,7 +191,7 @@ const CartPage = ({ onClick }) => {
                 </div>
               ))}
               <div className="flex justify-between border-t border-stone-500 pt-4 mt-6">
-                <span className="font-bold">Total ({totalItems} items)</span>
+                <span className="font-bold">Total ({itemsLocal.length} items)</span>
                 <span>${totalPrice.toFixed(2)}</span>
               </div>
             </div>
