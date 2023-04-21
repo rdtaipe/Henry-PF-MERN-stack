@@ -33,7 +33,7 @@ const CartItem = ({ item, handleTotalItems, handleTotalPrice, handleSummary, han
 
             <div style={{minWidth: "150px", borderRadius: "5px"}} className='w-32 h-36 bg-white flex justify-center items-center'>
                 <img
-                    src={item.image[0]}
+                    src={item.image}
                     alt={item.name}
                     className="h-full object-contain max-h-full"
                 />
@@ -76,7 +76,6 @@ const CartItem = ({ item, handleTotalItems, handleTotalPrice, handleSummary, han
                 
                 <div className="p-1">
                     <Chip
-                        key={"-"}
                         label={"-"}
                         onClick={handleDecrement}
                     />

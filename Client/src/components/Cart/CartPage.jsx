@@ -72,10 +72,23 @@ const CartPage = ({ onClick }) => {
   ];
 
   // const items = useSelector((state) => state.items) se
+  
 
-  const [itemsLocal, setItemsLocal] = useState(itemsHardcode)
+  const itemsString = localStorage.getItem("cart");
+  const items = JSON.parse(itemsString);
+  
+  const itemsArray = Object.values(items); // extraer el array del objeto
+  
+  console.log(itemsArray);
+  console.log(itemsArray.length);
+  console.log(typeof itemsArray);
+  
 
-  const [totalItems, setTotalItems] = useState(itemsLocal.length);
+  // localStorage.removeItem("cartItems")
+
+  const [itemsLocal, setItemsLocal] = useState(itemsArray)
+
+  const [totalItems, setTotalItems] = useState(itemsHardcode.length);
   const [totalPrice, setTotalPrice] = useState(
     itemsLocal.reduce((acc, curr) => acc + curr.price, 0) // Obtener la suma de los precios de los artículos seleccionados
   );
@@ -92,10 +105,6 @@ const CartPage = ({ onClick }) => {
     }, {});
   });
 
-  console.log(summary)
-  console.log(itemsLocal)
-  console.log(totalItems)
-  console.log(totalPrice)
 
   function handleSummary(value) {
     setSummary(prevSummary => ({

@@ -1,10 +1,11 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { Notification } from './Notification/Notification';
 
 const Card = ({data}) => {
   const navigate = useNavigate();
 
-  const { _id, image, name, price, stock } = data;
+  const { _id, image, name, price, stock, description } = data;
 
   const discount = Math.round(Math.random() * 20);
   const priceDiscount = Math.round(price - (price * discount) / 20);
@@ -14,6 +15,24 @@ const Card = ({data}) => {
   
     // navigate(`/products/${_id}`);
   };
+
+  const handleAddToCart = () => {
+    // Obtener información del producto
+    const product = {
+      id: _id,
+      image: image[0],
+      name: name,
+      price: price,
+      description: description
+    };
+
+    const products = JSON.parse(localStorage.getItem('cart')) || [];
+
+    products.push(product)
+
+    localStorage.setItem('cart', JSON.stringify(products));
+    Notification('succes', product.name + ' added to the cart', 'top-end', 5000);
+  }
 
   return (
     <div className="rounded-lg justify-center items-center w-[200px] min-h-200 bg-stone-300 hover:shadow-xl hover:scale-105 transition duration-500 ease-in-out mb-1">
@@ -84,15 +103,16 @@ const Card = ({data}) => {
             </p>
           </div>
           <div className="absolute bottom-3 flex justify-between mt-2">
-            <button className="text-sm font-semibold block px-4 text-gray-500  rounded-full hover:scale-105">
+
+            <button style={{borderRadius: "5px"}} className="text-md px-2 ml-auto text-white bg-gray-900 hover:bg-blue-900 transition" onClick={handleAddToCart}>
               Add to cart
             </button>
-            {/* detail buton */}
-            <Link to={`/products/${_id}`} className="text-lg font-semibold block px-4 text-white bg-gray-900 rounded-full hover:scale-105 hover:bg-blue-900"
+            <Link to={`/products/${_id}`} style={{borderRadius: "5px", marginBottom: "-5px"}} className="font-medium ml-6 px-4 font-md transition"
               onClick={handleNameClick}
             >
               Detail
             </Link>
+
           </div>
         </div>
       </div>
