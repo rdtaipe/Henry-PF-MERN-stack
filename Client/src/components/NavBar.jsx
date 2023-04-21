@@ -15,9 +15,6 @@ const NavBar = ({ className }) => {
   const userAutorized = isAutorized()
   const userData = data()
 
-  const userAutorized = isAutorized();
-  const userData = data();
-
   const [profileState, setProfileState] = useState({
     button: <Link to={"/authorize"}>Log In</Link>,
     icon: <RxAvatar size={25} className="mr-[10px]" />,
