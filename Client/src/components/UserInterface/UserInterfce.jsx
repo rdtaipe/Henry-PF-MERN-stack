@@ -6,7 +6,7 @@ import AdressSettings from "./AdressSettings";
 import { FaUser, FaCog, FaShoppingCart } from "react-icons/fa";
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import ShopHistory from "./ShopHistory";
-
+import _ from "lodash";
 import axios from "axios";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -15,34 +15,44 @@ import { NavLink, Link } from "react-router-dom";
 import { RxAvatar } from 'react-icons/rx'
 
 const UserInterface = () => {
-
-    const userHardcoded = {
-        fullName: "Arthur Morgan",
-        email: "ArthurMorgan@Vanderlinde.com",
-        password: "?",
-        birthDate: "12/12/1863",
-        genre: "male",
-        country: "United States",
-        address: "Street Licor - 200, Saint Denise",
-        tel: "123456789",
-        image: "https://static.wikia.nocookie.net/listofdeaths/images/2/2f/Arthur_Morgan.jpg"
-    }
-
     
     const { isAutorized, unauthorize, status, data } = useSelector(({ state }) => state.user)
     const { isAuthenticated, logout } = useAuth0();
     const userAutorized = isAutorized()
     const userData = data()
     
-    const [originalUser, setOriginalUser] = useState(userHardcoded)
-    const [user, setUser] = useState(userData);
     const [activeSection, setActiveSection] = useState("Personal data");
     
-    console.log(user)
+    const [user, setUser] = useState({});
+    const [originalUser, setOriginalUser] = useState({});
+    
+    const [saveStatus, setSaveStatus] = useState(true)
 
-    const handleUserDataChange = (newUserData) => {
+    console.log(user)
+    console.log(originalUser)
+    console.log(user === originalUser)
+
+    useEffect(() => {
+        if (!_.isEqual(user, originalUser)) {
+          setSaveStatus(true);
+        } else {
+          setSaveStatus(false);
+        }
+      }, [user]);
+
+      const handleUserDataChange = (newUserData) => {
         setUser(prevUser => ({ ...prevUser, ...newUserData }));
-    }
+        setOriginalUser(prevUser => {
+          const updatedOriginalUser = { ...prevUser };
+          Object.keys(newUserData).forEach(key => {
+            if (!updatedOriginalUser.hasOwnProperty(key)) {
+              updatedOriginalUser[key] = "";
+            }
+          });
+          return updatedOriginalUser;
+        });
+      };
+      
     
     const handleActiveSection = (value) => {
         setActiveSection(value);
@@ -56,8 +66,8 @@ const UserInterface = () => {
     useEffect(() => {
         axios.get(`http://localhost:5000/users/find/${userData.id}`)
           .then((response) => {
-            console.log(response.data)
-            setUser(response.data);
+            setOriginalUser(response.data)
+            setUser(response.data)
           })
           .catch((error) => {
             console.log(error);
@@ -69,8 +79,18 @@ const UserInterface = () => {
 <>
         {userAutorized ? (
 
-            <div style={{height: "700px"}} className="flex flex-col items-center bg-stone-100">
-                <div className="mt-20 py-20 px-32 bg-stone-100 flex items-start justify-content-center">
+            <div style={{height: "800px"}} className="flex flex-col items-center bg-stone-100">
+
+            <div style={{borderRadius: "10px", width: "1220px"}} className="mt-40 bg-stone-200 gap-8 py-5 px-10 shadow-xl">
+                <div style={{display: "flex", alignItems: "center"}}>
+                    <img src={userData.picture} alt="user" style={{width: "70px", height: "70px", borderRadius: "50%", marginRight: "50px"}} />
+                    <h2 className="text-3xl font-bold pt-2">Hola {userData.given_name}!</h2>
+                    <button className={saveStatus ? "bg-red-500" : "bg-green-500"} style={{marginTop: "20px"}} disabled={saveStatus}>Save Changes</button>
+                </div>
+            </div>
+
+                
+                <div className="py-10 pb-32 flex items-start justify-content-center">
 
                     <div style={{ width: "365px", borderRadius: "5px", flex: "0 0 auto" }} className=" flex flex-col justify-center items-center py-2 gap-4">
                     

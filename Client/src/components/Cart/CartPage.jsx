@@ -27,12 +27,7 @@ const CartPage = ({ onClick }) => {
   const itemsString = localStorage.getItem("cart");
   const items = JSON.parse(itemsString);
 
-  const itemsArray = Object.values(items ?? {}); // extraer el array del objeto
-
-  console.log(itemsArray);
-  console.log(itemsArray.length);
-  console.log(typeof itemsArray);
-
+  const itemsArray = Object.values(items ?? {}); // extraer el array del objeto;
 
   // localStorage.removeItem("cartItems")
 
