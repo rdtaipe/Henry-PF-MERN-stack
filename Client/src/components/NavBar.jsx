@@ -19,14 +19,14 @@ const NavBar = ({ className }) => {
   const userData = data();
 
   const [profileState, setProfileState] = useState({
-    button: <Link to={"/authorize"}>Loguin</Link>,
+    button: <Link to={"/authorize"}>Log In</Link>,
     icon: <RxAvatar size={25} className="mr-[10px]" />,
   });
 
   useEffect(() => {
     if ((userAutorized, isAuthenticated)) {
       setProfileState({
-        button: <button onClick={hadleLogout}>Loguot</button>,
+        button: <button onClick={hadleLogout}>Log Out</button>,
         icon: (
           <img
             src={userData.picture}
