@@ -75,13 +75,13 @@ const CartPage = ({ onClick }) => {
 
   const itemsString = localStorage.getItem("cart");
   const items = JSON.parse(itemsString);
-  
-  const itemsArray = Object.values(items); // extraer el array del objeto
-  
+
+  const itemsArray = Object.values(items ?? {}); // extraer el array del objeto
+
   console.log(itemsArray);
   console.log(itemsArray.length);
   console.log(typeof itemsArray);
-  
+
 
   // localStorage.removeItem("cartItems")
 
@@ -127,6 +127,13 @@ const CartPage = ({ onClick }) => {
       const { [deletedItem.name]: deleted, ...rest } = prevSummary;
       return rest;
     });
+    const updatedCart = itemsLocal.reduce((cart, item) => {
+      return {
+        ...cart,
+        [item.id]: item,
+      };
+    }, {});
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
     Notification('warning', deletedItem.name + ' deleted from the cart', 'top-end', 5000);
   }
 
@@ -139,7 +146,7 @@ const CartPage = ({ onClick }) => {
   };
 
   return (
-    <div style={{height: "900px"}} className={`container mx-auto flex items-center bg-stone-100 justify-center px-4 mt-12  ${!isVisible ? 'hidden' : ''}`}>
+    <div style={{ height: "900px" }} className={`container mx-auto flex items-center bg-stone-100 justify-center px-4 mt-12  ${!isVisible ? 'hidden' : ''}`}>
       {itemsLocal.length === 0 ? (
 
         <div style={{ borderRadius: "18px" }} className="shadow-2xl text-center bg-stone-200 py-12 px-8 sm:px-16 md:px-24 lg:px-56 max-w-4xl mx-auto flex flex-col items-center justify-center">
