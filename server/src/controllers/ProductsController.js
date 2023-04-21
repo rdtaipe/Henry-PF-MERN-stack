@@ -1,6 +1,6 @@
 import productsModel from "../models/product.js";
-import  cloudinary  from '../middlewares/cloudinary_config.js';
 import {deleteImageLocal} from '../middlewares/multer_config.js'
+import uploadCloudinary from "../middlewares/cloudinary.js";
 
 
 export const getProducts = async (req, res) => {
@@ -39,26 +39,25 @@ export const getProductById = async (req, res) => {
     }
 }
 
+
+//create products
 export const createProducts = async (req, res,next) => {
   try { 
         //destructuro porque debo trabajar el objeto en formas separada
     let {name,description,stock,color,size,category,genre,brand,price,active,feactured}=req.body;
-    let file=req.file
+    let file=req.file;
  
-    let cloudinaryUpload = await cloudinary.uploader.upload(file.path, 
-    { //uploas seria la carpeta donde se guardara todo lo que subimos de products
-    folder: 'products',
-    });  
+     let upload=await  uploadCloudinary(file);
         //una vez subida la image ya puedo obtener su url .creo un objeto
        let objProduct={
         name,description,stock,
         color,size,category,genre: genre,
         brand,price,active,feactured,
-       image:cloudinaryUpload.secure_url
+        image:upload.secure_url
      }
-     console.log('objeto producto \n',objProduct)
+     //console.log('objeto producto \n',objProduct)
 
-     const newProduct =await new productsModel(objProduct);
+    const newProduct =await new productsModel(objProduct);
      if (!newProduct) {  
         res.status(400).json({ message: 'All fields are required' })
     }
@@ -72,8 +71,9 @@ export const createProducts = async (req, res,next) => {
       res.status(409).json({ message: error.message });
   
     }
- 
 }
+
+
 export const updateProduct = async (req,res) =>{
     const { id } = req.params
     const {name,description,stock,color,size,category,image,genre,brand,price,active,featured} = req.body
