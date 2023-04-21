@@ -72,7 +72,6 @@ const CartPage = ({ onClick }) => {
   ];
 
   // const items = useSelector((state) => state.items) se
-  
 
   const itemsString = localStorage.getItem("cart");
   const items = JSON.parse(itemsString);
