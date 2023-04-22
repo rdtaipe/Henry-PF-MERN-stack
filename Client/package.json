@@ -8,6 +8,7 @@
     "@emotion/styled": "^11.10.6",
     "@mercadopago/sdk-react": "^0.0.8",
     "@mui/icons-material": "^5.11.16",
+    "@mui/joy": "^5.0.0-alpha.76",
     "@mui/material": "^5.12.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
