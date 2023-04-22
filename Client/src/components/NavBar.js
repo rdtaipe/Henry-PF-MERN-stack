@@ -111,9 +111,8 @@ const NavBar = () => {
               </button>
             </div>
           </NavLink>
-
           <div className="text-black bg-white w-[auto] h-[40px] flex justify-center items-center hover:bg-stone-400 transition-all duration-200 ml-[5px] mr-[30px] rounded-[4px] px-[10px]">
-            {profileState.icon}
+          <NavLink to='/user' className="hover: transition-all duration-500">{profileState.icon}</NavLink>
             {profileState.button}
 
           </div>
