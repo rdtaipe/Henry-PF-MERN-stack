@@ -5,7 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from 'react-redux';
 
 
-const CartItem = ({ id, item, handleTotalItems, handleTotalPrice, handleSummary, handleDelete,onIncrement,onDecrement  }) => {
+const CartItem = ({ id,onClick, item,onSummary, handleDelete,onIncrement,onDecrement  }) => {
    
     const { url, auth, setter,get } = useSelector(({ state }) => state.server)
 
@@ -13,14 +13,14 @@ const CartItem = ({ id, item, handleTotalItems, handleTotalPrice, handleSummary,
     useEffect(() => {
         get(`${url}/products/${id}`).then(res => {
             setData(res.data)
+            onSummary(res.data)
         })
 
-    }, [(data?null:data)])
+
+    }, [(data?null:data),item])
  
-    const handleNameClick = (e, item) => {
-    }
-  
-  return (data&& <div style={{borderRadius: "10px"}} className="shadow-xl hover:shadow-2xl flex flex-col md:flex-row justify-between items-center pl-2 pr-4 py-4 mb-1 bmd:mb-0 bg-stone-200 transition ">
+
+  return (data&& <div onClick={onClick} style={{borderRadius: "10px"}} className="shadow-xl hover:shadow-2xl flex flex-col md:flex-row justify-between items-center pl-2 pr-4 py-4 mb-1 bmd:mb-0 bg-stone-200 transition ">
         
         <div className="flex flex-col md:flex-row items-center md:mr-8">
 
