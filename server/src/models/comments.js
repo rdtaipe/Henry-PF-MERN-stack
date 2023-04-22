@@ -3,12 +3,32 @@ const commentSchema = new Schema(
     {
         name: {
             type: String,
+            required: true,
         },
-        email: {
+        picture: {
             type: String,
+            required: true,
         },
-        message: {
+        body: {
             type: String,
+            default: 'No comment',
+        },
+        score: {
+            type: Number,
+            enum: [1, 2, 3, 4, 5],
+            required: true,
+        },
+        date: {
+            type: Date,
+            default: Date.now,
+        },
+        productId: {
+            type: String,
+            required: true,
+        },
+        userId: {
+            type: String,
+            required: true,
         }
     },
     {

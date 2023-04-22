@@ -25,25 +25,37 @@ router.get('/', async (req, res, next) => {
         next(error)
     }
 })
+router.get('/:id', async (req, res) => {
+    try{
+        const {id} = req.params
+        const response = await commentModel.find({productId:id})
+        if(response){
+            res.status(200).json(response)
+        }
+        else { 
+            res.status(200).json({ message: "There're no comments yet"})
+        }
+    } catch (error){
+        res.status(500).json({ message: error.message })
+    }
+})
 
 router.post('/send', async (req, res) => {
     try{
-        const {name, email, message} = req.body
-
-        if(message){
-
-            await commentModel.create({
-                name,
-                email,
-                message
-            })
-            res.status(201).send('Comment saved in the db')
+        const {name,picture,productId,userId,body,score,date} = req.body.data
+        var findComment=await commentModel.findOne({productId:productId,userId:userId})
+        if(findComment){
+            res.status(406).send("You already commented this product")
+        }
+        if(name,picture,productId,userId,body,score,date){
+            await commentModel.create({name,picture,productId,userId,body,score,date})
+            res.status(201).json(commentModel)
 
         } else res.status(406).send("There isn't comment to save")
 
     } catch (error) {
         console.log('Error sending the comment');
-        next(error)
+        res.status(500).json({ message: error.message })
     }
 })
 

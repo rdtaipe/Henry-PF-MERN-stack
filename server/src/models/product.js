@@ -59,6 +59,10 @@ const productSchema = new Schema(
         },
         featured: {
             type: Boolean  //true
+        },
+        stars: {
+            type: Number,
+            default: 0
         }
     },
     {

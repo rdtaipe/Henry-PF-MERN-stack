@@ -2,26 +2,47 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
+import { useSelector, useDispatch } from "react-redux";
+
 import Stars from "./Stars";
 import CommentBox from "./CommentBox";
+import Comment from "./Comment";
 
 export const DetailPage = () => {
+  const dispatch = useDispatch()
+  const { data, cart } = useSelector(({ state }) => state.user)
+  const { url, auth, setter, get } = useSelector(({ state }) => state.server)
+  const userData = data()
+
   const { productId } = useParams();
   const [product, setProduct] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:5000/products/${productId}`)
+    get(`${url}/products/${productId}`)
       .then((res) => setProduct(res.data))
       .catch((err) => console.log(err.message));
-  }, []);
 
+    getCurrentComments()
+  }, []);
+  const addToCart = () => {
+    var obj = {
+      id: product._id,
+      date: new Date(),
+    };
+    auth.put(`${url}/cart/${userData.id}`, obj).then(res => {
+      var resData = res.data.products
+      console.log(resData)
+      dispatch(setter({ keys: 'state.user.cart', value: resData }))
+    })
+
+  }
   const slide = product.image
     ? product.image.map((x) => {
-        return { url: x };
-      })
+      return { url: x };
+    })
     : "https://example.com/zapatos-deportivos-nike1.jpg";
 
   const prevSlide = () => {
@@ -38,7 +59,27 @@ export const DetailPage = () => {
   const updateScore = (newScore) => {
     setScore(newScore);
   };
+  const addComment = ({ comment, stars }) => {
+    const newComment = {
+      name: userData.name,
+      picture: userData.picture,
+      productId: product._id,
+      userId: userData.id,
+      body: comment,
+      score: stars,
+      date: new Date(),
+    };
+    auth.post(`${url}/comments/send`, newComment).then((res) => {
+      getCurrentComments()
+    });
 
+  };
+
+  const getCurrentComments = () => {
+    auth.get(`${url}/comments/${productId}`).then((res) => {
+      setComments(res.data)
+    });
+  }
   return (
     <div className="h-full flex flex-col justify-center mt-[140px]">
       <div className="flex justify-evenly items-center">
@@ -90,7 +131,7 @@ export const DetailPage = () => {
               )}
             </div>
             <div className="flex justify-center">
-              <button className="w-[250px] md:w-[300px] lg:w-[450px] mt-10 font-semibold bg-gray-900 h-10 text-center border-2 border-black rounded hover:bg-blue-900 text-white">
+              <button onClick={addToCart} className="w-[250px] md:w-[300px] lg:w-[450px] mt-10 font-semibold bg-gray-900 h-10 text-center border-2 border-black rounded hover:bg-blue-900 text-white">
                 Add To Cart
               </button>
             </div>
@@ -123,10 +164,30 @@ export const DetailPage = () => {
           </p>
         </div>
       </div>
+      {comments.filter((item) => item.userId === userData.id).length === 0 && (
+        <div className="w-full my-8 px-[2%] bg-gray-100 py-4">
+          <p className="text-m font-bold py-2">Qualify {product.name}</p>
+          <CommentBox avatar={userData.picture} onSubmit={addComment} />
+        </div>
+      )}
 
-      <div className="w-full my-8">
-        <CommentBox />
+
+      <div className="w-full my-8 px-[2%]  py-4">
+        <p className="text-m font-bold py-2">Comments</p>
+        <div className="flex flex-col gap-4">
+          {comments.map((item) => {
+            return (
+              <Comment
+                key={item._id}
+                data={item}
+              />
+            );
+          })}
+        </div>
       </div>
+
+
+
     </div>
   );
 };
