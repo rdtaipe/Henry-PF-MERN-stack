@@ -4,12 +4,19 @@ import { NavLink, Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { RxAvatar } from 'react-icons/rx'
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const NavBar = ({ className }) => {
+//conponets
+import Badge from './Badge'
+
+const NavBar = () => {
+  const dispatch = useDispatch()
   const { top, width } = useSelector(({ state }) => state.sidebar)
-  const { isAutorized, unauthorize, status, data } = useSelector(({ state }) => state.user)
+  const {refresh} = useSelector((state) => state)
+  const { isAutorized, unauthorize, status, data,cart } = useSelector(({ state }) => state.user)
+  
+  const { url, auth, setter } = useSelector(({ state }) => state.server)
   const { isAuthenticated, logout } = useAuth0();
 
   const userAutorized = isAutorized()
@@ -19,9 +26,12 @@ const NavBar = ({ className }) => {
     button: <Link to={"/authorize"}>Log In</Link>,
     icon: <RxAvatar size={25} className="mr-[10px]" />,
   });
+  const [cartProducts, setCartProducts] = useState({ length: 0, products: [], total: 0 });
 
   useEffect(() => {
-    if ((userAutorized, isAuthenticated)) {
+    if (userAutorized && isAuthenticated) {
+      getProductCart()
+
       setProfileState({
         button: <button onClick={hadleLogout}>Log Out</button>,
         icon: (
@@ -32,29 +42,33 @@ const NavBar = ({ className }) => {
           />
         ),
       });
-    } else if (status === "authorize") {
+    } else {
       setProfileState({
         button: <Link to={"/authorize"}>Loguin</Link>,
         icon: <RxAvatar size={25} className="mr-[10px]" />,
       });
     }
-  }, [userAutorized, isAuthenticated]);
+  }, [userAutorized, isAuthenticated, refresh]);
+
+  const getProductCart = () => {
+    auth.get(`${url}/cart/${userData.id}`).then(res => {
+      setCartProducts({
+        length: res.data.products.length,
+        products: res.data.products,
+        total: res.data.products.reduce((acc, curr) => acc + curr.price, 0)
+
+      })
+
+    })
+
+  }
+
   const hadleLogout = () => {
     unauthorize();
     logout({ returnTo: window.location.origin });
   };
 
-  const [open, setOpen] = useState(false);
 
-  const menuBtn = () => {
-    setOpen(!open);
-  };
-
-  const userImg = userAutorized === true ? (
-    <img src={userData.picture} alt="User avatar" className="w-8 h-8 rounded-full" />
-  ) : (
-    <RxAvatar size={30}/>
-  );
 
 
   return (
@@ -64,7 +78,8 @@ const NavBar = ({ className }) => {
           <img src={logo} alt="logo" className="w-36" />
         </NavLink>
       </div>
-      <div style={{width:`calc(100% - ${width}px)`}} className="flex items-center justify-between pr-[2%]">
+
+      <div style={{ width: `calc(100% - ${width}px)` }} className="flex items-center justify-between pr-[2%]">
 
         <div className="flex items-center">
           <NavLink to='/home' className="text-white hover:text-stone-400 hover:transform transition-all duration-500">
@@ -76,37 +91,38 @@ const NavBar = ({ className }) => {
           <NavLink to='/form' className="text-white hover:text-stone-400 hover:transform transition-all duration-500">
             Form
           </NavLink>
-        </div>
-     
 
-      <div className="flex items-center">
+        </div>
+
+
+        <div className="text-white">
+          <SearchBar />
+        </div>
 
         <div className="flex items-center">
-          <div className="text-white">
-            <SearchBar />
-          </div>
 
-          <div className="flex items-center ml-[50px]">
 
-            <NavLink to='/cart' className="hover: transition-all duration-500">
-              <div className="text-black bg-white w-[45px] h-[80px] flex justify-center items-center hover:bg-stone-400 transition-all duration-200 px-[8px] mr-[5px]">
-                <button>
+          <NavLink to='/cart' className="hover: transition-all duration-500">
+            <div className="text-black bg-white w-[auto]  h-[40px] flex justify-center items-center hover:bg-stone-400 transition-all duration-200 px-[8px] mr-[10px]  rounded-[4px]">
+              <button>
+                <Badge origin={{ vertical: 'top', horizontal: 'right' }} color="secondary" counter={cartProducts.length}>
                   <AiOutlineShoppingCart size={25} />
-                </button>
-              </div>
-            </NavLink>
+                </Badge>
+              </button>
+            </div>
+          </NavLink>
 
-            <NavLink to='/user' className="hover: transition-all duration-500">
-              <div className="text-black bg-white w-[45px] h-[80px] flex justify-center items-center hover:bg-stone-400 transition-all duration-200 ml-[5px] mr-[30px]">
-                <button>
-                  {userImg}
-                </button>
-              </div>
-            </NavLink>
+          <div className="text-black bg-white w-[auto] h-[40px] flex justify-center items-center hover:bg-stone-400 transition-all duration-200 ml-[5px] mr-[30px] rounded-[4px] px-[10px]">
+            {profileState.icon}
+            {profileState.button}
+
           </div>
+
+
         </div>
+
       </div>
-    </div>
+
     </nav >
   );
 };
