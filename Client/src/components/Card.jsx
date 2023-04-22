@@ -1,19 +1,37 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
 
-const Card = ({data}) => {
+const Card = (props) => {
   const navigate = useNavigate();
 
-  const { _id, image, name, price, stock } = data;
+  const { _id, image, name, price, stock } = props.data;
+  const {url,auth}=useSelector(({state})=>state.server)
+  const { isAutorized, unauthorize, status, data } = useSelector(({ state }) => state.user)
+
 
   const discount = Math.round(Math.random() * 20);
   const priceDiscount = Math.round(price - (price * discount) / 20);
   const stars = Math.round(Math.random() * 5);
 
-  const handleNameClick = () => {
+  const handleNameClick = (e,item) => {
+    const id=data()._id
+    const newObj={
+        id:_id,
+        date:new Date.now
+    }
+    auth.get(`${url}/card/${id}`).then(res=>{
+      console.log(res.data)
+    })
+
+    auth.put(`${url}/card/${id}`,newObj).then(res=>{
+      console.log(res.data)
+    })
+   
   
     // navigate(`/products/${_id}`);
   };
+  // console.log(data())
 
   return (
     <div className="rounded-lg justify-center items-center w-[200px] min-h-200 bg-stone-300 hover:shadow-xl hover:scale-105 transition duration-500 ease-in-out mb-1">
@@ -56,7 +74,6 @@ const Card = ({data}) => {
         <div className="mt-2 pb-3">
           <p
             className="text-ml font-bold text-gray-900 cursor-pointer"
-            onClick={handleNameClick}
             title={name}
           >
             {name.length > 34 ? name.slice(0, 34) + "..." : name}
@@ -89,7 +106,6 @@ const Card = ({data}) => {
             </button>
             {/* detail buton */}
             <Link to={`/products/${_id}`} className="text-lg font-semibold block px-4 text-white bg-gray-900 rounded-full hover:scale-105 hover:bg-blue-900"
-              onClick={handleNameClick}
             >
               Detail
             </Link>

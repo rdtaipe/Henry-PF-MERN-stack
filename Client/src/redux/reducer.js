@@ -66,6 +66,30 @@ export var initialState = {
       put: (url, id, house) => axios.put(url + id, house),
       delete: (url, id) => axios.delete(url + id),
       find: (url, query) => axios.get(url + query),
+      auth: {
+        get: (url) => {
+          var token = utils.getCookie("token")
+          var headers = { Authorization: `Bearer ${token}` }// for every request
+          console.log(token)
+          return axios.get(url, { headers: headers, })
+        },
+        post: (url, send) => {
+          var token = utils.getCookie("token")
+          var headers = { Authorization: `Bearer ${token}` }// for every request
+          return axios.post(url, { body: send ? send : {}, headers: headers })
+        },
+        put: (url, send) => {
+          var token = utils.getCookie("token")
+          var headers = { Authorization: `Bearer ${token}` }// for every request
+          return axios.put(url, { body: send ? send : {}, headers: headers })
+        },
+        delete: (url, send) => {
+          var token = utils.getCookie("token")
+          var headers = { Authorization: `Bearer ${token}` }// for every request
+          return axios.delete(url, { body: send ? send : {}, headers: headers })
+        },
+
+      }
     },
     user: {
       setStatus: (status) => { utils.saveLocal("userStatus", status) },
@@ -105,7 +129,7 @@ export var initialState = {
         value: true,
         b: [
           { id: "asd", a: 1 },
-          { id: "asd", a: 1 },
+          { id: "abd", a: 1 },
         ]
       }
     }

@@ -1,17 +1,28 @@
-import mongoose,{ Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
+
+const productShema =new Schema({
+    id: { type: String, required: true, unique: true },//product id
+    date:{
+        type: Date,
+    },
+    total:{ type:Number,default:1},
+    active:{
+        type:Boolean,
+        default: true
+    },
+    attr:{
+        type:Object,
+        default:{}
+    }
+})
  
 const cartSchema = new Schema({
     id: { type: String, required: true, unique: true },
-    store:{
+    products:{
         type: Array,
         default:[] 
     },
-    payment: {
-        type: Array,
-        default: []
-    },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-
+    user: { type: Schema.Types.ObjectId, ref: "User" },
 }, {
     timestamp: true,
     versionKey: false,
