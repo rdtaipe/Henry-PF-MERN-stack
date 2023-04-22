@@ -87,6 +87,7 @@ export const updateCart = async (req, res) => {
 
 export const deliteCart = async (req, res) => {
     const { id } = req.params
+
     try {
         const data = req.body
         //type: 0=delete all, 1=delete one
@@ -100,21 +101,24 @@ export const deliteCart = async (req, res) => {
         } {
             const newProduct = [...findCard.products]
             if (data.type === 0) {
-                var index = newProduct.indexOf(data.id);
-                newProduct.splice(index, 1);
-                findCard.products = newProduct
-                findCard.save()
-
-            }else if(data.type==1){
                 const ifExist = findCard.products.find((p) => p.id === data.id);
                 if (ifExist) {//si el producto existe
-                    if(ifExist.total>1){
+                    var index = newProduct.indexOf(ifExist);
+                    newProduct.splice(index, 1);
+                    findCard.products = newProduct
+                    findCard.save()
+                }
+
+            } else if (data.type == 1) {
+                const ifExist = findCard.products.find((p) => p.id === data.id);
+                if (ifExist) {//si el producto existe
+                    if (ifExist.total > 1) {
                         var index = newProduct.indexOf(ifExist);
                         newProduct[index].total -= 1
                         newProduct[index].date = Date.now()
                         findCard.products = newProduct
                         findCard.save()
-                    }else{
+                    } else {
                         var index = newProduct.indexOf(ifExist);
                         newProduct.splice(index, 1);
                         findCard.products = newProduct
