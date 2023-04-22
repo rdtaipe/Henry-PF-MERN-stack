@@ -4,15 +4,19 @@ import classnames from 'classnames'
 import { Wallet } from "@mercadopago/sdk-react";
 import { Context } from "./ContextProvider";
 import axios from "axios";
-
+import { useSelector } from "react-redux";
 const Payment = () => {
+  // const { preferenceId, orderData } = useContext(Context);
   const { preferenceId, orderData } = useContext(Context);
+
   const [isReady, setIsReady] = useState(false);
   const paymentClass = classnames('payment-form dark', {
     'payment-form--hidden': !isReady,
   });
+  const { cart } = useSelector(({ state }) => state.user)
+  
 
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+ console.log(orderData)
 
   const [totalPrice, setTotalPrice] = useState(
     cart.reduce((acc, curr) => acc + curr.price, 0) // Obtener la suma de los precios de los artículos seleccionados
@@ -49,7 +53,7 @@ const Payment = () => {
               {cart.map(prod => {
                 return (
                   <div className="flex justify-between m-2 border-4 p-3">
-                    <p>{prod.name.toUpperCase()}</p>
+                    <p>{prod.name}</p>
                     <p>{prod.price} $ARS</p>
                   </div>
                 )
