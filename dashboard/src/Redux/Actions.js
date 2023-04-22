@@ -16,29 +16,26 @@ export const InitialState = {
         delete: (url, id) => axios.delete(url + id),
         find: (url, query) => axios.get(url + query),
         auth: {
-            get: ({ url }) => {
+            get: (url) => {
                 var token = utils.getCookie("token")
                 var headers = { Authorization: `Bearer ${token}` }// for every request
                 console.log(token)
-                return axios.get(url, {
-                    headers: headers,
-                })
-
+                return axios.get(url, { headers: headers, })
             },
-            post: ({ url, send }) => {
+            post: (url, send) => {
                 var token = utils.getCookie("token")
                 var headers = { Authorization: `Bearer ${token}` }// for every request
-                return axios.post(url, { ...send, headers: headers })
+                return axios.post(url, { body: send ? send : {}, headers: headers })
             },
-            put: ({ url, send }) => {
+            put: (url, send) => {
                 var token = utils.getCookie("token")
                 var headers = { Authorization: `Bearer ${token}` }// for every request
-                return axios.put(url, { ...send, headers: headers })
+                return axios.put(url, { body: send ? send : {}, headers: headers })
             },
-            delete: ({ url, send }) => {
+            delete: (url, send) => {
                 var token = utils.getCookie("token")
                 var headers = { Authorization: `Bearer ${token}` }// for every request
-                return axios.delete(url, { ...send, headers: headers })
+                return axios.delete(url, { body: send ? send : {}, headers: headers })
             },
 
         }
@@ -75,7 +72,7 @@ export const InitialState = {
             utils.saveLocal("autorized", true)
             utils.saveLocal("userData", data)
             utils.saveCookie("token", token)
-            console.log(utils.getLocal("userData"),"user data")
+            console.log(utils.getLocal("userData"), "user data")
             return data
         },
         unauthorize: () => {
