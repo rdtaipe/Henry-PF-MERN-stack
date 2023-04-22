@@ -25,7 +25,6 @@ export const getCartById = async (req, res) => {
     }
 }
 
-
 export const createCart = async (id) => {
     const cartIf = await cartModel.findOne({ id: id })
     if (!cartIf) {
