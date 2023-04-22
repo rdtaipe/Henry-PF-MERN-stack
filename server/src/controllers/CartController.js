@@ -61,6 +61,9 @@ export const updateCart = async (req, res) => {
             } else {//si el producto no existe
                 const newProduct = {
                     id: data.id,
+                    name: data.name,
+                    price: data.price,
+                    image: data.image,
                     total: 1,
                     date: Date.now(),
                     attr: data.attr
