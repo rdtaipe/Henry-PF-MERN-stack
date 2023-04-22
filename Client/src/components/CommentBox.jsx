@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-//hola que hace 
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+//ayudaaaaaaa
 function CommentBox() {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
@@ -8,29 +9,46 @@ function CommentBox() {
     setNewComment(event.target.value);
   }
 
+  useEffect(() => {
+    axios.get('http://localhost:5000/comments')
+      .then((response) => {
+        setComments([response.data[response.data.length - 1]]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   const handleCommentSubmit = (event) => {
     event.preventDefault();
-    if (comments.length >= 1) {
-      setComments([...comments.slice(1), newComment]);
-    } else {
-      setComments([...comments, newComment]);
+    if (newComment.trim() !== '') {
+      axios.post('http://localhost:5000/comments/send', {
+        message: newComment,
+        name:"yo"
+      })
+        .then((response) => {
+          setComments([response.data]);
+          setNewComment('');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-    setNewComment('');
   }
 
   return (
     <div className="max-w-xl mx-auto rounded-lg overflow-hidden shadow-lg">
       <h2 className="font-bold text-xl text-white p-4 bg-gray-700">Comments:</h2>
       <div className="p-2 bg-gray-700 max-h-30 overflow-y-scroll custom-scrollbar">
-  {comments.slice(0).reverse().map((comment, index) => (
-    <div key={index} className="flex py-2">
-      <div>
-        <p className="font-semibold text-gray-100">{`Usuario`}</p>
-        <p className="text-gray-100">{comment}</p>
+        {comments.length > 0 &&
+          <div key={comments[0]._id} className="flex py-2">
+            <div>
+              <p className="font-semibold text-gray-100">{comments[0].name}</p>
+              <p className="text-gray-100">{comments[0].message}</p>
+            </div>
+          </div>
+        }
       </div>
-    </div>
-  ))}
-</div>
       <form className="p-4 bg-gray-700" onSubmit={handleCommentSubmit}>
         <div className="flex items-center">
           <input className="w-full rounded-full border border-gray-100 py-2 px-4 focus:outline-none focus:border-blue-400" type="text" value={newComment} onChange={handleCommentChange} placeholder="Product feedback ... " />

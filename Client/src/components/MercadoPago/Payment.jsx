@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import classnames from 'classnames'
 import { Wallet } from "@mercadopago/sdk-react";
 import { Context } from "./ContextProvider";
+import axios from "axios";
 
 const Payment = () => {
   const { preferenceId, orderData } = useContext(Context);
@@ -10,6 +11,12 @@ const Payment = () => {
   const paymentClass = classnames('payment-form dark', {
     'payment-form--hidden': !isReady,
   });
+
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  const [totalPrice, setTotalPrice] = useState(
+    cart.reduce((acc, curr) => acc + curr.price, 0) // Obtener la suma de los precios de los artículos seleccionados
+  );
 
   const handleOnReady = () => {
     setIsReady(true);
@@ -19,10 +26,13 @@ const Payment = () => {
     if (!preferenceId) return null;
 
     return (
-      <Wallet 
+      <Wallet
         initialization={{ preferenceId: preferenceId }}
-        onReady={handleOnReady} />
-      )
+        onReady={handleOnReady}
+        onSubmit={() => {
+          axios.post('http://localhost:5000/payment', cart).then((res) => window.location.href = res.data.response.body.sandbox_init_point)
+        }} />
+    )
   }
 
   return (
@@ -30,20 +40,24 @@ const Payment = () => {
       <div className="container_payment">
         <div className="block-heading">
           <h2>Checkout Payment</h2>
-          <p>This is an example of a Mercado Pago integration</p>
+          <p>ChicCloset 2023 | All rights reserved. </p>
         </div>
         <div className="form-payment">
           <div className="products">
-            <h2 className="title">Summary</h2>
+            <h2 className="flex justify-center items-center mb-10 font-bold">Summary</h2>
             <div className="item">
-              <span className="price" id="summary-price">${orderData.price}</span>
-              <p className="item-name">
-                Book X <span id="summary-quantity">{orderData.quantity}</span>
-              </p>
+              {cart.map(prod => {
+                return (
+                  <div className="flex justify-between m-2 border-4 p-3">
+                    <p>{prod.name.toUpperCase()}</p>
+                    <p>{prod.price} $ARS</p>
+                  </div>
+                )
+              })}
             </div>
-            <div className="total">
-              Total
-              <span className="price" id="summary-total">${orderData.amount}</span>
+            <div className="flex justify-between mt-20">
+              <p className="font-bold">Total</p>
+              <span className="text-lg font-bold" id="summary-total">{totalPrice} $ARS</span>
             </div>
           </div>
           <div className="payment-details">

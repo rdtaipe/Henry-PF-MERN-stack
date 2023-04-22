@@ -6,6 +6,7 @@ const Card = (props) => {
   const navigate = useNavigate();
 
   const { _id, image, name, price, stock } = props.data;
+
   const {url,auth}=useSelector(({state})=>state.server)
   const { isAutorized, unauthorize, status, data } = useSelector(({ state }) => state.user)
 
@@ -27,46 +28,67 @@ const Card = (props) => {
     auth.put(`${url}/card/${id}`,newObj).then(res=>{
       console.log(res.data)
     })
-   
-  
-    // navigate(`/products/${_id}`);
-  };
-  // console.log(data())
+  }
+
+
+  const handleAddToCart = () => {
+    // Obtener información del producto
+    const product = {
+      id: _id,
+      image: image[0],
+      name: name,
+      price: price,
+      description: "description"
+    };
+
+    let products = JSON.parse(localStorage.getItem('cart')) || [];
+
+    if (!Array.isArray(products)) {
+      // Si no es un array, lo inicializamos como un array vacío
+      products = [];
+    }
+
+    products.push(product);
+
+    localStorage.setItem('cart', JSON.stringify(products));
+    Notification('succes', product.name + ' added to the cart', 'top-end', 5000);
+  }
 
   return (
     <div className="rounded-lg justify-center items-center w-[200px] min-h-200 bg-stone-300 hover:shadow-xl hover:scale-105 transition duration-500 ease-in-out mb-1">
-    <div className="relative h-full">
-      <div className="relative h-40">
-        <img
-          className="relative object-cover w-full h-full rounded-t-lg"
-          src={image[0]}
-          alt={name}
-        />
-        {discount && (
-          <div className="absolute top-0 right-0 m-2">
-            <p className="text-xs font-semibold text-white bg-red-500 rounded-full px-2 py-1">
-              {discount}% off
-            </p>
-          </div>
-        )}
-        <div className="absolute left-3 bottom-2">
-          {/* stars */}
-          <div className="flex items-center">
-          {[...Array(stars)].map((star, i) => (
-              <svg
-                key={i}
-                className="w-4 h-4 fill-current text-yellow-400"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <path d="M12 17.27l-5.18 2.73 1-5.81-4.24-3.73 5.88-.51L12 6.34l2.45 5.51 5.88.51-4.24 3.73 1 5.81z" />
-              </svg>
-            ))}
-            <p className="ml-1 text-xs text-gray-500 dark:text-gray-400">
-              ({stars})
-            </p>
-           </div>
+      <div className="relative h-full">
+        <div className="relative h-40">
+          <img
+            className="relative object-cover w-full h-full rounded-t-lg"
+            src={image[0]}
+            alt={name}
+          />
+          {discount && (
+            <div className="absolute top-0 right-0 m-2">
+              <p className="text-xs font-semibold text-white bg-red-500 rounded-full px-2 py-1">
+                {discount}% off
+              </p>
+            </div>
+          )}
+          <div className="absolute left-3 bottom-2">
+            {/* stars */}
+            <div className="flex items-center">
+              {[...Array(stars)].map((star, i) => (
+                <svg
+                  key={i}
+                  className="w-4 h-4 fill-current text-yellow-400"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 17.27l-5.18 2.73 1-5.81-4.24-3.73 5.88-.51L12 6.34l2.45 5.51 5.88.51-4.24 3.73 1 5.81z" />
+                </svg>
+              ))}
+              <p className="ml-1 text-xs text-gray-500 dark:text-gray-400">
+                ({stars})
+              </p>
+            </div>
 
+          </div>
         </div>
       </div>
   
@@ -101,7 +123,9 @@ const Card = (props) => {
             </p>
           </div>
           <div className="absolute bottom-3 flex justify-between mt-2">
-            <button className="text-sm font-semibold block px-4 text-gray-500  rounded-full hover:scale-105">
+            <button className="text-sm font-semibold block px-4 text-gray-500  rounded-full hover:scale-105"
+            onClick={(e)=>handleNameClick(e,props.data)}
+            >
               Add to cart
             </button>
             {/* detail buton */}
@@ -113,9 +137,9 @@ const Card = (props) => {
         </div>
       </div>
     </div>
-  </div>
-  
+
   );
 }
+
 
 export default Card

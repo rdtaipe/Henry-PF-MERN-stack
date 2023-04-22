@@ -11,25 +11,51 @@ const NavBar = ({ className }) => {
   const { top, width } = useSelector(({ state }) => state.sidebar)
   const { isAutorized, unauthorize, status, data } = useSelector(({ state }) => state.user)
   const { isAuthenticated, logout } = useAuth0();
+
   const userAutorized = isAutorized()
   const userData = data()
 
-
-  const [profileState, setProfileState] = useState({ button: <Link to={"/authorize"}>Loguin</Link>, icon: <RxAvatar size={25} className="mr-[10px]" /> })
+  const [profileState, setProfileState] = useState({
+    button: <Link to={"/authorize"}>Log In</Link>,
+    icon: <RxAvatar size={25} className="mr-[10px]" />,
+  });
 
   useEffect(() => {
-
-    if (userAutorized, isAuthenticated) {
-      setProfileState({ button: <button onClick={hadleLogout}>Loguot</button>, icon: <img src={userData.picture} alt="avatar" className="w-[25px] h-[25px] rounded-full mr-[10px]" /> })
-    } else if (status === 'authorize') {
-      setProfileState({ button: <Link to={"/authorize"}>Loguin</Link>, icon: <RxAvatar size={25} className="mr-[10px]" /> })
+    if ((userAutorized, isAuthenticated)) {
+      setProfileState({
+        button: <button onClick={hadleLogout}>Log Out</button>,
+        icon: (
+          <img
+            src={userData.picture}
+            alt="avatar"
+            className="w-[25px] h-[25px] rounded-full mr-[10px]"
+          />
+        ),
+      });
+    } else if (status === "authorize") {
+      setProfileState({
+        button: <Link to={"/authorize"}>Loguin</Link>,
+        icon: <RxAvatar size={25} className="mr-[10px]" />,
+      });
     }
-
-  }, [userAutorized, isAuthenticated])
+  }, [userAutorized, isAuthenticated]);
   const hadleLogout = () => {
-    unauthorize()
-    logout({ returnTo: window.location.origin })
-  }
+    unauthorize();
+    logout({ returnTo: window.location.origin });
+  };
+
+  const [open, setOpen] = useState(false);
+
+  const menuBtn = () => {
+    setOpen(!open);
+  };
+
+  const userImg = userAutorized === true ? (
+    <img src={userData.picture} alt="User avatar" className="w-8 h-8 rounded-full" />
+  ) : (
+    <RxAvatar size={30}/>
+  );
+
 
   return (
     <nav className={`fixed top-0 left-0 z-50 flex justify-between items-center bg-black w-[100%] h-[${top}px] text-white`}>
@@ -63,7 +89,7 @@ const NavBar = ({ className }) => {
 
 
             <NavLink to='/cart' className="hover: transition-all duration-500">
-              <div className="text-black bg-white w-[auto] h-[40px] flex justify-center items-center hover:bg-stone-400 transition-all duration-200 rounded-[4px] px-[8px] mr-[5px]">
+              <div className="text-black bg-white w-[auto]  h-[40px] flex justify-center items-center hover:bg-stone-400 transition-all duration-200 px-[8px] mr-[10px]  rounded-[4px]">
                 <button>
                   <AiOutlineShoppingCart size={25} />
                 </button>
@@ -86,3 +112,50 @@ const NavBar = ({ className }) => {
 };
 
 export default NavBar;
+
+// import React, { useState } from "react";
+// import { AiOutlineMenu } from "react-icons/ai";
+
+// function Navbar() {
+//   const [isOpen, setIsOpen] = useState(false);
+
+//   const handleMenuClick = () => {
+//     setIsOpen(!isOpen);
+//   };
+
+//   return (
+//     <nav className="flex items-center justify-between flex-wrap bg-gray-800 p-6">
+//       <div className="flex items-center flex-shrink-0 text-white mr-6">
+//         <span className="font-semibold text-xl tracking-tight">Logo</span>
+//       </div>
+
+//       <div className="block lg:hidden">
+//         <button
+//           className="flex items-center px-3 py-2 border rounded text-gray-200 hover:text-white hover:border-white focus:outline-none"
+//           onClick={handleMenuClick}
+//         >
+//           <span className="block h-3 w-3">
+//             <AiOutlineMenu className="h-full w-full text-gray-500" />
+//           </span>
+//         </button>
+//       </div>
+
+//       <div
+//         className={`w-full block flex-grow lg:flex lg:items-center lg:w-auto ${
+//           isOpen ? "" : "hidden"
+//         }`}
+//       >
+//         <div className="text-sm lg:flex-grow">
+//           <a
+//             href="#responsive-header"
+//             className="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4"
+//           >
+//             Example link
+//           </a>
+//         </div>
+//       </div>
+//     </nav>
+//   );
+// }
+
+// export default Navbar;
