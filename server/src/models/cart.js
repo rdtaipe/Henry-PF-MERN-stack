@@ -19,10 +19,10 @@ const productShema =new Schema({
 const cartSchema = new Schema({
     id: { type: String, required: true, unique: true },
     products:{
-        type: Array,
-        default:[] 
+        ///type Array of productShema
+        type:[productShema],
+        default:[]
     },
-    user: { type: Schema.Types.ObjectId, ref: "User" },
 }, {
     timestamp: true,
     versionKey: false,

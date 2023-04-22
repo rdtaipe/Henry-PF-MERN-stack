@@ -3,9 +3,9 @@ import { getAllCart,getCartById,updateCart,deliteCart} from '../controllers/Cart
 
 const router = express.Router()
 
-router.get('/cart',getAllCart)
-router.get('/cart/:id',getCartById)
-router.put('/cart/:id',updateCart)
-router.delete('/cart/:id',deliteCart)
+router.get('/',getAllCart)
+router.get('/:id',getCartById)
+router.put('/:id',updateCart)
+router.delete('/:id',deliteCart)
 
 export default router

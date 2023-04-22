@@ -10,10 +10,12 @@ import { useAuth0 } from "@auth0/auth0-react";
 //conponets
 import Badge from './Badge'
 
-const NavBar = ({ className }) => {
+const NavBar = () => {
   const dispatch = useDispatch()
   const { top, width } = useSelector(({ state }) => state.sidebar)
-  const { isAutorized, unauthorize, status, data, cart } = useSelector(({ state }) => state.user)
+  const {refresh} = useSelector((state) => state)
+  const { isAutorized, unauthorize, status, data,cart } = useSelector(({ state }) => state.user)
+  
   const { url, auth, setter } = useSelector(({ state }) => state.server)
   const { isAuthenticated, logout } = useAuth0();
 
@@ -27,7 +29,7 @@ const NavBar = ({ className }) => {
   const [cartProducts, setCartProducts] = useState({ length: 0, products: [], total: 0 });
 
   useEffect(() => {
-    if ((userAutorized, isAuthenticated)) {
+    if (userAutorized && isAuthenticated) {
       getProductCart()
 
       setProfileState({
@@ -40,27 +42,22 @@ const NavBar = ({ className }) => {
           />
         ),
       });
-    } else if (status === "authorize") {
+    } else {
       setProfileState({
         button: <Link to={"/authorize"}>Loguin</Link>,
         icon: <RxAvatar size={25} className="mr-[10px]" />,
       });
     }
-  }, [userAutorized, isAuthenticated, cart]);
+  }, [userAutorized, isAuthenticated, refresh]);
 
   const getProductCart = () => {
-
     auth.get(`${url}/cart/${userData.id}`).then(res => {
-      var resData = res.data.products
-
       setCartProducts({
         length: res.data.products.length,
         products: res.data.products,
         total: res.data.products.reduce((acc, curr) => acc + curr.price, 0)
 
       })
-      // console.log(res.data.products)
-      dispatch(setter({ keys: 'state.user.cart', value:resData  }))
 
     })
 
@@ -71,17 +68,7 @@ const NavBar = ({ className }) => {
     logout({ returnTo: window.location.origin });
   };
 
-  const [open, setOpen] = useState(false);
 
-  const menuBtn = () => {
-    setOpen(!open);
-  };
-
-  const userImg = userAutorized === true ? (
-    <img src={userData.picture} alt="User avatar" className="w-8 h-8 rounded-full" />
-  ) : (
-    <RxAvatar size={30} />
-  );
 
 
   return (

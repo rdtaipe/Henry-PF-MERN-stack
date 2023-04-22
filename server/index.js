@@ -1,4 +1,7 @@
+///clear console
 console.clear();
+process.stdout.write("\x1Bc");
+
 import server from "./app.js";
 
 async function startServer() {
