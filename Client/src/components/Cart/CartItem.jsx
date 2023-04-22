@@ -5,10 +5,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from 'react-redux';
 
 
-const CartItem = ({ id, item, handleTotalItems, handleTotalPrice, handleSummary, handleDelete  }) => {
-    const dispatch = useDispatch();
+const CartItem = ({ id, item, handleTotalItems, handleTotalPrice, handleSummary, handleDelete,onIncrement,onDecrement  }) => {
+   
     const { url, auth, setter,get } = useSelector(({ state }) => state.server)
-    const { isAuthenticated } = useAuth0();
+
     const [data, setData] = useState(null)
     useEffect(() => {
         get(`${url}/products/${id}`).then(res => {
@@ -16,13 +16,10 @@ const CartItem = ({ id, item, handleTotalItems, handleTotalPrice, handleSummary,
         })
 
     }, [(data?null:data)])
-
-    const handleIncrement = () => {
-    }
-    const handleDecrement = () => {
-    }
+ 
     const handleNameClick = (e, item) => {
     }
+  
   return (data&& <div style={{borderRadius: "10px"}} className="shadow-xl hover:shadow-2xl flex flex-col md:flex-row justify-between items-center pl-2 pr-4 py-4 mb-1 bmd:mb-0 bg-stone-200 transition ">
         
         <div className="flex flex-col md:flex-row items-center md:mr-8">
@@ -61,19 +58,19 @@ const CartItem = ({ id, item, handleTotalItems, handleTotalPrice, handleSummary,
                 <div className="p-1">
                     <Chip
                         label={"+"}
-                        // onClick={handleIncrement}
+                        onClick={onIncrement}
                     />
                 </div>
 
                 <span style={{paddingBlock: "0.125rem", fontSize: "12px", fontWeight: "bold"}} className="px-4 py-1 w-12 text-center">
-                    {/* {quantity} */}
+                    {item.total} 
                 </span>
 
                 
                 <div className="p-1">
                     <Chip
                         label={"-"}
-                        // onClick={handleDecrement}
+                        onClick={onDecrement}
                     />
                 </div>
 

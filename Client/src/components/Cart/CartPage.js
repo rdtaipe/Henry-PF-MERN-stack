@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const CartPage = ({ onClick }) => {
   const dispatch = useDispatch()
   const { data, cart } = useSelector(({ state }) => state.user)
-  const { url, auth, setter,get } = useSelector(({ state }) => state.server)
+  const { url, auth, setter, get } = useSelector(({ state }) => state.server)
   const userData = data()
 
   const [cartProducts, setCartProducts] = useState([]);
@@ -28,7 +28,7 @@ const CartPage = ({ onClick }) => {
   useEffect(() => {
 
     getProductCart()
-  }, [(cartProducts.length > 0?null:cartProducts),(cart.length > 0?null:cart)]);
+  }, [(cartProducts.length > 0 ? null : cartProducts), (cart.length > 0 ? null : cart)]);
 
   const itemsHardcode = [
     {
@@ -86,22 +86,33 @@ const CartPage = ({ onClick }) => {
     auth.get(`${url}/cart/${userData.id}`).then(res => {
       var resData = res.data.products
       setCartProducts(resData)
-      dispatch(setter({ keys: 'state.user.cart', value:resData}))
+      dispatch(setter({ keys: 'state.user.cart', value: resData }))
     })
 
   }
-  const handleDelete=(id)=> {
-    auth.delete(`${url}/cart/${userData.id}`,{id,type:0}).then(res => {
+  const handleDelete = (id) => {
+    auth.delete(`${url}/cart/${userData.id}`, { id, type: 0 }).then(res => {
       var resData = res.data.products
       setCartProducts(resData)
-      dispatch(setter({ keys: 'state.user.cart', value:resData}))
+      dispatch(setter({ keys: 'state.user.cart', value: resData }))
 
-  })
+    })
   }
 
-  const handleIncrement=(id)=> {
+  const handleIncrement = (id, obj) => {
+
+    auth.put(`${url}/cart/${userData.id}`, obj).then(res => {
+      var resData = res.data.products
+      setCartProducts(resData)
+      dispatch(setter({ keys: 'state.user.cart', value: resData }))
+    })
   }
-  const handleDecrement=(id)=> {
+  const handleDecrement = (id) => {
+    auth.delete(`${url}/cart/${userData.id}`, { id, type: 1 }).then(res => {
+      var resData = res.data.products
+      setCartProducts(resData)
+      dispatch(setter({ keys: 'state.user.cart', value: resData }))
+    })
 
   }
 
@@ -143,7 +154,7 @@ const CartPage = ({ onClick }) => {
     }));
   }
 
- 
+
 
   const handleTotalItems = (value) => {
     setTotalItems(totalItems + value);
@@ -153,55 +164,58 @@ const CartPage = ({ onClick }) => {
     setTotalPrice(totalPrice + value);
   };
 
-  return ( cartProducts && <div style={{ height: "900px" }} className={`container mx-auto flex items-center bg-stone-100 justify-center px-4 mt-12  ${!isVisible ? 'hidden' : ''}`}>
-      {cartProducts.length === 0 ? (
+  return (cartProducts && <div style={{ height: "900px" }} className={`container mx-auto flex items-center bg-stone-100 justify-center px-4 mt-12  ${!isVisible ? 'hidden' : ''}`}>
+    {cartProducts.length === 0 ? (
 
-        <div style={{ borderRadius: "18px" }} className="shadow-2xl text-center bg-stone-200 py-12 px-8 sm:px-16 md:px-24 lg:px-56 max-w-4xl mx-auto flex flex-col items-center justify-center">
+      <div style={{ borderRadius: "18px" }} className="shadow-2xl text-center bg-stone-200 py-12 px-8 sm:px-16 md:px-24 lg:px-56 max-w-4xl mx-auto flex flex-col items-center justify-center">
+        <h1 className="text-2xl font-bold leading-none sm:text-3xl dark:text-black">
+          There's nothing on your cart, let's get chic!
+        </h1>
+        <div className="flex items-center justify-center my-10">
+          <IoCartOutline size={250} />
+        </div>
+        <Link to="/home" className="bg-gray-800 text-white py-2 px-4 sm:px-12 rounded mt-6 hover:bg-blue-900 transition inline-block">
+          Go to main page
+        </Link>
+      </div>
+
+
+    ) : (
+      <div className='grid grid-cols-1 sm:grid-cols-2 gap-6 bg-stone-100'>
+
+        <div className="space-y-6">
+
           <h1 className="text-2xl font-bold leading-none sm:text-3xl dark:text-black">
-            There's nothing on your cart, let's get chic!
+            Cart ({cartProducts.length} products)
           </h1>
-          <div className="flex items-center justify-center my-10">
-            <IoCartOutline size={250} />
-          </div>
-          <Link to="/home" className="bg-gray-800 text-white py-2 px-4 sm:px-12 rounded mt-6 hover:bg-blue-900 transition inline-block">
-            Go to main page
-          </Link>
+
+          {cartProducts.map((item) => {
+
+
+            return <CartItem
+              key={item.id}
+              id={item.id}
+              item={item}
+              onIncrement={() => handleIncrement(item.id, item)}
+              onDecrement={() => handleDecrement(item.id)}
+
+              //  handleTotalItems={handleTotalItems}
+              //  handleTotalPrice={handleTotalPrice}
+              //  handleSummary={handleSummary}
+              handleDelete={() => handleDelete(item.id)} // Pasa la función handleDelete como prop
+            />
+          })}
+
         </div>
 
+        <div className="ml-16 flex flex-col">
 
-      ) : (
-        <div className='grid grid-cols-1 sm:grid-cols-2 gap-6 bg-stone-100'>
+          <h1 className="text-2xl font-bold leading-none sm:text-3xl dark:text-black">
+            Order Summary
+          </h1>
 
-          <div className="space-y-6">
-
-            <h1 className="text-2xl font-bold leading-none sm:text-3xl dark:text-black">
-              Cart ({cartProducts.length} products)
-            </h1>
-
-            {cartProducts.map((item) => {
-            
-
-               return <CartItem
-                 key={item.id}
-                 id={item.id}
-                 item={item}
-                //  handleTotalItems={handleTotalItems}
-                //  handleTotalPrice={handleTotalPrice}
-                //  handleSummary={handleSummary}
-                 handleDelete={() => handleDelete(item.id)} // Pasa la función handleDelete como prop
-               />
-            })}
-
-          </div>
-
-          <div className="ml-16 flex flex-col">
-
-            <h1 className="text-2xl font-bold leading-none sm:text-3xl dark:text-black">
-              Order Summary
-            </h1>
-
-            <div style={{ borderRadius: "10px" }} className="border-none shadow-md bg-stone-200 px-5 py-5 mt-6 dark:text-black">
-              {/*  {Object.entries(summary).map(([itemId, itemSummary]) => (
+          <div style={{ borderRadius: "10px" }} className="border-none shadow-md bg-stone-200 px-5 py-5 mt-6 dark:text-black">
+            {/*  {Object.entries(summary).map(([itemId, itemSummary]) => (
                 <div key={itemId} className="flex justify-between mb-2">
                   <span>{itemId} x {itemSummary.quantity}</span>
                   <span>${itemSummary.total.toFixed(2)}</span>
@@ -211,18 +225,18 @@ const CartPage = ({ onClick }) => {
                 <span className="font-bold">Total ({itemsLocal.length} items)</span>
                 <span>${totalPrice.toFixed(2)}</span>
               </div> */}
-            </div>
-
-            <button onClick={onClick} className="bg-gray-800 text-white py-2 rounded mt-10 hover:bg-blue-900 transition">
-              Go to payment
-            </button>
-
           </div>
 
+          <button onClick={onClick} className="bg-gray-800 text-white py-2 rounded mt-10 hover:bg-blue-900 transition">
+            Go to payment
+          </button>
 
         </div>
-      )}
-    </div>
+
+
+      </div>
+    )}
+  </div>
 
   );
 };
