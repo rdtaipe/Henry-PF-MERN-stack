@@ -20,6 +20,9 @@ const Card = (props) => {
       const {id}=data()
       const newObj={
           id:_id,
+          name: name,
+          image: image,
+          price: price,
           date:new Date()
       }
   

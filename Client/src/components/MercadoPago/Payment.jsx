@@ -16,7 +16,7 @@ const Payment = () => {
   const { cart } = useSelector(({ state }) => state.user)
   
 
- console.log(orderData)
+ console.log(cart)
 
   const [totalPrice, setTotalPrice] = useState(
     cart.reduce((acc, curr) => acc + curr.price, 0) // Obtener la suma de los precios de los artículos seleccionados
