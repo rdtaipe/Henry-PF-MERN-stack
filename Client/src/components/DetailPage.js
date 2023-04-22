@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
 
 import Stars from "./Stars";
 import CommentBox from "./CommentBox";
 import Comment from "./Comment";
+import Rating from "./Rating";
 
 export const DetailPage = () => {
   const dispatch = useDispatch()
@@ -109,8 +109,23 @@ export const DetailPage = () => {
               Option Colors:{" "}
               <span className="font-normal capitalize">{product.color}</span>
             </p>
+            <div className="flex justify-center items-center py-2 ">
 
-            <Stars score={score} onScoreClick={updateScore} />
+              <Rating
+                value={
+                  comments.length > 0
+                    ? comments.reduce((acc, el) => acc + el.score, 0) /
+                    comments.length
+                    : 0
+
+                }
+                disabled={true}
+                size={"small"}
+              />
+              <span className="text-sm text-gray-500 ml-2 pt-1">
+                {comments.length} reviews
+              </span>
+            </div>
 
             <div className="flex justify-center pt-7">
               {product.size && typeof product.size === "object" ? (
