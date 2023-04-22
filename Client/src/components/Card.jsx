@@ -32,9 +32,6 @@ const Card = (props) => {
     }
   }
 
-
- 
-
   return (
     <div className="rounded-lg justify-center items-center w-[200px] min-h-200 bg-stone-300 hover:shadow-xl hover:scale-105 transition duration-500 ease-in-out mb-1">
       <div className="relative h-full">
@@ -71,49 +68,50 @@ const Card = (props) => {
 
           </div>
         </div>
-      </div>
-  
-      <div className="w-full h-40 px-3">
-        <div className="mt-2 pb-3">
-          <p
-            className="text-ml font-bold text-gray-900 cursor-pointer"
-            title={name}
-          >
-            {name.length > 34 ? name.slice(0, 34) + "..." : name}
-          </p>
-          <p className="text-sm text-gray-700 mb-2 ">
-            Stock: {stock}
-          </p>
-          {/* price */}
-          <div className="flex justify-between items-center">
-            <p className="text-ms font-semibold text-gray-700">
-              {discount ? (
-                <>
-                  <span className="line-through text-gray-500">
+
+        <div className="w-full h-40 px-3">
+          <div className="mt-2 pb-3">
+            <p
+              className="text-ml font-bold text-gray-900 cursor-pointer"
+              onClick={handleNameClick}
+              title={name}
+            >
+              {name.length > 34 ? name.slice(0, 34) + "..." : name}
+            </p>
+            <p className="text-sm text-gray-700 mb-2 ">
+              Stock: {stock}
+            </p>
+            {/* price */}
+            <div className="flex justify-between items-center">
+              <p className="text-ms font-semibold text-gray-700">
+                {discount ? (
+                  <>
+                    <span className="line-through text-gray-500">
+                      ${price}
+                    </span>
+                    <span className="text-green-500">
+                      ${priceDiscount}
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-green-500 dark:text-green-400">
                     ${price}
                   </span>
-                  <span className="text-green-500">
-                     ${priceDiscount}
-                  </span>
-                </>
-              ) : (
-                <span className="text-green-500 dark:text-green-400">
-                  ${price}
-                </span>
-              )}
-            </p>
-          </div>
-          <div className="absolute bottom-3 flex justify-between mt-2">
-            <button className="text-sm font-semibold px-4 text-gray-500  rounded-full hover:scale-105"
-            onClick={(e)=>handleNameClick(e,props.data)}
-            >
-              Add to cart
-            </button>
+                )}
+              </p>
+            </div>
+            <div className="absolute bottom-3 flex justify-between mt-2">
 
-            <Link to={`/products/${_id}`} className="text-lg font-semibold px-4 text-white bg-gray-900 rounded-full hover:scale-105 hover:bg-blue-900"
-            >
-              Detail
-            </Link>
+              <button style={{ borderRadius: "5px" }} className="text-md px-2 ml-auto text-white bg-gray-900 hover:bg-blue-900 transition" onClick={(e) => handleNameClick(e,props.data)}>
+                Add to cart
+              </button>
+              <Link to={`/products/${_id}`} style={{ borderRadius: "5px", marginBottom: "-5px" }} className="font-medium ml-6 px-4 font-md transition"
+                onClick={handleNameClick}
+              >
+                Detail
+              </Link>
+
+            </div>
           </div>
         </div>
       </div>
@@ -121,6 +119,5 @@ const Card = (props) => {
 
   );
 }
-
 
 export default Card
