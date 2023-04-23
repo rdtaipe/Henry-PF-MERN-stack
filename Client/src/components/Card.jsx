@@ -1,42 +1,38 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Notification } from './Notification/Notification';
+import { useDispatch, useSelector } from 'react-redux';
 
-const Card = ({ data }) => {
+const Card = (props) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const { _id, image, name, price, stock, description } = data;
+  const { _id, image, name, price, stock } = props.data;//product DATA
+  const {url,auth,setter}=useSelector(({state})=>state.server)
+  const { isAutorized, data ,cart} = useSelector(({ state }) => state.user)
+
 
   const discount = Math.round(Math.random() * 20);
   const priceDiscount = Math.round(price - (price * discount) / 20);
   const stars = Math.round(Math.random() * 5);
 
-  const handleNameClick = () => {
-
-    // navigate(`/products/${_id}`);
-  };
-
-  const handleAddToCart = () => {
-    // Obtener información del producto
-    const product = {
-      id: _id,
-      image: image[0],
-      name: name,
-      price: price,
-      description: description
-    };
-
-    let products = JSON.parse(localStorage.getItem('cart')) || [];
-
-    if (!Array.isArray(products)) {
-      // Si no es un array, lo inicializamos como un array vacío
-      products = [];
+  const handleNameClick = (e,item) => {
+    if(isAutorized()){//si esta autorizado
+      const {id}=data()
+      const newObj={
+          id:_id,
+          name: name,
+          image: image,
+          price: price,
+          date:new Date()
+      }
+  
+      auth.put(`${url}/cart/${id}`,newObj).then(res=>{
+        var resData=res.data.products
+        dispatch(setter({ keys: 'state.user.cart', value:resData  }))
+      })
+    }else{//si no esta autorizado
+      navigate("/authorize")
     }
-
-    products.push(product);
-
-    localStorage.setItem('cart', JSON.stringify(products));
-    Notification('succes', product.name + ' added to the cart', 'top-end', 5000);
   }
 
   return (
@@ -109,7 +105,7 @@ const Card = ({ data }) => {
             </div>
             <div className="absolute bottom-3 flex justify-between mt-2">
 
-              <button style={{ borderRadius: "5px" }} className="text-md px-2 ml-auto text-white bg-gray-900 hover:bg-blue-900 transition" onClick={handleAddToCart}>
+              <button style={{ borderRadius: "5px" }} className="text-md px-2 ml-auto text-white bg-gray-900 hover:bg-blue-900 transition" onClick={(e) => handleNameClick(e,props.data)}>
                 Add to cart
               </button>
               <Link to={`/products/${_id}`} style={{ borderRadius: "5px", marginBottom: "-5px" }} className="font-medium ml-6 px-4 font-md transition"

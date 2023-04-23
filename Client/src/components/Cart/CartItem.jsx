@@ -1,51 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import Chip from '../Chip'
+import { useAuth0 } from "@auth0/auth0-react";
+import { useDispatch, useSelector } from 'react-redux';
 
 
-const CartItem = ({ item, handleTotalItems, handleTotalPrice, handleSummary, handleDelete  }) => {
-    const [quantity, setQuantity] = useState(1);
-    const [total, setTotal] = useState(item.price)
-    const truncatedDescription = item.description.length > 30 ? item.description.slice(0, 30) + '...' : item.description;
+const CartItem = ({ id,onClick, item,onSummary, handleDelete,onIncrement,onDecrement  }) => {
+   
+    const { url, auth, setter,get } = useSelector(({ state }) => state.server)
 
-    const handleIncrement = () => {
-        setQuantity(quantity + 1);
-        setTotal(total + item.price);
-        handleTotalItems(1); // Aumentar en 1 el total de items en el componente padre
-        handleTotalPrice(item.price); // Aumentar el precio del artículo en el componente padre
-        handleSummary({ item: [item.name], quantity: quantity + 1, total: total + item.price }); // Pasar valores actualizados al componente padre
-    };
-  
-    const handleDecrement = () => {
-        if (quantity > 1) {
-            setQuantity(quantity - 1);
-            setTotal(total - item.price);
-            handleTotalItems(-1); // Disminuir en 1 el total de items en el componente padre
-            handleTotalPrice(-item.price); // Disminuir el precio del artículo en el componente padre
-            handleSummary({ item: [item.name], quantity: quantity - 1, total: total - item.price }); // Pasar valores actualizados al componente padre
-        }
-    };
+    const [data, setData] = useState(null)
+    useEffect(() => {
+        get(`${url}/products/${id}`).then(res => {
+            setData(res.data)
+            onSummary(res.data)
+        })
 
-  return (
-    <div style={{borderRadius: "10px"}} className="shadow-xl hover:shadow-2xl flex flex-col md:flex-row justify-between items-center pl-2 pr-4 py-4 mb-1 bmd:mb-0 bg-stone-200 transition ">
+
+    }, [(data?null:data),item])
+ 
+
+  return (data&& <div onClick={onClick} style={{borderRadius: "10px"}} className="shadow-xl hover:shadow-2xl flex flex-col md:flex-row justify-between items-center pl-2 pr-4 py-4 mb-1 bmd:mb-0 bg-stone-200 transition ">
         
         <div className="flex flex-col md:flex-row items-center md:mr-8">
 
             <div style={{minWidth: "150px", borderRadius: "5px"}} className='w-32 h-36 bg-white flex justify-center items-center'>
                 <img
-                    src={item.image}
-                    alt={item.name}
+                    src={data.image[0]}
+                    alt={data.name}
                     className="h-full object-contain max-h-full"
                 />
             </div>
 
 
             <div style={{minWidth: "200px"}} className='py-4 px-8'>
-                <h3 className="text-l font-bold ">{item.name}</h3>
-                <p className="text-sm font-medium">Brand: {item.brand}</p>
-                <p className="text-sm mr-5" style={{maxWidth: "200px"}}>{truncatedDescription}</p>
-                <p className="text-sm mr-5">Color: {item.color}</p>
-                <p className="text-sm font-medium">Price: ${item.price}</p>
+                <h3 className="text-l font-bold ">{data.name}</h3>
+                <p className="text-sm font-medium">Brand: {data.brand}</p>
+                {/* <p className="text-sm mr-5" style={{maxWidth: "200px"}}>{truncatedDescription}</p> */}
+                <p className="text-sm mr-5">Color: {data.color}</p>
+                <p className="text-sm font-medium">Price: ${data.price}</p>
             </div>
 
         </div>
@@ -65,25 +58,27 @@ const CartItem = ({ item, handleTotalItems, handleTotalPrice, handleSummary, han
                 <div className="p-1">
                     <Chip
                         label={"+"}
-                        onClick={handleIncrement}
+                        onClick={onIncrement}
                     />
                 </div>
 
                 <span style={{paddingBlock: "0.125rem", fontSize: "12px", fontWeight: "bold"}} className="px-4 py-1 w-12 text-center">
-                    {quantity}
+                    {item.total} 
                 </span>
 
                 
                 <div className="p-1">
                     <Chip
                         label={"-"}
-                        onClick={handleDecrement}
+                        onClick={onDecrement}
                     />
                 </div>
 
             </div>
 
-            <button style={{borderRadius: "5px"}} className="px-10 py-1 mt-8 bg-stone-800 text-white hover:bg-blue-900 transition text-sm" onClick={handleDelete}>Remove</button>
+            <button style={{borderRadius: "5px"}} className="px-10 py-1 mt-8 bg-stone-800 text-white hover:bg-blue-900 transition text-sm" 
+           onClick={handleDelete}
+            >Remove</button>
 
         </div>
 
