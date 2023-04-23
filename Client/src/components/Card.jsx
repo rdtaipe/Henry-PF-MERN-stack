@@ -108,9 +108,7 @@ const Card = (props) => {
               <button style={{ borderRadius: "5px" }} className="text-md px-2 ml-auto text-white bg-gray-900 hover:bg-blue-900 transition" onClick={(e) => handleNameClick(e,props.data)}>
                 Add to cart
               </button>
-              <Link to={`/products/${_id}`} style={{ borderRadius: "5px", marginBottom: "-5px" }} className="font-medium ml-6 px-4 font-md transition"
-                onClick={handleNameClick}
-              >
+              <Link to={`/products/${_id}`} style={{ borderRadius: "5px", marginBottom: "-5px" }} className="font-medium ml-6 px-4 font-md transition">
                 Detail
               </Link>
 
