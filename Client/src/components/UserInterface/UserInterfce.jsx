@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import { NavLink, Link } from "react-router-dom";
 import { RxAvatar } from 'react-icons/rx'
-import Modal from "./Modal";
+import Modal from "../Modal";
 
 const UserInterface = () => {
     
@@ -150,7 +150,7 @@ const UserInterface = () => {
                     </div>
 
                     <div>
-                        {isModalOpen && <Modal onClose={handleModalClose} onLogout={handleLogout}/>}
+                        {isModalOpen && <Modal title={"Log out"} onFalse={handleModalClose} onTrue={handleLogout} message={"Are you sure you want to leave?"}/>}
                     </div>
 
                 </div>
