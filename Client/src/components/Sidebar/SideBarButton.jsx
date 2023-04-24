@@ -2,7 +2,7 @@ import { useState } from "react";
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 import Chip from '../Chip'
 
-function SidebarButton({ title, items, onSelect }) {
+function SidebarButton({title, items, onSelect }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
 
@@ -23,7 +23,7 @@ function SidebarButton({ title, items, onSelect }) {
 
   // console.log(selectedItems)
   return (
-    <div className="relative">
+    <div key={title} className="relative">
       
       <button
         className="w-full py-4 px-6 bg-stone-800 text-white hover:bg-stone-600 focus:bg-black transition-all duration-300 flex justify-between items-center pl-20"

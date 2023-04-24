@@ -36,6 +36,7 @@ export default function SortBar({ setSort }) {
         <div className='relative w-full h-[40px] flex flex-row justify-start items-center p-2  text-gray z-5'>
             {module && module.map((e, i) => {
                 return <MenuItem
+                     key={i}
                     disableGutters
                     disableRipple
                     disableTouchRipple
