@@ -9,9 +9,19 @@ import Auth_BORRAR_ from "./pages/Auth_BORRAR_";
 import Cart from "./pages/Cart";
 import Authorize from "./pages/Authorize";
 import User from "./pages/User";
+import { useSelector, useDispatch } from "react-redux";
+const url = {
+  local: "http://localhost:5000",
+  production: "https://xmk0mx-5000.csb.app",
+};
 
 function App() {
-  
+  const dispatch = useDispatch();
+  const { setter } = useSelector(({ state }) => state.server);
+
+  dispatch(setter({ keys: "state.server.url", value: url.production }));
+  console.log(useSelector(({ state }) => state.server.url));
+
   return (
     <div>
       <Routes>
@@ -22,7 +32,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/products/:productId" element={<Detail />} />
-        <Route path="/authorize" element={<Authorize/>} />
+        <Route path="/authorize" element={<Authorize />} />
         <Route path="/user" element={<User />} />
       </Routes>
       <Footer />
