@@ -5,6 +5,7 @@ import CartPage from "../components/Cart/CartPage";
 import NavBar from "../components/NavBar";
 import InternalProvider from "../components/MercadoPago/ContextProvider";
 import Payment from "../components/MercadoPago/Payment";
+import { useSelector } from "react-redux";
 
 initMercadoPago("APP_USR-544e1d3a-475b-4f83-b0c7-7c9e74534ecf"); //PUBLIC KEY
 
@@ -61,9 +62,11 @@ const Cart = () => {
       "featured": true
     },
   ])
+  const {url} = useSelector(({state}) => state.server);
+
 
   const handleClick = async () => {
-    await axios.post("http://localhost:5000/payment", orderData, {
+    await axios.post(`${url}/payment`, orderData, {
       headers: {
         "Content-Type": "application/json",
       },

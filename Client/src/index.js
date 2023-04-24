@@ -15,10 +15,6 @@ const config = {
   scope: "read:current_user update:current_user_metadata",
 }
 
-const url = {
-  local: "http://localhost:5000/",
-  production: "https://api.localhost.com/"
-}
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
