@@ -57,10 +57,10 @@ function Sidebar({className, setFilter}) {
   return (
     <div style={{top:top,width:width}} className={`absolute left-0 h-[auto] overflow-y-auto flex flex-col  text-white z-10 ${className}`}>
 
-      <div classname="flex flex-col">
+      <div className="flex flex-col">
         {/* se hace un map al modulo validator con su enum */}
         {module.map((e,i)=>{
-          return <SidebarButton title={firstLetterCapitalized(e.key)} items={e.attributes.input} onSelect={(selectedItems) => handleSelection(e.key, selectedItems)} />
+          return <SidebarButton key={i} title={firstLetterCapitalized(e.key)} items={e.attributes.input} onSelect={(selectedItems) => handleSelection(e.key, selectedItems)} />
         })}
       </div>
 
