@@ -19,6 +19,8 @@ import Modal from "../Modal";
 const UserInterface = () => {
     
     const { isAutorized, unauthorize, status, data } = useSelector(({ state }) => state.user)
+    const { url } = useSelector(({ state }) => state.server);
+
     const { isAuthenticated, logout } = useAuth0();
     const userAutorized = isAutorized()
     const userData = data()
@@ -56,7 +58,7 @@ const UserInterface = () => {
     };
 
     const handleSaveUserData = () => {
-        axios.put(`http://localhost:5000/users/${user._id}`, user)
+        axios.put(`${url}/users/${user._id}`, user)
           .then(response => {
             Notification('success', "Profile updated successfully!", 'bottom-end', 5000);
             setOriginalUser(user);
@@ -74,7 +76,7 @@ const UserInterface = () => {
 
     
     useEffect(() => {
-        axios.get(`http://localhost:5000/users/find/${userData.id}`)
+        axios.get(`${url}/users/find/${userData.id}`)
         .then((response) => {
             setOriginalUser(response.data)
             setUser(response.data)

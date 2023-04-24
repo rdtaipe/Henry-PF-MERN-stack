@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { search } from "../redux/actions";
 import SearchIcon from "@mui/icons-material/Search";
 import { IconButton } from "@mui/material";
 
@@ -15,7 +14,7 @@ const SearchBar = () => {
   const handleInputChange = (e) => {
     e.preventDefault();
     setName(e.target.value);
-    dispatch(search(e.target.value));
+    dispatch(setter({ keys: "searchName", value: e.target.value }));
   };
 
   return (

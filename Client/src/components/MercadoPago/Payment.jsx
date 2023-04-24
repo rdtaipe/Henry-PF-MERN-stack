@@ -14,6 +14,7 @@ const Payment = () => {
     'payment-form--hidden': !isReady,
   });
   const { cart } = useSelector(({ state }) => state.user)
+  const { url } = useSelector(({ state }) => state.server);
   
 
  console.log(cart)
@@ -34,7 +35,7 @@ const Payment = () => {
         initialization={{ preferenceId: preferenceId }}
         onReady={handleOnReady}
         onSubmit={() => {
-          axios.post('http://localhost:5000/payment', cart).then((res) => window.location.href = res.data.response.body.sandbox_init_point)
+          axios.post(`${url}/payment`, cart).then((res) => window.location.href = res.data.response.body.sandbox_init_point)
         }} />
     )
   }

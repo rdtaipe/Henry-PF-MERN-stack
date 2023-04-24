@@ -5,13 +5,23 @@ import { Route, Routes } from "react-router-dom";
 import { Detail } from "./pages/Detail";
 import Footer from "./components/Footer";
 import { About } from "./pages/About";
-import Auth_BORRAR_ from "./pages/Auth_BORRAR_";
 import Cart from "./pages/Cart";
 import Authorize from "./pages/Authorize";
 import User from "./pages/User";
+import { useSelector, useDispatch } from "react-redux";
+
+const server = {
+  local: "http://localhost:5000",
+  production: "https://xmk0mx-5000.csb.app",
+};
 
 function App() {
-  
+  const dispatch = useDispatch();
+  const { setter } = useSelector(({ state }) => state.server);
+
+  dispatch(setter({ keys: "state.server.url", value: server.production }));
+  console.log(useSelector(({ state }) => state.server.url));
+
   return (
     <div>
       <Routes>

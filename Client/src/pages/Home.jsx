@@ -14,8 +14,6 @@ import Offer4 from '../assets/imagesCarousel/Offer4.png'
 import Offer5 from '../assets/imagesCarousel/Offer5.png'
 import Offer6 from '../assets/imagesCarousel/Offer6.png'
 import Offer7 from '../assets/imagesCarousel/Offer7.png'
-import { useParams } from 'react-router-dom'
-//  import { setter } from '../redux/actions'
 
 const Home = () => {
 
@@ -29,25 +27,19 @@ const Home = () => {
   const { top, width } = useSelector(({ state }) => state.sidebar)
   const { queryString } = useSelector(({ state }) => state.utils)
   const search = useSelector(state => state.searchName)
+
   //local state
   const [data, setData] = useState([])
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(10)
-  const [count, setCount] = useState(0)//check
-
+  const [count, setCount] = useState(0)
   const [filter, setFilter] = useState({})
   const [sort, setSort] = useState({})
 
-  //save token in local-storage
-  const {token} = useParams()
-  if(token){
-    localStorage.setItem("token",token?.replace(/_/g, "."))
-  }
-  
 
   useEffect(() => {
     getData({ filter:{name: [search], ...filter},sort:sort })
-    // dispatch(setter({ keys: "state.sidebar.width", value: 100 }))
+
   }, [filter,sort, search, page])
 
 
