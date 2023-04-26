@@ -3,46 +3,7 @@ import {createCart} from './CartController.js'
 import { emailerConfig } from './emailerController.js'
 
 
-export const allUsers = async (req, res, next) => {
-   /*  const {id}= req.query
-    try {
-        if(!id){
-            res.status(400).send({msg:"No ID passed. Cannot access data"})
-        }
-        
-        const user = await userModel.findById(id)
-
-        if(!user.isAdmin){
-            res.status(400).send({msg:"Access denied. User is not admin"})
-        }
-        const response = await userModel.find({})
-        
-
-        const users = response?.map((us) => {
-            const User = {
-                id: us._id,
-                fullName: us.fullName,
-
-                
-                email: us.email,
-                birthDate: us.birthDate,
-                genre: us.genre,
-                country: us.country,
-                address: us.address,
-                tel: us.tel,
-                image: us.image,
-                isAdmin: us.isAdmin,
-                active: us.active,
-            }
-            return User
-        })
-
-        if (users.length > 0) res.status(200).send(users)
-        else return { msg: 'There are not users in the DB' }
-    } catch (error) {
-        console.error("Error occurred. Users couldn't be shown.")
-        next(error)
-    } */
+export const allUsers = async (req, res,) => {
     try {
         const users = await userModel.find()
         res.json(users)
@@ -91,7 +52,7 @@ export const userLoggin = async (req, res, next) => {
 }
 
 
-export const userProfile = async (req, res, next) => {
+export const userProfile = async (req, res) => {
     const { id } = req.params
     try {
         if (id) {
@@ -102,7 +63,7 @@ export const userProfile = async (req, res, next) => {
         } else res.send(400).send("There's no ID to find an User")
     } catch (error) {
         console.log(error)
-        next(error)
+        res.status(400).send(error.message)
     }
 }
 
