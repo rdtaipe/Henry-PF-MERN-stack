@@ -72,7 +72,7 @@ export default async function getPay(req, res) {
       .catch((error) => res.status(400).send({ error: error.message }));
     const findUser = await UserModel.findById(userId)
 
-    var customer_data = { "email": findUser.email }
+   /*  var customer_data = { "email": findUser.email }
 
     mercadopago.customers.create(customer_data).then((res) => {
       var newData = {
@@ -95,7 +95,7 @@ export default async function getPay(req, res) {
     }
     ).catch(function (error) {
       console.log(error)
-    })
+    }) */
 
 
   } catch (error) {

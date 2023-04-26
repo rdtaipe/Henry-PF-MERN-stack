@@ -6,7 +6,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 const Payment = () => {
   // const { preferenceId, orderData } = useContext(Context);
-  const { orderData } = useContext(Context);
+  const { step,setStep,orderData } = useContext(Context);
 
   const [isReady, setIsReady] = useState(false);
   const paymentClass = classnames('payment-form dark', {
@@ -64,7 +64,7 @@ const Payment = () => {
     )
   }
 
-  return (
+  return (step===2&&
     <div className={`mt-[200px] min-h-screen `}>
       <div className="container_payment">
         <div className="block-heading">

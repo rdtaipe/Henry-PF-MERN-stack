@@ -21,8 +21,7 @@ const CartPage = () => {
   const userData = data()
 
   const [cartProducts, setCartProducts] = useState([]);
-  const [isVisible, setIsVisible] = useState(true);
-  const {setOrderData } = useContext(Context);
+  const {step,setStep, setOrderData } = useContext(Context);
   
   const [summary, setSummary] = useState({});
   
@@ -91,8 +90,7 @@ const CartPage = () => {
   }
 
   const handlePayment = () => {
-   
-      setIsVisible(false)
+      setStep(2)
       setOrderData({
         products: summary, 
         total: summary && Object.values(summary).reduce((acc, item) => acc + item.total, 0),
@@ -104,7 +102,7 @@ const CartPage = () => {
 
 
 
-  return (<div style={{ height: "900px" }} className={`container mx-auto flex items-center bg-stone-100 justify-center px-4 mt-12  ${!isVisible ? 'hidden' : ''}`}>
+  return step === 1&&<div style={{ height: "900px" }} className={`container mx-auto flex items-center bg-stone-100 justify-center px-4 mt-12`}>
     {cartProducts.length === 0 ? (
 
       <div style={{ borderRadius: "18px" }} className="shadow-2xl text-center bg-stone-200 py-12 px-8 sm:px-16 md:px-24 lg:px-56 max-w-4xl mx-auto flex flex-col items-center justify-center">
@@ -183,7 +181,7 @@ const CartPage = () => {
     )}
   </div>
 
-  );
+  
 };
 
 export default CartPage;
