@@ -14,30 +14,23 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useDispatch, useSelector } from 'react-redux';
 
 
-const CartPage = ({ onClick }) => {
+const CartPage = () => {
   const dispatch = useDispatch()
   const { data, cart } = useSelector(({ state }) => state.user)
   const { url, auth, setter, get } = useSelector(({ state }) => state.server)
   const userData = data()
 
   const [cartProducts, setCartProducts] = useState([]);
-  const [isVisible, setIsVisible] = useState(true);
-  const { preferenceId, orderData, setOrderData } = useContext(Context);
-  const [realCart, setRealCart] = useState([]);
-
+  const {step,setStep, setOrderData } = useContext(Context);
+  
   const [summary, setSummary] = useState({});
   
   useEffect(() => {
-    getProductCart();
-
-  
-    
+    getProductCart();    
 
   }, [(cart.length > 0 ? null : cart)]);
 
-  useEffect(() => {
-    if (preferenceId) setIsVisible(false);
-  }, [preferenceId])
+  
 
 
 
@@ -81,6 +74,11 @@ const CartPage = ({ onClick }) => {
       const newSummary = {
         ...prevSummary,
         [item.name]: {
+          productId: item._id,
+          image: item.image[0],
+          name: item.name,
+          price: item.price,
+          description: item.description,
           quantity: t,
           total: Math.round(item.price * t * 100) / 100
         }
@@ -92,11 +90,11 @@ const CartPage = ({ onClick }) => {
   }
 
   const handlePayment = () => {
-   
-      setIsVisible(false)
+      setStep(2)
       setOrderData({
-        items: summary, 
-        total: summary && Object.values(summary).reduce((acc, item) => Math.round(acc + item.total * 100) / 100, 0)
+        products: summary, 
+        total: summary && Object.values(summary).reduce((acc, item) => acc + item.total, 0),
+        userId: userData._id
 })
 }
 
@@ -104,7 +102,7 @@ const CartPage = ({ onClick }) => {
 
 
 
-  return (<div style={{ height: "900px" }} className={`container mx-auto flex items-center bg-stone-100 justify-center px-4 mt-12  ${!isVisible ? 'hidden' : ''}`}>
+  return step === 1&&<div style={{ height: "900px" }} className={`container mx-auto flex items-center bg-stone-100 justify-center px-4 mt-12`}>
     {cartProducts.length === 0 ? (
 
       <div style={{ borderRadius: "18px" }} className="shadow-2xl text-center bg-stone-200 py-12 px-8 sm:px-16 md:px-24 lg:px-56 max-w-4xl mx-auto flex flex-col items-center justify-center">
@@ -130,7 +128,6 @@ const CartPage = ({ onClick }) => {
           </h1>
 
           {cartProducts.map((item) => {
-
 
             return <CartItem
               key={item.id}
@@ -173,7 +170,7 @@ const CartPage = ({ onClick }) => {
             </div>
           </div>
 
-          <button onClick={onClick} className="bg-gray-800 text-white py-2 rounded mt-10 hover:bg-blue-900 transition">
+          <button onClick={handlePayment} className="bg-gray-800 text-white py-2 rounded mt-10 hover:bg-blue-900 transition">
             Go to payment
           </button>
 
@@ -184,7 +181,7 @@ const CartPage = ({ onClick }) => {
     )}
   </div>
 
-  );
+  
 };
 
 export default CartPage;
