@@ -32,7 +32,7 @@ export const DetailPage = () => {
       id: product._id,
       date: new Date(),
     };
-    auth.put(`${url}/cart/${userData.id}`, obj).then((res) => {
+    auth.put(`${url}/cart/${userData._id}`, obj).then((res) => {
       var resData = res.data.products;
       console.log(resData);
       dispatch(setter({ keys: "state.user.cart", value: resData }));
@@ -63,7 +63,7 @@ export const DetailPage = () => {
       name: userData.name,
       picture: userData.picture,
       productId: product._id,
-      userId: userData.id,
+      userId: userData._id,
       body: comment,
       score: stars,
       date: new Date(),
@@ -182,7 +182,7 @@ export const DetailPage = () => {
           </p>
         </div>
       </div>
-      {comments.filter((item) => item.userId === userData.id).length === 0 && (
+      {comments.filter((item) => item.userId === userData._id).length === 0 && (
         <div className="w-full my-8 px-[2%] bg-gray-100 py-4">
           <p className="text-m font-bold py-2">Qualify {product.name}</p>
           <CommentBox avatar={userData.picture} onSubmit={addComment} />

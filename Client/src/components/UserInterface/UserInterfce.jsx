@@ -76,7 +76,7 @@ const UserInterface = () => {
 
     
     useEffect(() => {
-        axios.get(`${url}/users/find/${userData.id}`)
+        axios.get(`${url}/users/find/${userData._id}`)
         .then((response) => {
             setOriginalUser(response.data)
             setUser(response.data)

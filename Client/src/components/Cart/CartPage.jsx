@@ -42,7 +42,7 @@ const CartPage = ({ onClick }) => {
 
 
   const getProductCart = () => {
-    auth.get(`${url}/cart/${userData.id}`).then(res => {
+    auth.get(`${url}/cart/${userData._id}`).then(res => {
       var resData = res.data.products
       setCartProducts(resData)
       dispatch(setter({ keys: 'state.user.cart', value: resData }))
@@ -50,7 +50,7 @@ const CartPage = ({ onClick }) => {
 
   }
   const handleDelete = (id) => {
-    auth.delete(`${url}/cart/${userData.id}`, { id, type: 0 }).then(res => {
+    auth.delete(`${url}/cart/${userData._id}`, { id, type: 0 }).then(res => {
       var resData = res.data.products
       setCartProducts(resData)
       dispatch(setter({ keys: 'state.user.cart', value: resData }))
@@ -60,14 +60,14 @@ const CartPage = ({ onClick }) => {
 
   const handleIncrement = (id, obj) => {
 
-    auth.put(`${url}/cart/${userData.id}`, obj).then(res => {
+    auth.put(`${url}/cart/${userData._id}`, obj).then(res => {
       var resData = res.data.products
       setCartProducts(resData)
       dispatch(setter({ keys: 'state.user.cart', value: resData }))
     })
   }
   const handleDecrement = (id) => {
-    auth.delete(`${url}/cart/${userData.id}`, { id, type: 1 }).then(res => {
+    auth.delete(`${url}/cart/${userData._id}`, { id, type: 1 }).then(res => {
       var resData = res.data.products
       setCartProducts(resData)
       dispatch(setter({ keys: 'state.user.cart', value: resData }))
