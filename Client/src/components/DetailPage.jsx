@@ -83,7 +83,10 @@ export const DetailPage = () => {
     <div className="h-full flex flex-col justify-center mt-[140px]">
       <div className="flex flex-col md:flex-row justify-evenly items-center">
         <div
-          style={{ backgroundImage: `url(${slide[currentIndex].url})` }}
+          style={{
+            backgroundImage: `url(${slide[currentIndex].url})`,
+            backgroundPosition: "center",
+          }}
           className="w-[80%] md:w-[50%] lg:w-[38%] h-[550px] rounded-2xl bg-center bg-cover duration-500 flex mt-11 mb-8 md:mb-0 md:mt-0"
         >
           {slide.length === 1 ? null : (
