@@ -64,7 +64,7 @@ const send = async ({ model, body, user }) => {
     var newFrom = from ? from : 'chicclosethenry@gmail.com'
     var newUser = model ? await model.findOne({ email: to }) : user;
     var newTo = to ? to : newUser.email;
-
+console.log(newUser)
     if (!newUser) {
         throw new Error('User not found')
     }

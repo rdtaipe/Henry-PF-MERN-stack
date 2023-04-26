@@ -20,7 +20,7 @@ const origins = {
 // name,sub,picture,phone,email,ip,location,role,status
 const compareUser = async (newUser) => {
 
-    const validate = await userDataValidate(newUser);
+    const validate = await validator(newUser);
 
     if (!validate) { 
         throw new Error('User data not valid')
@@ -36,10 +36,10 @@ const compareUser = async (newUser) => {
 
         return createNewUser(validate);
     } else {
-        return updateUser(user[0], validate);
+        return updateUser(user, validate);
     }
 }
-const userDataValidate = async (user) => {
+const validator = async (user) => {
     try {
         const { name, identities, picture, email, email_verified } = user;
         if (!name || !identities || !picture || !email || !email_verified) { return false; }
@@ -55,8 +55,8 @@ const userDataValidate = async (user) => {
         }
         return newUser;
     } catch (error) {
-        console.log('error: in userDataValidate')
-        return null;
+        console.log('error: in validator')
+        throw new Error('User data not valid')
     }
 }
 const updateUser = async (user, newUser) => {
@@ -71,7 +71,7 @@ const updateUser = async (user, newUser) => {
         const updatedUser = await UserModel.findByIdAndUpdate(user._id.toString(), userObj, { new: true });
         return updatedUser;
     } catch (error) {
-        console.log('error: in updateUserAfterCompare')
+        console.log('error: in updateUser')
        
         throw new Error('User data not valid')
     }
