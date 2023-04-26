@@ -14,7 +14,7 @@ const Profile = ({anchorElUser,setAnchorElUser}) => {
   const Navigate=useNavigate()
   const actions=useSelector(state=>state.actions)
   const { unauthorize, status, setStatus, data} = useSelector(state => state.user)
-  const userMetadata=data()
+  const userData = data()
   const { logout } = useAuth0();
 
   const settings = [
@@ -37,15 +37,15 @@ const handleLogout=()=>{
   };
   useEffect(() => {
 
-  }, [userMetadata]);
+  }, [userData]);
 
-  console.log(userMetadata,"userMetadata")
+  console.log(userData,"userData")
   return (
 
-    userMetadata&&<>
-        <Tooltip title={userMetadata.name}>
+    userData&&<>
+        <Tooltip title={userData.name}>
             <IconButton onClick={handleOpenUserMenu} disableRipple>
-                <Avatar alt={userMetadata.name} src={userMetadata.picture } />
+                <Avatar alt={userData.name} src={userData.picture } />
           </IconButton>
        
           </Tooltip>

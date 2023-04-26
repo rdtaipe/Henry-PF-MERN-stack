@@ -22,7 +22,7 @@ const compareUser = async (newUser) => {
 
     const validate = await validator(newUser);
 
-    if (!validate) { 
+    if (!validate) {
         throw new Error('User data not valid')
     }
     const { sub } = validate
@@ -30,28 +30,28 @@ const compareUser = async (newUser) => {
 
     console.log('user: ', user)
 
-    if (!user||user===null) {
-       var onSend = await send({ user: validate, body:{ type:"welcome" } })
-       console.log('onSend: ', onSend)
-
+    if (!user || user === null) {//if user not exist
+        await send({ user: validate, body: { type: "welcome", issue: "welcome to chiccloset" } })//send welcome email
         return createNewUser(validate);
-    } else {
+    } else {//if user exist
         return updateUser(user, validate);
     }
 }
 const validator = async (user) => {
+    console.log(user)
     try {
-        const { name, identities, picture, email, email_verified } = user;
-        if (!name || !identities || !picture || !email || !email_verified) { return false; }
+        const { name, user_id, picture, email, email_verified, given_name } = user;
+        if (!name || !user_id || !picture || !email || !email_verified) { throw new Error('User data not valid') }
 
-        const sub = identities[0].provider + "|" + identities[0].user_id;
         const newUser = {
-            name: name,
-            sub: sub,
+            fullName: name,
+            name: given_name,
+            sub: user_id,
             picture: picture,
             email: email,
             role: 'user',
-            status: 'active'
+            status: 'active',
+            email_verified: email_verified
         }
         return newUser;
     } catch (error) {
@@ -61,18 +61,19 @@ const validator = async (user) => {
 }
 const updateUser = async (user, newUser) => {
     try {
-        const { name, sub, picture, email, email_verified } = newUser;
+        const { name, picture, email, email_verified } = newUser;
         const userObj = {
             name: name,
             picture: picture,
             email: email,
+            email_verified: email_verified
         }
 
         const updatedUser = await UserModel.findByIdAndUpdate(user._id.toString(), userObj, { new: true });
         return updatedUser;
     } catch (error) {
         console.log('error: in updateUser')
-       
+
         throw new Error('User data not valid')
     }
 
@@ -95,7 +96,7 @@ const createNewUser = async (newUser) => {
 }
 
 export const userAuthorize = async (req, res) => {
-    if(Object.keys(req.headers).find(key => key === 'authorization')===undefined){res.status(401).json({message:"Unauthorized",error:'token or userId not found'});}
+    if (Object.keys(req.headers).find(key => key === 'authorization') === undefined) { res.status(401).json({ message: "Unauthorized", error: 'token or userId not found' }); }
     const token = req.headers.authorization?.split(' ')[1];
     // const origin = req.headers.origin;
     const { user, origin } = req.headers
@@ -109,10 +110,9 @@ export const userAuthorize = async (req, res) => {
             },
         });
         const userData = response.data;
-
         const newUser = await compareUser(userData);
 
-        const mixData = { ...userData, role: newUser.role, id: newUser._id, phone: newUser.phone }
+        const mixData =  {...userData,...newUser._doc} 
 
         //  if(newUser===null){res.status(401).json({message:"Unauthorized",error:'user not found'});}
         //  if(newUser.role==='admin'&&origins.admin.includes(origin)){

@@ -55,8 +55,6 @@ const send = async ({ model, body, user }) => {
         order: `<div>order</div>`,
         notification: `<div>notification</div>`
     }
-
-
     const { html, issue, text, from, to, type } = body;
 
     var newHtml = html ? html : types[type] ? types[type] : undefined;
@@ -64,12 +62,11 @@ const send = async ({ model, body, user }) => {
     var newFrom = from ? from : 'chicclosethenry@gmail.com'
     var newUser = model ? await model.findOne({ email: to }) : user;
     var newTo = to ? to : newUser.email;
-console.log(newUser)
     if (!newUser) {
         throw new Error('User not found')
     }
 
-    if (!to || (newHtml === undefined && text === undefined)) {
+    if ((newHtml === undefined && text === undefined)) {
         throw new Error('Email not found')
     }
 

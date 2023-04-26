@@ -48,7 +48,7 @@ const NavBar = () => {
   }, [userAutorized, isAuthenticated, refresh, modal]);
 
   const getProductCart = () => {
-    auth.get(`${url}/cart/${userData.id}`).then(res => {
+    auth.get(`${url}/cart/${userData._id}`).then(res => {
       setCartProducts({
         length: res.data.products.length,
         products: res.data.products,
