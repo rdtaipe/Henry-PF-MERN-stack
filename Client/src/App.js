@@ -19,7 +19,7 @@ function App() {
   const dispatch = useDispatch();
   const { setter } = useSelector(({ state }) => state.server);
 
-  dispatch(setter({ keys: "state.server.url", value: server.production }));
+  dispatch(setter({ keys: "state.server.url", value: server.local }));
   console.log(useSelector(({ state }) => state.server.url));
 
   return (
