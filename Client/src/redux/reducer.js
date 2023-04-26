@@ -65,9 +65,9 @@ export var initialState = {
       clientUrl: "http://localhost:3000",
       //routes action 
       get: (url) => axios.get(url),
-      post: (url, house) => axios.post(url, house),
-      put: (url, id, house) => axios.put(url + id, house),
-      delete: (url, id) => axios.delete(url + id),
+      post: (url, data) => axios.post(url, data),
+      put: (url, data) => axios.put(url, data),
+      delete: (url) => axios.delete(url),
       find: (url, query) => axios.get(url + query),
       auth: {
         get: (url) => {

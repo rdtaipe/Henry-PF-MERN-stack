@@ -1,5 +1,4 @@
-import React from "react";
-import { useContext, useState } from "react";
+import React,{useEffect,useContext, useState } from "react";
 import classnames from 'classnames'
 import { Wallet } from "@mercadopago/sdk-react";
 import { Context } from "./ContextProvider";
@@ -7,27 +6,51 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 const Payment = () => {
   // const { preferenceId, orderData } = useContext(Context);
-  const { preferenceId, orderData } = useContext(Context);
+  const { orderData } = useContext(Context);
 
   const [isReady, setIsReady] = useState(false);
   const paymentClass = classnames('payment-form dark', {
     'payment-form--hidden': !isReady,
   });
-  const { cart } = useSelector(({ state }) => state.user)
-  const { url } = useSelector(({ state }) => state.server);
-  
+  const { url,post } = useSelector(({ state }) => state.server);
 
- console.log(cart)
+ const [cart, setCart] = useState([])
+ const [total, setTotal] = useState(0)
+ const [userId, setUserId] = useState('')
 
-  const [totalPrice, setTotalPrice] = useState(
-    cart.reduce((acc, curr) => acc + curr.price, 0) // Obtener la suma de los precios de los artículos seleccionados
-  );
+ const [preferenceId, setPreferenceId] = useState('')
 
   const handleOnReady = () => {
     setIsReady(true);
   }
 
-  const renderCheckoutButton = (preferenceId) => {
+
+  useEffect(() => { 
+    var awaitCart= orderData.products&&Object.values(orderData.products)||[]
+    setCart(awaitCart)
+    setTotal(orderData.total)
+    setUserId(orderData.userId)
+
+    if(orderData&&awaitCart.length>0){
+      post(`${url}/payment`,{userId:orderData.userId, cart: awaitCart, total:orderData.total})
+        .then((res) => {
+          setPreferenceId(res.data.response.body.id);
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log("Hubo un error")
+          console.error(error);
+        })
+
+    }
+
+ 
+  }, [orderData])
+
+
+
+
+  const handlePay =(preferenceId) => {
     if (!preferenceId) return null;
 
     return (
@@ -36,12 +59,13 @@ const Payment = () => {
         onReady={handleOnReady}
         onSubmit={() => {
           axios.post(`${url}/payment`, cart).then((res) => window.location.href = res.data.response.body.sandbox_init_point)
+
         }} />
     )
   }
 
   return (
-    <div className={`mt-[200px] min-h-screen ${paymentClass}`}>
+    <div className={`mt-[200px] min-h-screen `}>
       <div className="container_payment">
         <div className="block-heading">
           <h2>Checkout Payment</h2>
@@ -51,23 +75,36 @@ const Payment = () => {
           <div className="products">
             <h2 className="flex justify-center items-center mb-10 font-bold">Summary</h2>
             <div className="item">
-              {cart.map(prod => {
+              {cart&&cart.map((prod) => {
                 return (
                   <div className="flex justify-between m-2 border-4 p-3">
-                    <p>{prod.name}</p>
-                    <p>{prod.price} $ARS</p>
+                    <div className="flex justify-between">
+                      <img className="w-20 h-20" src={prod.image} alt="" />
+                      <div className="flex flex-col justify-center ml-3">
+                        <p className="text-lg font-bold">{prod.name}</p>
+                        <p className="text-gray-600">${prod.price}</p>
+                        <p className="text-gray-600">Quantity: {prod.quantity}</p>
+                        <p className="text-gray-600">Total: ${prod.total}</p>
+                      </div>
+                    </div>
                   </div>
-                )
+                );
+        
               })}
+              
+              
+            
             </div>
             <div className="flex justify-between mt-20">
               <p className="font-bold">Total</p>
-              <span className="text-lg font-bold" id="summary-total">{totalPrice} $ARS</span>
+              <span className="text-lg font-bold" id="summary-total">$ {total} </span>
             </div>
           </div>
           <div className="payment-details">
-            <div className="form-group col-sm-12">
-              {renderCheckoutButton(preferenceId)}
+            <div className="form-group col-sm-12">{
+              handlePay(preferenceId)
+
+            }
             </div>
           </div>
         </div>
