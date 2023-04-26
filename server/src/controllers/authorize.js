@@ -1,6 +1,8 @@
 import axios from "axios";
 import UserModel from '../models/user.js'
 import CartModel from "../models/cart.js";
+import send from '../utils/mail/send.js';
+
 
 
 const auth0Config = {
@@ -20,15 +22,21 @@ const compareUser = async (newUser) => {
 
     const validate = await userDataValidate(newUser);
 
-    if (!validate) { return null; }
+    if (!validate) { 
+        throw new Error('User data not valid')
+    }
     const { sub } = validate
-    const user = await UserModel.find({ sub: sub });
+    const user = await UserModel.findOne({ sub: sub });
 
+    console.log('user: ', user)
 
-    if (!user || user.length === 0) {
-        return saveUserAfterCompare(validate);
+    if (!user||user===null) {
+       var onSend = await send({ user: validate, body:{ type:"welcome" } })
+       console.log('onSend: ', onSend)
+
+        return createNewUser(validate);
     } else {
-        return updateUserAfterCompare(user[0], validate);
+        return updateUser(user[0], validate);
     }
 }
 const userDataValidate = async (user) => {
@@ -51,8 +59,7 @@ const userDataValidate = async (user) => {
         return null;
     }
 }
-const updateUserAfterCompare = async (user, newUser) => {
-    // console.log(user, newUser)
+const updateUser = async (user, newUser) => {
     try {
         const { name, sub, picture, email, email_verified } = newUser;
         const userObj = {
@@ -65,23 +72,24 @@ const updateUserAfterCompare = async (user, newUser) => {
         return updatedUser;
     } catch (error) {
         console.log('error: in updateUserAfterCompare')
-        return null;
+       
+        throw new Error('User data not valid')
     }
 
 }
-const saveUserAfterCompare = async (newUser) => {
+const createNewUser = async (newUser) => {
     try {
         const save = new UserModel(newUser);
         const newCart = new CartModel({ id: save._id });
-        console.log(save)
         await save.save();
-        console.log('new user saved')
+
+        console.log('new user saved and welcome email send')
         await newCart.save();
         console.log('new user saved')
         return save;
     } catch (error) {
         console.log('error: in saveUserAfterCompare')
-        return null;
+        throw new Error('User data not valid')
     }
 
 }

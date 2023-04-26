@@ -9,13 +9,15 @@ import cart from './cartRouter.js'
 import comments from './commentsRouter.js'
 import favorites from './favoritesRouter.js'
 import purchase from './purchaseRouter.js'
-import users from './userRouter.js'
 import find from "./findRouter.js";
 import dev from "./devRouter.js";
 import auth from "./authRouter.js";
+//privete
+import users from './private/userRouter.js'
+
 
 import mercadopago from './MercadoPagoRoute.js';
-import email from './emailRouter.js'
+import email from '../services/email.js'
 const server = express();
 //---- Products routes ------
 server.use('/products', products);

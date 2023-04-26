@@ -10,7 +10,7 @@ export const AboutUs = () => {
       <div className="flex justify-between flex-col-reverse items-center px-10 py-10 xl:flex-row">
         <div className="w-full flex justify-center xl:w-[50%]">
           <img
-            src="https://www.controlcomercio.com/wp-content/uploads/2015/07/13636233053154301_big.jpg"
+            src="https://loqueva.com/wp-content/uploads/2019/09/Ropa_Revolver_local_Malabia_1150_loqueva-14.jpg"
             alt="Image Local"
             className="w-[97%] sm:h-[400px] lg:h-[550px] rounded"
           />
