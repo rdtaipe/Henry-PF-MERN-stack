@@ -104,7 +104,7 @@ const CartPage = ({ onClick }) => {
 
 
 
-  return (<div style={{ height: "900px" }} className={`container mx-auto flex items-center bg-stone-100 justify-center px-4 mt-12  ${!isVisible ? 'hidden' : ''}`}>
+  return (<div className={`container mx-auto flex items-center bg-stone-100 justify-center py-20 px-4 mt-12  ${!isVisible ? 'hidden' : ''}`}>
     {cartProducts.length === 0 ? (
 
       <div style={{ borderRadius: "18px" }} className="shadow-2xl text-center bg-stone-200 py-12 px-8 sm:px-16 md:px-24 lg:px-56 max-w-4xl mx-auto flex flex-col items-center justify-center">

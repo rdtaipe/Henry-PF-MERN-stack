@@ -119,7 +119,7 @@ const NavBar = () => {
 
 
           <NavLink to='/cart' className="hover: transition-all duration-500">
-            <div className="text-black bg-white w-[auto]  h-[40px] flex justify-center items-center hover:bg-stone-400 transition-all duration-200 px-[8px] mr-[10px]  rounded-[4px]">
+            <div className="text-black bg-white w-[45px]  h-[40px] flex justify-center items-center hover:bg-stone-400 transition-all duration-200 px-[8px] mr-[10px]  rounded-[4px]">
 
               <Badge origin={{ vertical: 'top', horizontal: 'right' }} color="secondary" counter={cartProducts.length}>
                 <AiOutlineShoppingCart size={25} />
@@ -128,15 +128,10 @@ const NavBar = () => {
             </div>
           </NavLink>
 
-          <div className="text-black bg-white w-[auto] h-[40px] flex justify-center items-center transition-all duration-200 ml-[5px] mr-[30px] rounded-[4px] overflow-hidden">
+          <div className="text-black bg-white w-[45px] h-[40px] flex justify-center items-center transition-all duration-200 ml-[5px] mr-[30px] rounded-[4px] overflow-hidden">
             <button className="flex items-center justify-center  hover:bg-stone-400 transition-all duration-200  w-[60px] h-[100%]" onClick={handleProfile}>
               {profileState.icon}
             </button>
-            <Divider orientation="vertical" flexItem />
-            <button className="flex items-center hover:bg-stone-400 transition-all duration-200 px-[8px] w-[100%] h-[100%]" onClick={hadleText}>
-              {profileState.text}
-            </button>
-
 
           </div>
 

@@ -35,26 +35,12 @@ const MyData = ({user, updateUser}) => {
     
           <div className="flex flex-col gap-2" style={{width: "300px"}}>
             <label htmlFor="email">E-mail:</label>
-            <label htmlFor="emailUswer" className="pl-2 py-1 bg-stone-200  transition">{userData.email}</label>
+            <label htmlFor="emailUswer" className="pl-2 py-1 bg-stone-200  transition">{user.email}</label>
           </div>
           
         </div>
     
         <div className="flex flex-row flex-wrap gap-24">
-
-          {/* <div className="flex flex-col gap-2" style={{width: "300px"}}>
-            <label htmlFor="birthDate">Birth Date:</label>
-            <input 
-              className={`
-                pl-2 py-1 bg-stone-200 border-b-2 
-                ${user.birthDate ? 'border-gray-300 hover:border-stone-400' : 
-                'border-red-500'} focus:border-black focus:outline-none transition`}
-              type="text" 
-              name="birthDate" 
-              value={userData.birthDate} 
-              onChange={handleChange} 
-            />
-          </div> */}
     
           <div className="flex flex-col gap-2" style={{width: "300px"}}>
             <label htmlFor="phone">Phone Number:</label>
