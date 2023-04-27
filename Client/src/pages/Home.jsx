@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Card from '../components/Card'
 import { useDispatch, useSelector } from 'react-redux'
-import NavBar from '../components/NavBar'
 import Sidebar from '../components/Sidebar/Sidebar'
 import Grid from '../components/Grid'
 import Pagination from '../components/Pagination'
@@ -74,10 +73,9 @@ const Home = () => {
 
   return (
     <div className='bg-stone-800'>
-      <NavBar />
       
       <Sidebar setFilter={(e) => { setFilter(e) }} />
-      <div style={{ marginTop: top, marginLeft: width }} className="bg-white">
+      <div style={{ marginLeft: width }} className="bg-white">
    
         <Carousel images={images} />
         <div className='px-2'>

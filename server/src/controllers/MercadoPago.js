@@ -14,8 +14,10 @@ mercadopago.configure({
   access_token: MERCADOPAGO_KEY,
 });
 
-export default async function getPay(req, res) {
+export async function payment(req, res) {
   const { userId, cart, total } = req.body
+  const url = `${req.protocol}://${req.get('host')}`
+
   try {
 
     let items = [];
@@ -27,9 +29,6 @@ export default async function getPay(req, res) {
         picture_url: prod.image,
         description: prod.description,
         category_id: "art",
-        customer_data: {
-          email: "finetaype@gmail.com"
-        },
         quantity: prod.quantity,
         unit_price: prod.price,
       };
@@ -41,9 +40,9 @@ export default async function getPay(req, res) {
     let preference = {
       items: items,
       back_urls: {
-        success: "http://localhost:3000/home",
-        failure: "",
-        pending: "",
+        success: `${url}/payment/success/${userId}`,
+        failure: `${url}/payment/failure/${userId}`,
+        pending: `${url}/payment/pending/${userId}`,
       },
       payer: {
         items: items.map((item) => {
@@ -70,7 +69,7 @@ export default async function getPay(req, res) {
 
       })
       .catch((error) => res.status(400).send({ error: error.message }));
-    const findUser = await UserModel.findById(userId)
+  
 
    /*  var customer_data = { "email": findUser.email }
 
@@ -103,5 +102,56 @@ export default async function getPay(req, res) {
     res.status(500).send({ error: error.message });
   }
 };
+// success: 
+// failure: 
+// pending
+export async function success(req,res){
+  const {id} = req.params
 
+  try{
+    const findCard = await cartModel.findOne({id})
+
+    if(findCard){
+      var newProducts =await findCard.products.forEach(async (prod) => {
+        const findProduct = await ProductModel.findOne({id:prod.id})
+        if(findProduct){
+          findProduct.stock -= prod.total
+          await findProduct.save()
+        }
+        if(prod.active){
+          return prod
+        }
+      })
+      if(newProducts){
+        await cartModel.findOneAndUpdate({id},{$set:{products:newProducts}})
+        await PurchaseModel.create({id,products:newProducts})
+        
+      }
+
+
+      res.redirect('http://localhost:3000/payment/success')
+    }
+
+
+
+  }catch(error){
+    res.status(500).send({ error: error.message });
+
+  }
+
+}
+
+export async function failure(req,res){
+  const {id} = req.params
+
+  res.redirect('http://localhost:3000/payment/failure')
+
+  
+}
+export async function pending(req,res){
+  const {id} = req.params
+
+  res.redirect('http://localhost:3000/payment/pending')
+
+}
 

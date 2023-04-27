@@ -5,40 +5,28 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from 'react-redux';
 
 
-const CartItem = ({ id,onClick, item,onSummary, handleDelete,onIncrement,onDecrement  }) => {
-   
-    const { url, auth, setter,get } = useSelector(({ state }) => state.server)
-
-    const [data, setData] = useState(null)
-    useEffect(() => {
-        get(`${url}/products/${id}`).then(res => {
-            setData(res.data)
-            onSummary(res.data)
-        })
+const CartItem = ({ id,onClick, item, handleDelete,onIncrement,onDecrement  }) => {
 
 
-    }, [(data?null:data),item])
- 
-
-  return (data&& <div onClick={onClick} style={{borderRadius: "10px"}} className="shadow-xl hover:shadow-2xl flex flex-col md:flex-row justify-between items-center pl-2 pr-4 py-4 mb-1 bmd:mb-0 bg-stone-200 transition ">
+  return (item&& <div onClick={onClick} style={{borderRadius: "10px"}} className=" flex flex-col md:flex-row justify-between items-center pl-2 pr-4 py-4 mb-1 bmd:mb-0transition ">
         
         <div className="flex flex-col md:flex-row items-center md:mr-8">
 
             <div style={{minWidth: "150px", borderRadius: "5px"}} className='w-32 h-36 bg-white flex justify-center items-center'>
                 <img
-                    src={data.image[0]}
-                    alt={data.name}
+                    src={item.image[0]}
+                    alt={item.name}
                     className="h-full object-contain max-h-full"
                 />
             </div>
 
 
             <div style={{minWidth: "200px"}} className='py-4 px-8'>
-                <h3 className="text-l font-bold ">{data.name}</h3>
-                <p className="text-sm font-medium">Brand: {data.brand}</p>
+                <h3 className="text-l font-bold ">{item.name}</h3>
+                <p className="text-sm font-medium">Brand: {item.brand}</p>
                 {/* <p className="text-sm mr-5" style={{maxWidth: "200px"}}>{truncatedDescription}</p> */}
-                <p className="text-sm mr-5">Color: {data.color}</p>
-                <p className="text-sm font-medium">Price: ${data.price}</p>
+                <p className="text-sm mr-5">Color: {item.color}</p>
+                <p className="text-sm font-medium">Price: ${item.price}</p>
             </div>
 
         </div>
