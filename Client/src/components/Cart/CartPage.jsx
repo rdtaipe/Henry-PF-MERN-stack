@@ -105,7 +105,7 @@ const CartPage = () => {
           </div>
         ) : (
           <div className="flex sm:justify-around lg:justify-around bg-stone-100 w-full flex-col sm:flex-row mb-5 sm:mb-0 items-center sm:items-stretch">
-            <div className="relative flex flex-col w-[auto] mr-[2%]">
+            <div className="relative flex flex-col w-[auto] sm:mr-[2%]">
               <h1 className="text-2xl font-bold leading-none sm:text-3xl dark:text-black mb-5 sm:mb-0">
                 Cart ({cartProducts.length} products)
               </h1>
