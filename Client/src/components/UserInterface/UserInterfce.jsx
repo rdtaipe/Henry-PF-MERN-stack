@@ -292,9 +292,9 @@ const UserInterface = () => {
 <>
         {userAutorized ? (
 
-            <div style={{minHeight: "800px"}} className="flex flex-col items-center bg-stone-100">
+            <div style={{height: "700px"}} className="flex flex-col items-center bg-stone-100">
 
-                <div style={{borderRadius: "10px", width: "1220px", display: "flex", justifyContent: "space-between"}} className="mt-40 bg-stone-200 gap-8 py-5 px-10 shadow-xl">
+                <div style={{borderRadius: "10px", width: "1220px", display: "flex", justifyContent: "space-between"}} className="mt-20 bg-stone-200 gap-8 py-5 px-10 shadow-xl">
 
                     <div style={{display: "flex", alignItems: "center"}}>
                         <img src={userData.picture} alt="user" style={{width: "70px", height: "70px", borderRadius: "50%", marginRight: "50px"}} />
@@ -331,7 +331,7 @@ const UserInterface = () => {
                                 case "Adress settings":
                                     return <AdressSettings user={user} updateUser={handleUserDataChange} />;
                                 case "Shop history":
-                                    return <ShopHistory shopHistory={historyHarcoded}/>
+                                    return <ShopHistory shopHistory={shopHistory}/>
                                 default:
                                     return <PersonalData user={user} updateUser={handleUserDataChange} />;
                                 }
