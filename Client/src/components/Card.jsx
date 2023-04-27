@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
+import { Notification } from './Notification/Notification';
 
 const Card = (props) => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const Card = (props) => {
         var resData=res.data.products
         dispatch(setter({ keys: 'state.user.cart', value:resData  }))
       })
+      Notification('success', `${name} added to the cart`, 'bottom-end', 5000);
     }else{//si no esta autorizado
       navigate("/authorize")
     }
