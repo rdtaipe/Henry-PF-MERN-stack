@@ -8,7 +8,7 @@ router.post('/', payment);
 // failure: "",
 // pending:
 router.get('/success/:id', success);
-router.get('/failure/id', failure);
-router.get('/pending/id', pending);
+router.get('/failure/:id', failure);
+router.get('/pending/:id', pending);
 
 export default router;
