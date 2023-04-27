@@ -1,6 +1,6 @@
 import cartModel from '../models/cart.js'
 import userModel from '../models/user.js'
-
+import productModel from '../models/product.js'
 
 export const getAllCart = async (req, res) => {
     try {
@@ -47,9 +47,10 @@ export const updateCart = async (req, res) => {
             res.status(400).json({ message: 'no product id' })
         }
         const findProduct = await cartModel.findOne({ id: id }).populate('products')
+        const realProduct = await productModel.findById(data.id)
         const newProduct = [...findProduct.products]
 
-        if (findProduct) {//si el carrito existe
+        if (findProduct&&realProduct) {//si el carrito existe
             const ifExist = findProduct.products.find((p) => p.id === data.id);
             if (ifExist) {//si el producto existe
                 var index = newProduct.indexOf(ifExist);
@@ -59,11 +60,15 @@ export const updateCart = async (req, res) => {
                 findProduct.save()
                 res.status(200).json(findProduct)
             } else {//si el producto no existe
+
                 const newProduct = {
                     id: data.id,
-                    name: data.name,
-                    price: data.price,
-                    image: data.image,
+                    name: realProduct.name,
+                    price: realProduct.price,
+                    image: realProduct.image,
+                    brand: realProduct.brand,
+                    color: realProduct.color,
+                    description: realProduct.description,
                     total: 1,
                     date: Date.now(),
                     attr: data.attr

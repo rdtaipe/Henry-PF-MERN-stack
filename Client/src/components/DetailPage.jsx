@@ -9,10 +9,10 @@ import Comment from "./Comment";
 import Rating from "./Rating";
 
 export const DetailPage = () => {
-  const dispatch = useDispatch()
-  const { data, cart } = useSelector(({ state }) => state.user)
-  const { url, auth, setter, get } = useSelector(({ state }) => state.server)
-  const userData = data()
+  const dispatch = useDispatch();
+  const { data, cart } = useSelector(({ state }) => state.user);
+  const { url, auth, setter, get } = useSelector(({ state }) => state.server);
+  const userData = data();
 
   const { productId } = useParams();
   const [product, setProduct] = useState([]);
@@ -25,24 +25,23 @@ export const DetailPage = () => {
       .then((res) => setProduct(res.data))
       .catch((err) => console.log(err.message));
 
-    getCurrentComments()
+    getCurrentComments();
   }, []);
   const addToCart = () => {
     var obj = {
       id: product._id,
       date: new Date(),
     };
-    auth.put(`${url}/cart/${userData.id}`, obj).then(res => {
-      var resData = res.data.products
-      console.log(resData)
-      dispatch(setter({ keys: 'state.user.cart', value: resData }))
-    })
-
-  }
+    auth.put(`${url}/cart/${userData._id}`, obj).then((res) => {
+      var resData = res.data.products;
+      console.log(resData);
+      dispatch(setter({ keys: "state.user.cart", value: resData }));
+    });
+  };
   const slide = product.image
     ? product.image.map((x) => {
-      return { url: x };
-    })
+        return { url: x };
+      })
     : "https://example.com/zapatos-deportivos-nike1.jpg";
 
   const prevSlide = () => {
@@ -64,36 +63,39 @@ export const DetailPage = () => {
       name: userData.name,
       picture: userData.picture,
       productId: product._id,
-      userId: userData.id,
+      userId: userData._id,
       body: comment,
       score: stars,
       date: new Date(),
     };
     auth.post(`${url}/comments/send`, newComment).then((res) => {
-      getCurrentComments()
+      getCurrentComments();
     });
-
   };
 
   const getCurrentComments = () => {
     auth.get(`${url}/comments/${productId}`).then((res) => {
-      setComments(res.data)
+      setComments(res.data);
     });
-  }
+  };
   return (
     <div className="h-full flex flex-col justify-center mt-[140px]">
       <div className="flex justify-evenly items-center">
         <div
           style={{ backgroundImage: `url(${slide[currentIndex].url})` }}
-          className="w-[50%] lg:w-[38%] h-[550px] rounded-2xl bg-center bg-cover duration-500 flex justify-between"
+          className="w-[50%] lg:w-[38%] h-[550px] rounded-2xl bg-center bg-cover duration-500 flex"
         >
-          <div className="w-fit h-fit relative top-[50%] text-2xl rounded-full p-2 ml-2 bg-black/20 text-white cursor-pointer">
-            <BsChevronCompactLeft onClick={prevSlide} size={30} />
-          </div>
+          {slide.length === 1 ? null : (
+            <div className="w-full flex justify-between">
+              <div className="w-fit h-fit relative top-[50%] text-2xl rounded-full p-2 ml-2 bg-black/20 text-white cursor-pointer">
+                <BsChevronCompactLeft onClick={prevSlide} size={30} />
+              </div>
 
-          <div className="w-fit h-fit relative top-[50%] text-2xl rounded-full p-2 mr-2 bg-black/20 text-white cursor-pointer">
-            <BsChevronCompactRight onClick={nextSlide} size={30} />
-          </div>
+              <div className="w-fit h-fit relative top-[50%] text-2xl rounded-full p-2 mr-2 bg-black/20 text-white cursor-pointer">
+                <BsChevronCompactRight onClick={nextSlide} size={30} />
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col justify-center items-center gap-10 w-[45%]">
@@ -110,14 +112,12 @@ export const DetailPage = () => {
               <span className="font-normal capitalize">{product.color}</span>
             </p>
             <div className="flex justify-center items-center py-2 ">
-
               <Rating
                 value={
                   comments.length > 0
                     ? comments.reduce((acc, el) => acc + el.score, 0) /
-                    comments.length
+                      comments.length
                     : 0
-
                 }
                 disabled={true}
                 size={"small"}
@@ -146,7 +146,10 @@ export const DetailPage = () => {
               )}
             </div>
             <div className="flex justify-center">
-              <button onClick={addToCart} className="w-[250px] md:w-[300px] lg:w-[450px] mt-10 font-semibold bg-gray-900 h-10 text-center border-2 border-black rounded hover:bg-blue-900 text-white">
+              <button
+                onClick={addToCart}
+                className="w-[250px] md:w-[300px] lg:w-[450px] mt-10 font-semibold bg-gray-900 h-10 text-center border-2 border-black rounded hover:bg-blue-900 text-white"
+              >
                 Add To Cart
               </button>
             </div>
@@ -179,30 +182,21 @@ export const DetailPage = () => {
           </p>
         </div>
       </div>
-      {comments.filter((item) => item.userId === userData.id).length === 0 && (
+      {comments.filter((item) => item.userId === userData._id).length === 0 && (
         <div className="w-full my-8 px-[2%] bg-gray-100 py-4">
           <p className="text-m font-bold py-2">Qualify {product.name}</p>
           <CommentBox avatar={userData.picture} onSubmit={addComment} />
         </div>
       )}
 
-
       <div className="w-full my-8 px-[2%]  py-4">
         <p className="text-m font-bold py-2">Comments</p>
         <div className="flex flex-col gap-4">
           {comments.map((item) => {
-            return (
-              <Comment
-                key={item._id}
-                data={item}
-              />
-            );
+            return <Comment key={item._id} data={item} />;
           })}
         </div>
       </div>
-
-
-
     </div>
   );
 };

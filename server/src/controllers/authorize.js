@@ -1,6 +1,8 @@
 import axios from "axios";
 import UserModel from '../models/user.js'
 import CartModel from "../models/cart.js";
+import send from '../utils/mail/send.js';
+
 
 
 const auth0Config = {
@@ -18,76 +20,83 @@ const origins = {
 // name,sub,picture,phone,email,ip,location,role,status
 const compareUser = async (newUser) => {
 
-    const validate = await userDataValidate(newUser);
+    const validate = await validator(newUser);
 
-    if (!validate) { return null; }
+    if (!validate) {
+        throw new Error('User data not valid')
+    }
     const { sub } = validate
-    const user = await UserModel.find({ sub: sub });
+    const user = await UserModel.findOne({ sub: sub });
 
+    console.log('user: ', user)
 
-    if (!user || user.length === 0) {
-        return saveUserAfterCompare(validate);
-    } else {
-        return updateUserAfterCompare(user[0], validate);
+    if (!user || user === null) {//if user not exist
+        await send({ user: validate, body: { type: "welcome", issue: "welcome to chiccloset" } })//send welcome email
+        return createNewUser(validate);
+    } else {//if user exist
+        return updateUser(user, validate);
     }
 }
-const userDataValidate = async (user) => {
+const validator = async (user) => {
+    console.log(user)
     try {
-        const { name, identities, picture, email, email_verified } = user;
-        if (!name || !identities || !picture || !email || !email_verified) { return false; }
+        const { name, user_id, picture, email, email_verified, given_name } = user;
+        if (!name || !user_id || !picture || !email || !email_verified) { throw new Error('User data not valid') }
 
-        const sub = identities[0].provider + "|" + identities[0].user_id;
         const newUser = {
-            name: name,
-            sub: sub,
+            fullName: name,
+            name: given_name,
+            sub: user_id,
             picture: picture,
             email: email,
             role: 'user',
-            status: 'active'
+            status: 'active',
+            email_verified: email_verified
         }
         return newUser;
     } catch (error) {
-        console.log('error: in userDataValidate')
-        return null;
+        console.log('error: in validator')
+        throw new Error('User data not valid')
     }
 }
-const updateUserAfterCompare = async (user, newUser) => {
-    // console.log(user, newUser)
+const updateUser = async (user, newUser) => {
     try {
-        const { name, sub, picture, email, email_verified } = newUser;
+        const { name, picture, email, email_verified } = newUser;
         const userObj = {
             name: name,
             picture: picture,
             email: email,
+            email_verified: email_verified
         }
 
         const updatedUser = await UserModel.findByIdAndUpdate(user._id.toString(), userObj, { new: true });
         return updatedUser;
     } catch (error) {
-        console.log('error: in updateUserAfterCompare')
-        return null;
+        console.log('error: in updateUser')
+
+        throw new Error('User data not valid')
     }
 
 }
-const saveUserAfterCompare = async (newUser) => {
+const createNewUser = async (newUser) => {
     try {
         const save = new UserModel(newUser);
         const newCart = new CartModel({ id: save._id });
-        console.log(save)
         await save.save();
-        console.log('new user saved')
+
+        console.log('new user saved and welcome email send')
         await newCart.save();
         console.log('new user saved')
         return save;
     } catch (error) {
         console.log('error: in saveUserAfterCompare')
-        return null;
+        throw new Error('User data not valid')
     }
 
 }
 
 export const userAuthorize = async (req, res) => {
-    if(Object.keys(req.headers).find(key => key === 'authorization')===undefined){res.status(401).json({message:"Unauthorized",error:'token or userId not found'});}
+    if (Object.keys(req.headers).find(key => key === 'authorization') === undefined) { res.status(401).json({ message: "Unauthorized", error: 'token or userId not found' }); }
     const token = req.headers.authorization?.split(' ')[1];
     // const origin = req.headers.origin;
     const { user, origin } = req.headers
@@ -101,10 +110,9 @@ export const userAuthorize = async (req, res) => {
             },
         });
         const userData = response.data;
-
         const newUser = await compareUser(userData);
 
-        const mixData = { ...userData, role: newUser.role, id: newUser._id, phone: newUser.phone }
+        const mixData =  {...userData,...newUser._doc} 
 
         //  if(newUser===null){res.status(401).json({message:"Unauthorized",error:'user not found'});}
         //  if(newUser.role==='admin'&&origins.admin.includes(origin)){
