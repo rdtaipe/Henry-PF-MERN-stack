@@ -14,6 +14,9 @@ import { useSelector, useDispatch } from "react-redux";
 import ScrollAnimate from "./components/ScrollAnimate";
 
 import NavBar from "./components/NavBar";
+import Questions from "./pages/Questions";
+
+import SupportAdmin from "./components/SupportAdmin";
 
 const server = {
   local: "http://localhost:5000",
@@ -47,6 +50,8 @@ function App() {
         <Route path="/products/:productId" element={<Detail />} />
         <Route path="/authorize" element={<Authorize />} />
         <Route path="/user" element={<User />} />
+        <Route path="/questions" element={<Questions/>} />
+        <Route path="/support" element={<SupportAdmin/>} />
       </Routes>
 
       {page !== "/" && <ScrollAnimate footer={<Footer />} />}
