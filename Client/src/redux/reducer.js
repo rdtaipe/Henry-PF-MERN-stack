@@ -69,7 +69,7 @@ export var initialState = {
       put: (url, data) => axios.put(url, data),
       delete: (url) => axios.delete(url),
       find: (url, query) => axios.get(url + query),
-      
+
       auth: {
         get: (url) => {
           var token = utils.getCookie("token")
@@ -103,20 +103,23 @@ export var initialState = {
       isAutorized: () => !utils.getLocal("autorized") ? false : utils.getLocal("autorized"),
       data: () => !utils.getLocal("userData") ? {} : utils.getLocal("userData"),
       authorize: async (token, user, url) => {
-        const domain = url + "/users/authorize"
-        const headers = { authorization: `Bearer ${token}`, user: user }// for every request
-        const getUserMetadataResponse = await axios.get(domain, {
-          headers: headers,
-        });
-        const data = getUserMetadataResponse.data.user
-        utils.saveLocal("userStatus", { error: false, message: "Authorized" })
-        utils.saveLocal("autorized", true)
-        utils.saveLocal("userData", data)
-        utils.saveCookie("token", token)
-        return data
+        console.log(user, url)
+          const domain = url + "/users/authorize"
+          const headers = { authorization: `Bearer ${token}`, user: user }// for every request
+          const getUserMetadataResponse = await axios.get(domain, {
+            headers: headers,
+          });
+          const data = getUserMetadataResponse.data.user
+          utils.saveLocal("userStatus", { error: false, message: "Authorized" })
+          utils.saveLocal("autorized", true)
+          utils.saveLocal("userData", data)
+          utils.saveCookie("token", token)
+          return data
+       
       },
-      unauthorize: () => {
-        utils.saveLocal("userStatus", { error: true, message: "Unauthorized" })
+      unauthorize: ({ message }) => {
+        var newMessage = message ? message : "Unauthorized"
+        utils.saveLocal("userStatus", { error: true, message: newMessage })
         utils.saveLocal("autorized", false)
         utils.saveLocal("userData", {})
         utils.saveCookie("token", "")
@@ -145,7 +148,7 @@ export var initialState = {
 export const reducer = (state = initialState, action) => {
 
   switch (action.type) {
-    case "REFRESH":{
+    case "REFRESH": {
       return {
         ...state,
         refresh: action.payload,

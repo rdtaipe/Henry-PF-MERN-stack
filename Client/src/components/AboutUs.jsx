@@ -2,7 +2,7 @@ import React from "react";
 
 export const AboutUs = () => {
   return (
-    <div className="h-fit">
+    <div className="h-fit bg-[#fff]">
       <div className="h-[350px] w-full bg-[#232323] flex justify-center items-center">
         <p className="text-[#315386] font-bold font-serif text-7xl">About Us</p>
       </div>
@@ -42,7 +42,7 @@ export const AboutUs = () => {
           <div>
             <p className="text-4xl font-bold">What are we looking for?</p>
           </div>
-          <p className="text-xl">
+          <p className="text-xl ">
             ChicCloset is a clothing store that aims to offer its customers a
             wide variety of fashionable clothing and high quality. Our main
             objective is to provide a pleasant and satisfying shopping

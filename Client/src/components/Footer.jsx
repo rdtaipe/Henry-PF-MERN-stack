@@ -2,12 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import { TbBrandGithub } from 'react-icons/tb';
-import { useLocation } from 'react-router-dom';
 
-const Footer = () => {
-  const { pathname } = useLocation();
+export default function Footer(){
   return (
-    pathname !== '/' ? (
       <footer className="bg-gray-900 border-t border-black py-14 w-full z-50">
         <div className='container mx-auto px-8 mb-14'>
           <div className='grid lg:grid-cols-2'>
@@ -58,8 +55,7 @@ const Footer = () => {
           </div>
         </div>
       </footer>
-    ) : null
+   
   )
 };
 
-export default Footer

@@ -79,7 +79,7 @@ export const DetailPage = () => {
     });
   };
   return (
-    <div className="h-full flex flex-col justify-center mt-[140px]">
+    <div className="h-full flex flex-col justify-center mt-[10px] bg-[white]">
       <div className="flex justify-evenly items-center">
         <div
           style={{ backgroundImage: `url(${slide[currentIndex].url})` }}
