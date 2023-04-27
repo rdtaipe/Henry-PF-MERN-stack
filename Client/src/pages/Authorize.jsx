@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react'
 import styled from 'styled-components'
-import { Button } from '@mui/material'
+import { Button as MuiButton,Box } from '@mui/material'
+import Button from '@mui/joy/Button';
 import Loading  from '../components/Loading'
 
 const messages = {
@@ -90,13 +91,24 @@ return(
 }
 
 const TryAgain=({message})=>{
+  const {  logout } = useAuth0();
+  const Navigate = useNavigate()
+
   const handleTryAgain=()=>{
     window.location.reload()
+  }
+  const handleExit=()=>{
+    logout()
+    Navigate("/home")
   }
 
   return(
     <FlexCenterCenter style={{height: "100vh",flexDirection:"column"}}><h3>{message}</h3><br/>
-      <Button onClick={handleTryAgain}>try again</Button>
+
+<Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+      <MuiButton onClick={handleTryAgain}>try again</MuiButton>
+      <Button onClick={handleExit} >Go home</Button>
+      </Box>
     </FlexCenterCenter>
   )
   }
