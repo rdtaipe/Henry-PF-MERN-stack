@@ -9,7 +9,9 @@ import { About } from "./pages/About";
 import Cart from "./pages/Cart";
 import Authorize from "./pages/Authorize";
 import User from "./pages/User";
+import Payment from "./pages/Payment/Payment";
 import { useSelector, useDispatch } from "react-redux";
+import ScrollAnimate from "./components/ScrollAnimate";
 
 import NavBar from "./components/NavBar";
 
@@ -41,15 +43,21 @@ console.log(page);
         <Route path="/token/:token" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/payment/success" element={<h1>Success</h1>} />
-        <Route path="/payment/failure" element={<h1>Failure</h1>} />
-        <Route path="/payment/pending" element={<h1>Pending</h1>} />
+        <Route path="/payment/:res" element={<Payment/>} />
         
         <Route path="/products/:productId" element={<Detail />} />
         <Route path="/authorize" element={<Authorize/>} />
         <Route path="/user" element={<User />} />
       </Routes>
-      <Footer />
+      <ScrollAnimate 
+      header={<h1>header</h1>}
+      content={<h1>content</h1>}
+
+footer={
+  <Footer />
+}
+      
+      />
     </div>
   );
 }
