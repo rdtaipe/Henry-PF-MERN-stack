@@ -13,6 +13,7 @@ import users from './userRouter.js'
 import find from "./findRouter.js";
 import dev from "./devRouter.js";
 import auth from "./authRouter.js";
+import stats from "./statsRouter.js";
 
 import mercadopago from './MercadoPagoRoute.js';
 import email from './emailRouter.js'
@@ -61,5 +62,9 @@ server.use('/dev',dev)
 
 //-------- Auth Routes ----------
 server.use("/auth", auth)
+
+//-------- Stats Routes ----------
+server.use("/stats", stats)
+
 
 export default server;
