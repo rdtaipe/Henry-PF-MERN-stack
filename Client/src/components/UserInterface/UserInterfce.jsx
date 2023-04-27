@@ -46,6 +46,27 @@ const UserInterface = () => {
                     total: "50.00",
                     image: "https://falabella.scene7.com/is/image/FalabellaPE/882693798_1?wid=1004&hei=1500&crop=248,0,1004,1500&qlt=70"
                 },
+                {
+                    id: "6437010ab6dc8f57b10a98f8",
+                    name: "Zapatos deportivos Nike",
+                    amount: "2",
+                    total: "180.00",
+                    image: "https://falabella.scene7.com/is/image/FalabellaPE/882693798_1?wid=1004&hei=1500&crop=248,0,1004,1500&qlt=70",
+                },
+                {
+                    id: "6437010ab6dc8f57b10a98f8",
+                    name: "Vestido de noche elegante",
+                    amount: "1",
+                    total: "560.00",
+                    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0KqMDrmmIHhEj6j1NtXGwmOSiLgvIV_bthA&usqp=CAU"
+                },
+                {
+                    id: "6437010ab6dc8f57b10a98f8",
+                    name: "Bearcliff Man Shirts",
+                    amount: "1",
+                    total: "50.00",
+                    image: "https://falabella.scene7.com/is/image/FalabellaPE/882693798_1?wid=1004&hei=1500&crop=248,0,1004,1500&qlt=70"
+                },
             ]
         },
         {
@@ -252,7 +273,8 @@ const UserInterface = () => {
         setActiveSection(value);
     }
 
-    // Cuando se arma el componente se trae el historial de compra
+    // Cuando se arma el componente se trae el historial de compra del usuario
+
     // useEffect(() => {
     //     axios.get(`${url}/purchase/${userData._id}`)
     //     .then((response) => {

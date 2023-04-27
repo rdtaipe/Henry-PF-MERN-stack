@@ -28,12 +28,12 @@ function App() {
   const { setter } = useSelector(({ state }) => state.server);
   const href = useHref();
   dispatch(setter({ keys: "state.server.url", value: server.local }));
-  console.log(useSelector(({ state }) => state.server.url));
   const [page, setPage] = useState("");
   useEffect(() => {
     setPage(href);
   }, [href]);
-  console.log(page);
+  console.log("back=",useSelector(({ state }) => state.server.url),"front=",page);
+  
 
 
   return (
