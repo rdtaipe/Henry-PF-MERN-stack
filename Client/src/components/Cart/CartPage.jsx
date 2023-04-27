@@ -119,7 +119,7 @@ const CartPage = () => {
 
 
     ) : (
-      <div className='grid grid-cols-1 sm:grid-cols-2 gap-6 bg-stone-100'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 gap-6 bg-stone-100 h-fit'>
 
         <div className="space-y-6">
 
