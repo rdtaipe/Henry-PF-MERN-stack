@@ -71,32 +71,6 @@ export async function payment(req, res) {
       .catch((error) => res.status(400).send({ error: error.message }));
   
 
-   /*  var customer_data = { "email": findUser.email }
-
-    mercadopago.customers.create(customer_data).then((res) => {
-      var newData = {
-        token: "9b2d63e00d66a8c721607214cedaecda",
-        id: res.body.id,
-        first_name: findUser.name,
-        payment_method_id: "debit_card",
-        issuer_id: "303",
-        payer: {
-          email: findUser.email,
-          identification: {
-            type: "DNI",
-            number: "9999999"
-          }
-        }
-      }
-      mercadopago.customers.cards.create(newData).then((res) => {
-        console.log(res)
-      })
-    }
-    ).catch(function (error) {
-      console.log(error)
-    }) */
-
-
   } catch (error) {
     console.log(error);
     res.status(500).send({ error: error.message });
