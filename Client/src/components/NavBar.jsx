@@ -102,7 +102,7 @@ const NavBar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 z-50 flex justify-between items-center bg-black w-[100%] h-[80px] text-white`}
+      className={`fixed top-0 left-0 z-50 flex justify-between items-center bg-black w-[100%] h-[${top}px] text-white`}
     >
       {modal && (
         <Modal
@@ -114,7 +114,7 @@ const NavBar = () => {
           onTrue={handleModal}
         />
       )}
-      <div className="relative flex justify-center w-[200px] lg:w-[300px] p-5">
+      <div className="relative flex justify-center w-[300px] p-5">
         <NavLink to="/">
           <img src={logo} alt="logo" className="w-36" />
         </NavLink>
@@ -141,6 +141,12 @@ const NavBar = () => {
           >
             About Us
           </NavLink>
+          <NavLink
+            to="/form"
+            className="text-white hover:text-stone-400 hover:transform transition-all duration-500"
+          >
+            Form
+          </NavLink>
         </div>
 
         <div className="text-white">
@@ -160,41 +166,22 @@ const NavBar = () => {
             </div>
           </NavLink>
 
-          <div className="text-black bg-white w-[auto] h-[40px] flex justify-center items-center transition-all duration-200 ml-0 mr-0 lg:ml-[5px] lg:mr-[30px] rounded-[4px] overflow-hidden">
+          <div className="text-black bg-white w-[auto] h-[40px] flex justify-center items-center transition-all duration-200 ml-[5px] mr-[30px] rounded-[4px] overflow-hidden">
             <button
-              className="flex items-center justify-center  hover:bg-stone-400 transition-all duration-200 w-[60px] px-[8px] md:w-[100%] md:px-[8px] lg:px-0 lg:w-[60px] h-[100%]"
+              className="flex items-center justify-center  hover:bg-stone-400 transition-all duration-200  w-[60px] h-[100%]"
               onClick={handleProfile}
             >
               {profileState.icon}
             </button>
-            <Divider
-              orientation="vertical"
-              flexItem
-              className="block md:hidden lg:block"
-            />
+            <Divider orientation="vertical" flexItem />
             <button
-              className="flex items-center hover:bg-stone-400 transition-all duration-200 px-[8px] w-[100%] h-[100%] md:hidden lg:flex"
+              className="flex items-center hover:bg-stone-400 transition-all duration-200 px-[8px] w-[100%] h-[100%]"
               onClick={hadleText}
             >
               {profileState.text}
             </button>
           </div>
         </div>
-      </div>
-
-      <div className="block md:hidden">
-        <button
-          className="flex items-center px-3 py-2 pr-7"
-          onClick={onClickMenu}
-        >
-          <span className="block h-6 w-6">
-            {open ? (
-              <AiOutlineClose className="h-full w-full text-white" />
-            ) : (
-              <AiOutlineMenu className="h-full w-full text-white" />
-            )}
-          </span>
-        </button>
       </div>
     </nav>
   );

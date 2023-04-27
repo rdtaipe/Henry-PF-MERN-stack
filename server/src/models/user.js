@@ -34,6 +34,7 @@ const userSchema = new Schema(
     genre: { type: String, },
     country: { type: String, },
     address: { type: String, },
+    postal: { type: String, },
     sub: { type: String, required: true, unique: true },
     picture: { type: String, default: '' },
     phone: { type: String, default: '' },
