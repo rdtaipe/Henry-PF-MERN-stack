@@ -1,38 +1,26 @@
-import React,{useEffect,useContext, useState } from "react";
-import classnames from 'classnames'
-import { Wallet } from "@mercadopago/sdk-react";
+import React, { useEffect, useContext, useState } from "react";
+import { Wallet, CardPayment, Payment as pay, StatusScreen } from "@mercadopago/sdk-react";
 import { Context } from "./ContextProvider";
 import axios from "axios";
 import { useSelector } from "react-redux";
 const Payment = () => {
   // const { preferenceId, orderData } = useContext(Context);
-  const { step,setStep,orderData } = useContext(Context);
+  const { step, setStep, orderData } = useContext(Context);
+  const { url, post } = useSelector(({ state }) => state.server);
 
-  const [isReady, setIsReady] = useState(false);
-  const paymentClass = classnames('payment-form dark', {
-    'payment-form--hidden': !isReady,
-  });
-  const { url,post } = useSelector(({ state }) => state.server);
-
- const [cart, setCart] = useState([])
- const [total, setTotal] = useState(0)
- const [userId, setUserId] = useState('')
-
- const [preferenceId, setPreferenceId] = useState('')
-
-  const handleOnReady = () => {
-    setIsReady(true);
-  }
+  const [cart, setCart] = useState([])
+  const [total, setTotal] = useState(0)
+  const [preferenceId, setPreferenceId] = useState('')
 
 
-  useEffect(() => { 
-    var awaitCart= orderData.products&&Object.values(orderData.products)||[]
+
+  useEffect(() => {
+    var awaitCart = orderData.products || []
     setCart(awaitCart)
     setTotal(orderData.total)
-    setUserId(orderData.userId)
 
-    if(orderData&&awaitCart.length>0){
-      post(`${url}/payment`,{userId:orderData.userId, cart: awaitCart, total:orderData.total})
+    if (orderData && awaitCart.length > 0) {
+      post(`${url}/payment`, { userId: orderData.userId, cart: awaitCart, total: orderData.total })
         .then((res) => {
           setPreferenceId(res.data.response.body.id);
           console.log(res);
@@ -44,27 +32,24 @@ const Payment = () => {
 
     }
 
- 
+
   }, [orderData])
 
 
 
 
-  const handlePay =(preferenceId) => {
+  const handlePay = (preferenceId) => {
     if (!preferenceId) return null;
+    console.log(preferenceId)
 
-    return (
-      <Wallet
-        initialization={{ preferenceId: preferenceId }}
-        onReady={handleOnReady}
-        onSubmit={() => {
-          axios.post(`${url}/payment`, cart).then((res) => window.location.href = res.data.response.body.sandbox_init_point)
+    var url = `https://sandbox.mercadopago.com.ar/checkout/v1/redirect?pref_id=${preferenceId}`
 
-        }} />
-    )
+    window.location.href = url
+
+
   }
 
-  return (step===2&&
+  return (step === 2 &&
     <div className={`mt-[200px] min-h-screen `}>
       <div className="container_payment">
         <div className="block-heading">
@@ -75,7 +60,7 @@ const Payment = () => {
           <div className="products">
             <h2 className="flex justify-center items-center mb-10 font-bold">Summary</h2>
             <div className="item">
-              {cart&&cart.map((prod) => {
+              {cart && cart.map((prod) => {
                 return (
                   <div className="flex justify-between m-2 border-4 p-3">
                     <div className="flex justify-between">
@@ -89,11 +74,11 @@ const Payment = () => {
                     </div>
                   </div>
                 );
-        
+
               })}
-              
-              
-            
+
+
+
             </div>
             <div className="flex justify-between mt-20">
               <p className="font-bold">Total</p>
@@ -101,10 +86,12 @@ const Payment = () => {
             </div>
           </div>
           <div className="payment-details">
-            <div className="form-group col-sm-12">{
-              handlePay(preferenceId)
+            <div className="form-group flex justify-center items-center w-full">
+              <button className="btn btn-primary btn-block btn-lg bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-full w-1/2"
+                onClick={(e) => { handlePay(preferenceId) }}>
+                pay with MercadoPago
+              </button>
 
-            }
             </div>
           </div>
         </div>
