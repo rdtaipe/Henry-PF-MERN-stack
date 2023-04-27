@@ -1,15 +1,15 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
+import { Notification } from './Notification/Notification';
 
 const Card = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const { _id, image, name, price, stock } = props.data;//product DATA
+  const { _id, image, name, price, stock, } = props.data;//product DATA
   const {url,auth,setter}=useSelector(({state})=>state.server)
   const { isAutorized, data ,cart} = useSelector(({ state }) => state.user)
-
+  const userData = data();
 
   const discount = Math.round(Math.random() * 20);
   const priceDiscount = Math.round(price - (price * discount) / 20);
@@ -17,19 +17,16 @@ const Card = (props) => {
 
   const handleNameClick = (e,item) => {
     if(isAutorized()){//si esta autorizado
-      const {id}=data()
       const newObj={
           id:_id,
-          name: name,
-          image: image,
-          price: price,
           date:new Date()
       }
   
-      auth.put(`${url}/cart/${id}`,newObj).then(res=>{
+      auth.put(`${url}/cart/${userData._id}`,newObj).then(res=>{
         var resData=res.data.products
         dispatch(setter({ keys: 'state.user.cart', value:resData  }))
       })
+      Notification('success', `${name} added to the cart`, 'bottom-end', 5000);
     }else{//si no esta autorizado
       navigate("/authorize")
     }
