@@ -2,7 +2,7 @@ import React from "react";
 
 export const AboutUs = () => {
   return (
-    <div className="h-fit pt-[80px]">
+    <div className="h-fit">
       <div className="h-[350px] w-full bg-[#232323] flex justify-center items-center">
         <p className="text-[#315386] font-bold font-serif text-7xl">About Us</p>
       </div>

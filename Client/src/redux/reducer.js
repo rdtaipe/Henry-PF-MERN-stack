@@ -69,6 +69,7 @@ export var initialState = {
       put: (url, data) => axios.put(url, data),
       delete: (url) => axios.delete(url),
       find: (url, query) => axios.get(url + query),
+      
       auth: {
         get: (url) => {
           var token = utils.getCookie("token")
