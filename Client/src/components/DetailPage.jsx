@@ -80,7 +80,7 @@ export const DetailPage = () => {
   };
 
   return (
-    <div className="h-full flex flex-col justify-center mt-[140px]">
+    <div className="h-full flex flex-col justify-center pt-[80px] bg-white">
       <div className="flex flex-col md:flex-row justify-evenly items-center">
         <div
           style={{
