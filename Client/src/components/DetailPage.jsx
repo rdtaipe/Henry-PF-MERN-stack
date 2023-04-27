@@ -87,7 +87,7 @@ export const DetailPage = () => {
             backgroundImage: `url(${slide[currentIndex].url})`,
             backgroundPosition: "center",
           }}
-          className="w-[80%] md:w-[50%] lg:w-[38%] h-[550px] rounded-2xl bg-center bg-cover duration-500 flex mt-11 mb-8 md:mb-0 md:mt-0"
+          className="w-[80%] md:w-[50%] lg:w-[38%] h-[320px] md:h-[550px] rounded-2xl bg-center bg-cover duration-500 flex mt-11 mb-8 md:mb-0 md:mt-0"
         >
           {slide.length === 1 ? null : (
             <div className="w-full h-full flex justify-between">
