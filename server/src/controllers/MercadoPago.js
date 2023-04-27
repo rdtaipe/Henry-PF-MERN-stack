@@ -1,5 +1,12 @@
 import mercadopago from 'mercadopago';
 import dotenv from 'dotenv';
+
+import PurchaseModel from '../models/purchase.js';
+import ProductModel from '../models/product.js';
+import cartModel from '../models/cart.js';
+import UserModel from '../models/user.js';
+
+
 dotenv.config();
 const { MERCADOPAGO_KEY } = process.env;
 
@@ -7,51 +14,144 @@ mercadopago.configure({
   access_token: MERCADOPAGO_KEY,
 });
 
-const getPay = async (req, res) => {
-  const products = req.body;
+export async function payment(req, res) {
+  const { userId, cart, total } = req.body
+  const url = `${req.protocol}://${req.get('host')}`
 
-  let items = [];
- // _id, name, image, description, price
-  products.forEach((prod) => {
-    const item = {
-      id: prod._id,
-      title: prod.name,
-      currency_id: "ARS",
-      picture_url: prod.image[0],
-      description: prod.name,
-      category_id: "art",
-      quantity: 1,
-      unit_price: prod.price,
+  try {
+
+    let items = [];
+    // _id, name, image, description, price
+    cart.forEach((prod) => {
+      const item = {
+        id: prod.productId,
+        title: prod.name,
+        picture_url: prod.image,
+        description: prod.description,
+        category_id: "art",
+        quantity: prod.quantity,
+        unit_price: prod.price,
+      };
+
+      items.push(item);
+    });
+
+
+    let preference = {
+      items: items,
+      back_urls: {
+        success: `${url}/payment/success/${userId}`,
+        failure: `${url}/payment/failure/${userId}`,
+        pending: `${url}/payment/pending/${userId}`,
+      },
+      payer: {
+        items: items.map((item) => {
+          return {
+            title: item.title,
+            description: item.description,
+            quantity: item.quantity,
+            unit_price: item.unit_price,
+          };
+        })
+      },
+      auto_return: "approved",
+      binary_mode: true,
     };
 
-    items.push(item);
-  });
+    mercadopago.preferences
+      .create(preference)
+      .then((response) => {
 
-  let preference = {
-    items: items,
-    back_urls: {
-      success: "http://localhost:3000/home",
-      failure: "",
-      pending: "",
-    },
-    payer: {
-      items: items.map((item) => {
-        return {
-          title: item.title,
-          description: item.description,
-          quantity: item.quantity,
-          unit_price: item.unit_price,
-        };
+        console.log(response.body.init_point)
+
+
+        res.status(200).send({ response })
+
       })
-    },
-    auto_return: "approved",
-    binary_mode: true,
-  };
+      .catch((error) => res.status(400).send({ error: error.message }));
   
-  mercadopago.preferences
-    .create(preference)
-    .then((response) => res.status(200).send({ response }))
-    .catch((error) => res.status(400).send({ error: error.message }));
-};
 
-export default getPay;
+   /*  var customer_data = { "email": findUser.email }
+
+    mercadopago.customers.create(customer_data).then((res) => {
+      var newData = {
+        token: "9b2d63e00d66a8c721607214cedaecda",
+        id: res.body.id,
+        first_name: findUser.name,
+        payment_method_id: "debit_card",
+        issuer_id: "303",
+        payer: {
+          email: findUser.email,
+          identification: {
+            type: "DNI",
+            number: "9999999"
+          }
+        }
+      }
+      mercadopago.customers.cards.create(newData).then((res) => {
+        console.log(res)
+      })
+    }
+    ).catch(function (error) {
+      console.log(error)
+    }) */
+
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ error: error.message });
+  }
+};
+// success: 
+// failure: 
+// pending
+export async function success(req,res){
+  const {id} = req.params
+
+  try{
+    const findCard = await cartModel.findOne({id})
+
+    if(findCard){
+      var newProducts =await findCard.products.forEach(async (prod) => {
+        const findProduct = await ProductModel.findOne({id:prod.id})
+        if(findProduct){
+          findProduct.stock -= prod.total
+          await findProduct.save()
+        }
+        if(prod.active){
+          return prod
+        }
+      })
+      if(newProducts){
+        await cartModel.findOneAndUpdate({id},{$set:{products:newProducts}})
+        await PurchaseModel.create({id,products:newProducts})
+        
+      }
+
+
+      res.redirect('http://localhost:3000/payment/success')
+    }
+
+
+
+  }catch(error){
+    res.status(500).send({ error: error.message });
+
+  }
+
+}
+
+export async function failure(req,res){
+  const {id} = req.params
+
+  res.redirect('http://localhost:3000/payment/failure')
+
+  
+}
+export async function pending(req,res){
+  const {id} = req.params
+
+  res.redirect('http://localhost:3000/payment/pending')
+
+}
+

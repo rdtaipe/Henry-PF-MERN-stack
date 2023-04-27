@@ -6,8 +6,7 @@ import { Notification } from './Notification/Notification';
 const Card = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const { _id, image, name, price, stock } = props.data;//product DATA
+  const { _id, image, name, price, stock, } = props.data;//product DATA
   const {url,auth,setter}=useSelector(({state})=>state.server)
   const { isAutorized, data ,cart} = useSelector(({ state }) => state.user)
   const userData = data();
@@ -20,9 +19,6 @@ const Card = (props) => {
     if(isAutorized()){//si esta autorizado
       const newObj={
           id:_id,
-          name: name,
-          image: image,
-          price: price,
           date:new Date()
       }
   
