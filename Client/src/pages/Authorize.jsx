@@ -30,12 +30,8 @@ function Authorize() {
       const getUserMetadata = async () => {
         const token = await getAccessTokenSilently();
 
-        if (!token) {
-          logout({ returnTo: clientUrl+"/authorize" })
-          unauthorize({ message: "invalid_token" })
-        }
         try {
-          const res = await authorize(token, user.sub, url)
+          await authorize(token, user.sub, url)
           Navigate("/home")
 
         } catch (error) {
@@ -62,8 +58,34 @@ export default withAuthenticationRequired( Authorize, {
 
 
 const Await=()=>{
+  const Navigate = useNavigate()
+  const { user, isAuthenticated, getAccessTokenSilently, logout,error } = useAuth0();
+  const { url } = useSelector(({state}) => state.server)
+  const { unauthorize, authorize, status, setStatus } = useSelector(({state}) => state.user)
+  const [message,setMessage]=useState("")
+
+  useEffect(()=>{
+    if(isAuthenticated){
+      const auth=async()=>{
+        try{
+        const token = await getAccessTokenSilently();
+        await authorize(token, user.sub, url)
+        Navigate("/home")
+        }catch(error){
+          setMessage(status().message)
+        }
+
+      }
+      auth()
+    }
+
+  },[isAuthenticated])
+
 return(
-  <FlexCenterCenter style={{height: "100vh"}}><Loading/></FlexCenterCenter>
+  <FlexCenterCenter style={{height: "100vh"}} className='bg-[white]'>
+    {message.length===0?
+    <Loading/>:<TryAgain message={message}/>}
+    </FlexCenterCenter>
 )
 }
 

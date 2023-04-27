@@ -89,7 +89,7 @@ const createNewUser = async (newUser) => {
         console.log('new user saved')
         return save;
     } catch (error) {
-        console.log('error: in saveUserAfterCompare')
+        console.log('error: in createNewUser')
         throw new Error('User data not valid')
     }
 
@@ -125,6 +125,6 @@ export const userAuthorize = async (req, res) => {
         //     }
         res.status(201).json({ message: "Authorized", user: mixData });
     } catch (err) {
-        res.status(401).json({ message: "Unauthorized", error: err });
+        res.status(500).json({ message: "Unauthorized", error: err });
     }
 }
