@@ -38,17 +38,17 @@ export default createBrowserRouter([
         },{
           path: '/roles',
           element:<Roles /> ,
-        },{
+        },
+        {
           path: '/permissions',
           element:<Permissions /> ,
-        }
+        } 
       ]
     },
-    {
+  {
       path: '/authorize',
       element:<Authorize /> ,
-
-    }
+    } 
     
     
     ]);

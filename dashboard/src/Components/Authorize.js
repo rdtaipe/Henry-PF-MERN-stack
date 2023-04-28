@@ -32,12 +32,13 @@ function Authorize() {
       const getUserMetadata = async () => {
         const token = await getAccessTokenSilently();
 
-        if (!token) {
+       if (!token) {
           logout({ returnTo: dashboardUrl+"/authorize" })
           unauthorize({ message: "invalid_token" })
-        }
+        } 
         try {
-          const res = await authorize(token, user.sub, url)
+          //const res = await authorize(token, user.sub, url)
+          const res = await authorize( user.sub, url)
           Navigate("/")
 
         } catch (error) {
