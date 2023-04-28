@@ -30,7 +30,7 @@ const cartSchema = new Schema({
         default:[]
     },
 }, {
-    timestamp: true,
+    timestamps: true,
     versionKey: false,
 }
 )

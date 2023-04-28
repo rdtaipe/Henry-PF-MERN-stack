@@ -34,7 +34,7 @@ const purchaseSchema = new Schema(
         },
     },
     {
-        timestamp: true,
+        timestamps: true,
         versionKey: false,
     }
 )

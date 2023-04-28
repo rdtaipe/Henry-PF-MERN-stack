@@ -29,7 +29,7 @@ const addressSchema = new Schema({
     },
 },
 {
-    timestamp: true,
+    timestamps: true,
     versionKey: false
 })
 
