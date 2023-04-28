@@ -1,57 +1,65 @@
 import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
+import * as Scroll from 'react-scroll';
 
 export default function ScrollAnimate({ footer }) {
-    const [footerStyle, setFooterStyle] = useState({ bottom: "-100%" });
-    const footerRef = useRef(null);
-    const containerRef = useRef(null);
+  const [footerStyle, setFooterStyle] = useState({ bottom: "-100%" });
+  const footerRef = useRef(null);
+  const containerRef = useRef(null);
 
-    useEffect(() => {
-        function scrollFooter(scrollY, heightFooter) {
-            if (scrollY >= heightFooter) {
-                setFooterStyle({ bottom: "0px" });
-            } else {
-                setFooterStyle({ bottom: `-${heightFooter}px` });
-            }
-        }
+  useEffect(() => {
+    function scrollFooter(scrollY, heightFooter) {
+      if (scrollY >= heightFooter) {
+        setFooterStyle({ bottom: "0px" });
+      } else {
+        setFooterStyle({ bottom: `-${heightFooter}px` });
+      }
+    }
 
-        const footerHeight = footerRef.current.offsetHeight-5
-        containerRef.current.style.height = `${footerHeight}px`;
-        scrollFooter(window.scrollY, footerHeight);
+    const footerHeight = footerRef.current.offsetHeight - 5;
+    containerRef.current.style.height = `${footerHeight}px`;
+    scrollFooter(window.scrollY, footerHeight);
 
-        function handleScroll() {
+    function handleScroll() {
+      const scroll = window.scrollY;
+      containerRef.current.style.top = `-${scroll}px`;
+      scrollFooter(scroll, 0);
+    }
 
-            const scroll = window.scrollY;
-            containerRef.current.style.top = `-${scroll}px`;
-            scrollFooter(scroll, 0);
-        }
+    const scrollSpy = Scroll.scrollSpy;
+    const scroller = Scroll.scroller;
 
-        window.addEventListener("scroll", handleScroll);
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, [footerRef, containerRef]);
+    scrollSpy.update();
+    scroller.scrollTo("scroll-animate", {
+      duration: 500,
+      delay: 1,
+      smooth: "easeInOutQuart",
+    });
 
-    return (
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [footerRef, containerRef]);
 
-        <Container ref={containerRef}>
-            <Footer style={footerStyle} ref={footerRef}>
-                {footer}
-            </Footer>
-        </Container>
-
-    );
+  return (
+    <Container ref={containerRef}>
+      <Footer id="scroll-animate" style={footerStyle} ref={footerRef}>
+        {footer}
+      </Footer>
+    </Container>
+  );
 }
 
 const Footer = styled.footer`
   width: 100%;
   height: auto;
   position: fixed;
-  z-index: -9!important;
+  z-index: -9 !important;
 `;
 
 const Container = styled.footer`
   position: relative;
-  z-index: -9!important;
+  z-index: -9 !important;
   transition: all 0.5s ease-in-out;
 `;
