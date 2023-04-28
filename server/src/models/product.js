@@ -12,6 +12,9 @@ const productSchema = new Schema(
         stock: {
             type: Number,
         },
+        cost: {
+            type: Number,
+        },
         color: {//filtrado
             type: String,
             enum: ['black', 'white', 'red', 'blue', 'green', 'yellow', 'orange', 'purple', 'brown', 'gray', 'pink', 'silver', 'gold', 'beige', 'multicolor'],

@@ -44,13 +44,13 @@ export const getProductById = async (req, res) => {
 export const createProducts = async (req, res,next) => {
   try { 
         //destructuro porque debo trabajar el objeto en formas separada
-    let {name,description,stock,color,size,category,genre,brand,price,active,feactured}=req.body;
+    let {name,description,stock,color,size,category,genre,brand,price,active,feactured,cost}=req.body;
     let file=req.file;
  
      let upload=await  uploadCloudinary(file);
         //una vez subida la image ya puedo obtener su url .creo un objeto
        let objProduct={
-        name,description,stock,
+        name,description,stock,cost,
         color,size,category,genre: genre,
         brand,price,active,feactured,
         image:upload.secure_url

@@ -41,18 +41,34 @@ export const getSales = async (req, res) => {
 export const getPurchases = async (req, res) => {
   const { month, year } = req.query;
 
-  const data = await productModel.find({}, { stock: 1, price: 1 });
+  const startDate = new Date(year, month - 1, 1);
+  const endDate = new Date(year, month, 0);
+
+  const data = await productModel.find(
+    { createdAt: { $gte: startDate, $lt: endDate } },
+    { stock: 1, cost: 1, createdAt: 1 }
+  );
 
   const formatData = data.map((el) => {
+    const day = new Date(el.createdAt).getDate();
+    const purchase = el.stock * el.cost;
     return {
-      year: el._id.getTimestamp().getFullYear(),
-      month: el._id.getTimestamp().getMonth() + 1,
-      day: el._id.getTimestamp().getDate(),
-      total: el.stock * el.price,
+      day,
+      purchase,
     };
   });
 
-  res.json(formatData);
+  const resp = [];
+  for (let i = 1; i <= endDate.getDate(); i++) {
+    const dayData = formatData.find((item) => item.day === i);
+    if (dayData) {
+      resp.push(dayData);
+    } else {
+      resp.push({ day: i, purchase: 0 });
+    }
+  }
+
+  res.json(data);
 };
 
 const fakeData = [
