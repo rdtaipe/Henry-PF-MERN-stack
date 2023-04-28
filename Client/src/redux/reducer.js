@@ -1,19 +1,5 @@
 import axios from "axios";
-import {
-  SET_STATE,
-  GET_PRODUCTS,
-  PRODUCT_DETAIL,
-  POST_PRODUCT,
-  OPEN_FILTERS,
-  ORDER_BY,
-  FILTER,
-  SEARCH,
-  GET_BRANDS,
-  BRAND_ELECT,
-  GET_COLORS,
-  GET_CATEGORIES,
-  UPDATE_SCORE,
-} from "./types";
+import {SET_STATE,} from "./types";
 import { setter } from "./actions";
 import { utils } from "./utils";
 
@@ -43,14 +29,6 @@ export var initialState = {
     refresh: false,
     setter: setter,
     utils: utils,
-    find: {
-      m: "product",
-      q: null,//dont use this
-      filter: null,//[]
-      sort: null,//{}
-      limit: 10,
-      skip: 0,
-    },
     pagination: {
       page: 1,
       pageLimit: 10,
@@ -118,6 +96,7 @@ export var initialState = {
        
       },
       unauthorize: ({ message }) => {
+        console.log(message)
         var newMessage = message ? message : "Unauthorized"
         utils.saveLocal("userStatus", { error: true, message: newMessage })
         utils.saveLocal("autorized", false)
@@ -159,47 +138,6 @@ export const reducer = (state = initialState, action) => {
         ...state,
         ...action.payload,
       }
-
-    case PRODUCT_DETAIL:
-      return {
-        ...state,
-        details: { ...action.payload[0] },
-      };
-
-    case POST_PRODUCT:
-      return {
-        ...state,
-      };
-
-
-    case GET_CATEGORIES:
-      return {
-        ...state,
-        categories: action.payload,
-      };
-
-    case GET_BRANDS:
-      return {
-        ...state,
-        brands: action.payload,
-      };
-
-    case GET_COLORS:
-      return {
-        ...state,
-        colors: action.payload,
-      };
-    case BRAND_ELECT:
-      return {
-        ...state,
-        selectedBrands: action.payload,
-      };
-    case UPDATE_SCORE:
-      return {
-
-      }
-
-
     default:
       return state;
   }
