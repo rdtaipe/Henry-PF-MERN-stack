@@ -306,7 +306,7 @@ const UserInterface = () => {
     }
     
     const handleLogout = () => {
-      unauthorize()
+      unauthorize({message:"Unauthorize"})
       logout({ returnTo: window.location.origin })
     }
 

@@ -96,6 +96,7 @@ export var initialState = {
        
       },
       unauthorize: ({ message }) => {
+        console.log(message)
         var newMessage = message ? message : "Unauthorized"
         utils.saveLocal("userStatus", { error: true, message: newMessage })
         utils.saveLocal("autorized", false)
