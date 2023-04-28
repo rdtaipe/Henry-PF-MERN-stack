@@ -20,7 +20,7 @@ export const AboutUs = () => {
             <p className="text-4xl font-bold">ChicCloset</p>
             <p className="text-2xl">Dress To Impress And Never Stress</p>
           </div>
-          <p className="text-xl">
+          <p className="text-lg md:text-xl">
             <span className="font-bold">Welcome To ChicCloset</span>, The online
             store where you will find all the clothing styles that you you need
             to always look fashionable. We have from casual clothes to elegant
@@ -37,12 +37,14 @@ export const AboutUs = () => {
           </p>
         </div>
       </div>
-      <div className="bg-[#21385A] flex px-10 py-10 xl:flex-row xl:justify-between xl:items-stretch xl:text-left sm:flex-col sm:items-center sm:text-center text-[#ffff]">
-        <div className="xl:w-[44%] sm:w-full flex flex-col justify-between xl:pt-3 sm:gap-3 sm:pb-5">
+      <div className="bg-[#21385A] flex px-10 py-10 xl:flex-row justify-between xl:items-stretch xl:text-left flex-col items-center text-center text-[#ffff]">
+        <div className="xl:w-[44%] w-full flex flex-col justify-between xl:pt-3 gap-3 pb-5">
           <div>
-            <p className="text-4xl font-bold">What are we looking for?</p>
+            <p className="text-4xl font-bold text-center xl:text-left mb-3 sm:mb-0">
+              What are we looking for?
+            </p>
           </div>
-          <p className="text-xl ">
+          <p className="text-lg md:text-xl text-center xl:text-left">
             ChicCloset is a clothing store that aims to offer its customers a
             wide variety of fashionable clothing and high quality. Our main
             objective is to provide a pleasant and satisfying shopping
