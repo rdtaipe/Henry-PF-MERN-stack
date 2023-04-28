@@ -76,15 +76,19 @@ export const DetailPage = () => {
       setComments(res.data);
     });
   };
+
   return (
-    <div className="h-full flex flex-col justify-center mt-[10px] bg-[white]">
-      <div className="flex justify-evenly items-center">
+    <div className="h-full flex flex-col justify-center pt-[80px] bg-white">
+      <div className="flex flex-col md:flex-row justify-evenly items-center">
         <div
-          style={{ backgroundImage: `url(${slide[currentIndex].url})` }}
-          className="w-[50%] lg:w-[38%] h-[550px] rounded-2xl bg-center bg-cover duration-500 flex"
+          style={{
+            backgroundImage: `url(${slide[currentIndex].url})`,
+            backgroundPosition: "center",
+          }}
+          className="w-[80%] md:w-[50%] lg:w-[38%] h-[320px] sm:h-[550px] rounded-2xl bg-center bg-cover duration-500 flex mt-11 mb-8 md:mb-0 md:mt-0"
         >
           {slide.length === 1 ? null : (
-            <div className="w-full flex justify-between">
+            <div className="w-full h-full flex justify-between">
               <div className="w-fit h-fit relative top-[50%] text-2xl rounded-full p-2 ml-2 bg-black/20 text-white cursor-pointer">
                 <BsChevronCompactLeft onClick={prevSlide} size={30} />
               </div>
@@ -97,8 +101,8 @@ export const DetailPage = () => {
         </div>
 
         <div className="flex flex-col justify-center items-center gap-10 w-[45%]">
-          <div>
-            <p className="capitalize font-bold text-4xl lg:text-5xl text-center font-serif">
+          <div className="absolute top-[110px] md:static">
+            <p className="capitalize font-bold text-3xl md:text-4xl lg:text-5xl text-center font-serif">
               {product.name}
             </p>
           </div>
