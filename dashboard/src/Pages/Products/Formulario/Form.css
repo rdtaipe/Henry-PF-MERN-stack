@@ -1,0 +1,215 @@
+.container-form{
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: nowrap; */
+    justify-content:center;
+    align-items: center;
+    margin-top: 1rem;
+     color: #424242; 
+    /*  background-image: url("../../assets/imagesProduct/form1.jpg");
+     background-position:center;
+     background-repeat: no-repeat;
+     background-size: cover; */
+     height: 90vh;
+}
+
+
+.container-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border:2px solid #3e2723;
+    border-radius: 10px;
+    display: flex;
+    padding:1rem;
+    background-color:white;
+     color:#424242;
+    opacity: 0.90;
+
+}
+.title{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    font-size: x-large;
+    background-color: white;
+    /* color:#3e2723; */
+/*     border: 2px solid rgb(70, 66, 71);
+    border-radius: 8px; */
+    width: 25rem;
+    height: 4rem;
+    font-weight: 900;
+   
+
+}
+
+.text{
+ text-align: center;
+ font-weight: 600;
+ font-size: small;
+
+}
+
+
+
+.container2{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+    align-items: center;
+   /*  border: 1px solid grey;
+    border-radius: 2px;  */
+    width: 25rem;
+    height: 4rem;
+ /*    margin: 2px;
+    padding: 2px; */
+}
+
+
+.inputStyle {
+    border: 1px solid grey;
+    border-radius: 8px;
+    width: 25rem;
+    height: 2.5rem;
+    margin: 4px;
+    text-align: center;
+}
+
+.inputStyleArea{
+    border:1px solid grey;
+    border-radius: 4px;
+    width: 25rem;
+    height: 4rem;
+    margin-top: 4px ;
+    text-align: center;
+}
+
+
+
+.inputSelector{
+    border: 1px solid grey;
+    border-radius: 5px;
+    width:  8.5rem;
+    height: 2rem;
+    margin: 2px;
+    text-align: center;
+    cursor: pointer;
+    padding: 1px;
+    background-color:#f5f5f5
+}
+
+
+
+/* el container3 esta dentro del container2 */
+.container3{
+    display: flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
+    /*  border: 1px solid grey;
+    border-radius: 2px;  */
+    width: 15rem;
+    height: 4rem;
+    margin: 1px;
+    padding: 1px;
+    gap:0.5rem 
+
+}
+
+
+.input2 {
+    border: 1px solid grey;
+    border-radius: 5px;
+    width: 5rem;
+    height: 2rem;
+    margin: 2px;
+    text-align: center;
+}
+.inputSelector2{
+    margin-top: 0rem; 
+    border: 1px solid grey;
+    border-radius: 5px;
+    width:  5rem;
+    height: 2rem;
+ /*    margin: 0 0 8px 0;   */
+    text-align: center;
+    cursor: pointer;
+    padding: 2px; 
+    background-color:#f5f5f5
+}
+
+.container-sex {
+    /*  display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; */
+    gap: 2px;
+    margin-bottom: 1px
+}
+.inputSelector option:hover,
+.inputSelector option:focus {
+    background-color: #ccc !important;
+    color: #fff !important;
+}
+
+
+.botonStyle{
+   /*  border: 1px solid darkorchid; */
+    background-color:black;
+   color:white;
+    border-radius: 8px;
+    width: 25rem;
+    height: 2.5rem;
+    margin: 4px;
+    cursor: pointer;
+}
+.botonStyle:active{
+        background-color:#01579b;
+        color:white;
+        border: 2px solid black;
+}
+
+
+.inputStyleImage {
+    border: 1px solid grey;
+    border-radius: 8px;
+    width: 25rem;
+    height: 2.5rem;
+    margin: 4px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.inputStyleImage:hover {
+   background-color:gray;
+    color:black
+}
+
+.inputStyleImage:active {
+    background-color: black;
+    color:white;
+}
+
+
+.error {
+    background-color: #ffe5e5;
+    /* un color rojo muy suave */
+    color: #ff4d4d;
+    /* un color rojo oscuro para el texto */
+    font-size: 12px;
+    /* tamaño de fuente pequeño */
+    padding: 3px;
+    /* agregar un poco de espacio alrededor del texto */
+    text-align: center;
+    /* centrar el texto */
+    margin-top: 0px;
+    /* agregar un poco de espacio encima del texto */
+    border-radius: 20px;
+
+}
+
+.index_boton{
+    z-index: 99999;
+}

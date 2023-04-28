@@ -44,8 +44,8 @@ export const getPurchases = async (req, res) => {
   const data = await productModel.find({}, { stock: 1, price: 1 });
 
   const formatData = data.map((el) => {
-    
     return {
+      year: el._id.getTimestamp().getFullYear(),
       month: el._id.getTimestamp().getMonth() + 1,
       day: el._id.getTimestamp().getDate(),
       total: el.stock * el.price,

@@ -28,16 +28,30 @@ ChartJS.register(
 const Sales = () => {
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(1);
-  const [data, setData] = useState();
+  const [sold, setSold] = useState();
+  const [purchase, setPurchase] = useState();
 
-  function fetchdata() {
+  function fetchSold() {
     axios
       .get(`http://localhost:5000/stats/sales?month=${month}&year=${year - 1}`)
-      .then((res) => {setData(res.data);console.log(data);});
+      .then((res) => {
+        setSold(res.data);
+      });
+  }
+  function fetchPurchase() {
+    axios
+      .get(
+        `http://localhost:5000/stats/purchase?month=${month}&year=${year - 1}`
+      )
+      .then((res) => {
+        setPurchase(res.data);
+        console.log(purchase);
+      });
   }
 
   useEffect(() => {
-    fetchdata();
+    fetchSold();
+    fetchPurchase()
   }, [month]);
 
   const options = {
@@ -72,17 +86,32 @@ const Sales = () => {
     setMonth(event.target.value);
   }
 
+  const monthList = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
   return (
     <div>
       <FormControl sx={{ mt: 2, width: 200, height: 20 }}>
         <InputLabel>Month</InputLabel>
         <Select value={month} label="month" onChange={(e) => handleMonth(e)}>
-          <MenuItem value={1}>enero</MenuItem>
-          <MenuItem value={2}>febrero</MenuItem>
-          <MenuItem value={3}>marzo</MenuItem>
+          {monthList.map((el, i) => (
+            <MenuItem value={i + 1} key={i}>{el}</MenuItem>
+          ))}
         </Select>
       </FormControl>
-      {data && <Bar options={options} data={handleCharts(data)} height={80} />}
+      {sold && <Bar options={options} data={handleCharts(sold)} height={80} />}
     </div>
   );
 };
