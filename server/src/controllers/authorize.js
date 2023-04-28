@@ -18,9 +18,9 @@ const origins = {
 
 // name,sub,picture,email,ip,phone,location,role,status
 // name,sub,picture,phone,email,ip,location,role,status
-const compareUser = async (newUser) => {
+const compareUser = async (newUser,origin) => {
 
-    const validate = await validator(newUser);
+    const validate = await validator(newUser,origin);
 
     if (!validate) {
         throw new Error('User data not valid')
@@ -37,8 +37,8 @@ const compareUser = async (newUser) => {
         return updateUser(user, validate);
     }
 }
-const validator = async (user) => {
-    console.log(user)
+const validator = async (user,origin) => {
+    
     try {
         const { name, user_id, picture, email, email_verified, given_name } = user;
         if (!name || !user_id || !picture || !email || !email_verified) { throw new Error('User data not valid') }
@@ -51,7 +51,8 @@ const validator = async (user) => {
             email: email,
             role: 'user',
             status: 'active',
-            email_verified: email_verified
+            email_verified: email_verified,
+            origin:origin,
         }
         return newUser;
     } catch (error) {
@@ -61,12 +62,13 @@ const validator = async (user) => {
 }
 const updateUser = async (user, newUser) => {
     try {
-        const { name, picture, email, email_verified } = newUser;
+        const { name, picture, email, email_verified,origin } = newUser;
         const userObj = {
             name: name,
             picture: picture,
             email: email,
-            email_verified: email_verified
+            email_verified: email_verified,
+            origin:origin
         }
 
         const updatedUser = await UserModel.findByIdAndUpdate(user._id.toString(), userObj, { new: true });
@@ -110,7 +112,7 @@ export const userAuthorize = async (req, res) => {
             },
         });
         const userData = response.data;
-        const newUser = await compareUser(userData);
+        const newUser = await compareUser(userData,origin);
 
         const mixData =  {...userData,...newUser._doc} 
 

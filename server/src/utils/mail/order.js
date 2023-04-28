@@ -9,17 +9,22 @@ const Header = cheerio.load(fs.readFileSync('./src/utils/mail/templates/header.h
 
 
 
-
-
-export default (user) => {
+export default function Order(user,data) {
+    console.log(user,data)
     var brand="ChicCloset"
     const msg = {
-        title: `Bienvenido a ${brand}`,
-        intro: `¡Hola ${user.name}!`,
-        body: `<p>¡Hola! Gracias por registrarte en nuetro sitio web. Estoy muy emocionado de tenerte aquí y espero que disfrutes de todo lo que tengo que ofrecer. Si necesitas ayuda o tienes alguna pregunta, no dudes en contactarme. </p>
-        <p>¡Gracias de nuevo por unirte a mi comunidad!</p>
-        <p>Atentamente,</p>
-        <p>${brand}</p>`
+        title: `Thank you for purchase in ${brand}`,
+        intro: `¡Hi ${user.name}!`,
+        body: `
+        <h4>Tus productos</h4>
+        
+        <ul>
+        ${data.map(item=>{
+            return` <li>${item.name} </li>`
+        })}
+        </ul>
+        
+        `
     }
     Document('#title').text(msg.title)
     Document('#intro').text(msg.intro)
@@ -28,4 +33,5 @@ export default (user) => {
     Document('#footer').html(Footer.html())
 
     return Document.html()
+  
 }

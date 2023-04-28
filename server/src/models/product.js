@@ -66,7 +66,7 @@ const productSchema = new Schema(
         }
     },
     {
-        timestamp: true,
+        timestamps: true,
         versionKey: false,
     }
 );
