@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
   created_at: '2023-04-25T18:47:27.460Z',
   email: '75058238@continental.edu.pe',
   email_verified: true,
-  family_name: 'TAIPE QUISPE',
+  family_name: 'null,
   given_name: 'ROLANDO',
   identities: [
     {
@@ -15,7 +15,7 @@ import bcrypt from "bcryptjs";
     }
   ],
   locale: 'en',
-  name: 'ROLANDO TAIPE QUISPE',
+  name: 'ROLANDO',
   nickname: '75058238',
   picture: 'https://lh3.googleusercontent.com/a/AGNmyxYWqdCldsUUxE-MmBFQxKy8UAqYnSis0YHGUpyooQ=s96-c',
   updated_at: '2023-04-26T14:56:37.023Z',
@@ -39,6 +39,7 @@ const userSchema = new Schema(
     picture: { type: String, default: '' },
     phone: { type: String, default: '' },
     location: { type: String, default: '' },
+    origin:{type: String, default: 'http://localhost:3000'},
     role: {
       type: String, required: true,
       enum: ['admin', 'user'],
@@ -51,7 +52,7 @@ const userSchema = new Schema(
     },
   },
   {
-    timestamp: true,
+    timestamps: true,
     versionKey: false,
   }
 );

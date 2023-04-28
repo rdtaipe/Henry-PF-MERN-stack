@@ -15,6 +15,7 @@ import auth from "./authRouter.js";
 //privete
 import users from './private/userRouter.js'
 
+import stats from "./statsRouter.js";
 
 import mercadopago from './MercadoPagoRoute.js';
 import email from '../services/email.js'
@@ -63,5 +64,9 @@ server.use('/dev',dev)
 
 //-------- Auth Routes ----------
 server.use("/auth", auth)
+
+//-------- Stats Routes ----------
+server.use("/stats", stats)
+
 
 export default server;

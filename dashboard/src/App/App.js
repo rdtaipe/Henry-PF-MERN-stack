@@ -21,7 +21,7 @@ export default function App() {
   const { isAutorized } = useSelector(state => state.user)
   const userAuth = isAutorized()
 
-  useEffect(() => {
+/*   useEffect(() => {
     if (userAuth, isAuthenticated) {
       navigate('/dashboard')
     } else {
@@ -29,7 +29,7 @@ export default function App() {
       console.log("unauthorized")
     }
 
-  }, [userAuth, isAuthenticated])
+  }, [userAuth, isAuthenticated]) */
 
   return (
     <Constainer>

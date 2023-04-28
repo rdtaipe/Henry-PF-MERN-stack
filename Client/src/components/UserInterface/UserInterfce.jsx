@@ -2,7 +2,7 @@ import React from "react";
 import UserButton from "./UserButton";
 import { useState } from "react";
 import PersonalData from "./PersonalData";
-import AdressSettings from "./AdressSettings";
+import AddressSettings from "./AddressSettings";
 import { FaUser, FaCog, FaShoppingCart } from "react-icons/fa";
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import ShopHistory from "./ShopHistory";
@@ -25,6 +25,27 @@ const UserInterface = () => {
             date: "13/12/2019",
             totalItems: 4,
             items: [
+                {
+                    id: "6437010ab6dc8f57b10a98f8",
+                    name: "Zapatos deportivos Nike",
+                    amount: "2",
+                    total: "180.00",
+                    image: "https://falabella.scene7.com/is/image/FalabellaPE/882693798_1?wid=1004&hei=1500&crop=248,0,1004,1500&qlt=70",
+                },
+                {
+                    id: "6437010ab6dc8f57b10a98f8",
+                    name: "Vestido de noche elegante",
+                    amount: "1",
+                    total: "560.00",
+                    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0KqMDrmmIHhEj6j1NtXGwmOSiLgvIV_bthA&usqp=CAU"
+                },
+                {
+                    id: "6437010ab6dc8f57b10a98f8",
+                    name: "Bearcliff Man Shirts",
+                    amount: "1",
+                    total: "50.00",
+                    image: "https://falabella.scene7.com/is/image/FalabellaPE/882693798_1?wid=1004&hei=1500&crop=248,0,1004,1500&qlt=70"
+                },
                 {
                     id: "6437010ab6dc8f57b10a98f8",
                     name: "Zapatos deportivos Nike",
@@ -252,7 +273,8 @@ const UserInterface = () => {
         setActiveSection(value);
     }
 
-    // Cuando se arma el componente se trae el historial de compra
+    // Cuando se arma el componente se trae el historial de compra del usuario
+
     // useEffect(() => {
     //     axios.get(`${url}/purchase/${userData._id}`)
     //     .then((response) => {
@@ -284,7 +306,7 @@ const UserInterface = () => {
     }
     
     const handleLogout = () => {
-      unauthorize()
+      unauthorize({message:"Unauthorize"})
       logout({ returnTo: window.location.origin })
     }
 
@@ -317,7 +339,7 @@ const UserInterface = () => {
                     <div style={{ width: "365px", borderRadius: "5px", flex: "0 0 auto" }} className=" flex flex-col justify-center items-center mt-1 gap-4">
                     
                         <UserButton text={"Personal data"} icon={<FaUser />} value={"Personal data"} onClick={() => handleActiveSection("Personal data")} status={activeSection}/>
-                        <UserButton text={"Adress settings"} icon={<FaCog />} value={"Adress settings"} onClick={() => handleActiveSection("Adress settings")} status={activeSection}/>
+                        <UserButton text={"Address settings"} icon={<FaCog />} value={"Address settings"} onClick={() => handleActiveSection("Address settings")} status={activeSection}/>
                         <UserButton text={"Shop history"} icon={<FaShoppingCart />}  value={"Shop history"} onClick={() => handleActiveSection("Shop history")} status={activeSection}/>
                         <UserButton text={"Close session"} icon={<RiLogoutBoxRLine />} value={"Close session"} onClick={handleButtonClick}/>
 
@@ -328,8 +350,8 @@ const UserInterface = () => {
                             switch(activeSection) {
                                 case "Personal data":
                                     return <PersonalData user={user} updateUser={handleUserDataChange} />; 
-                                case "Adress settings":
-                                    return <AdressSettings user={user} updateUser={handleUserDataChange} />;
+                                case "Address settings":
+                                    return <AddressSettings user={user} updateUser={handleUserDataChange} />;
                                 case "Shop history":
                                     return <ShopHistory shopHistory={shopHistory}/>
                                 default:
@@ -340,9 +362,10 @@ const UserInterface = () => {
                             
                     </div>
 
-                    <div>
+                    <div style={{zIndex: 9999}}>
                         {isModalOpen && <Modal title={"Log out"} onFalse={handleModalClose} onTrue={handleLogout} message={"Are you sure you want to leave?"}/>}
                     </div>
+
 
                 </div>
             </div>

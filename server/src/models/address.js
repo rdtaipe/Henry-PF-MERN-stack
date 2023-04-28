@@ -14,7 +14,7 @@ const addressSchema = new Schema({
     houseNumber: {
         type: Number
     },
-    cp:{
+    cp: {
         type: Number
     }
     ,
@@ -28,10 +28,10 @@ const addressSchema = new Schema({
         type: String
     },
 },
-{
-    timestamp: true,
-    versionKey: false
-})
+    {
+        timestamps: true,
+        versionKey: false
+    })
 
 const addressModel = model('Address', addressSchema)
 

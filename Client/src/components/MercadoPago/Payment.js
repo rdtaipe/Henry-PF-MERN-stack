@@ -20,6 +20,7 @@ const Payment = () => {
     setTotal(orderData.total)
 
     if (orderData && awaitCart.length > 0) {
+      console.log({ userId: orderData.userId, cart: awaitCart, total: orderData.total })
       post(`${url}/payment`, { userId: orderData.userId, cart: awaitCart, total: orderData.total })
         .then((res) => {
           setPreferenceId(res.data.response.body.id);
