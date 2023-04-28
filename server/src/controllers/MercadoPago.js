@@ -101,6 +101,8 @@ export async function success(req,res){
         await PurchaseModel.create({id,products:newProducts})
         
       }
+      //get client url 
+    console.log(req)
 
 
       res.redirect('http://localhost:3000/payment/success')

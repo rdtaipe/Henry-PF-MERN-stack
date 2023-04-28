@@ -12,7 +12,6 @@ import {
   GET_BRANDS,
   BRAND_ELECT,
   GET_COLORS,
-  GET_CATEGORIES,
 } from "./types";
 
 export function setter(value) {
@@ -126,23 +125,7 @@ export function search(query) {
     payload: query,
   };
 }
-export function getBrands() {
-  return async function (dispatch) {
-    const allData = await axios.get('/brand')
-    return dispatch({ type: GET_BRANDS, payload: allData.data })
-  }
-}
-export function getCategories() {
-  return async function (dispatch) {
-    const allData = await axios.get('/category')
-    return dispatch({ type: GET_CATEGORIES, payload: allData.data })
-  }
-}
-export function brandElect(brand) {
-  return function (dispatch) {
-    dispatch({ type: BRAND_ELECT, payload: brand })
-  }
-}
+
 
 export function getColors() {
   return async function (dispatch) {
@@ -151,9 +134,3 @@ export function getColors() {
   }
 
 }
-export const updateScore = (id, score) => {
-  return {
-    type: 'UPDATE_SCORE',
-    payload: { id, score }
-  };
-};

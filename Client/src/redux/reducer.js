@@ -1,17 +1,11 @@
 import axios from "axios";
 import {
   SET_STATE,
-  GET_PRODUCTS,
   PRODUCT_DETAIL,
   POST_PRODUCT,
-  OPEN_FILTERS,
-  ORDER_BY,
-  FILTER,
-  SEARCH,
   GET_BRANDS,
   BRAND_ELECT,
   GET_COLORS,
-  GET_CATEGORIES,
   UPDATE_SCORE,
 } from "./types";
 import { setter } from "./actions";
@@ -171,12 +165,6 @@ export const reducer = (state = initialState, action) => {
         ...state,
       };
 
-
-    case GET_CATEGORIES:
-      return {
-        ...state,
-        categories: action.payload,
-      };
 
     case GET_BRANDS:
       return {
