@@ -14,6 +14,7 @@ import { Divider } from "@mui/material";
 //conponets
 import Badge from "./Badge";
 import Modal from "./Modal";
+import Tabs from './Tabs'
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -103,7 +104,7 @@ const NavBar = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 z-50 flex justify-between items-center bg-black w-[100%] h-[80px] text-white`}
+        className={`fixed top-0 left-0 z-[100!important] flex justify-between items-center backdrop-filter backdrop-blur-lg backdrop-brightness-[50%] backdrop-saturate-200 w-[100%] h-[80px] text-white`}
       >
         {modal && (
           <Modal
@@ -119,28 +120,32 @@ const NavBar = () => {
           <NavLink to="/">
             <img src={logo} alt="logo" className="w-36" />
           </NavLink>
+
         </div>
 
         <div
           style={{ width: `calc(100% - ${width}px)` }}
-          className={`flex-col items-center md:flex md:flex-row md:justify-around lg:justify-between  md:relative md:top-0 md:pb-0 md:gap-0  ${
-            open
+          className={`flex-col items-center md:flex md:flex-row md:justify-around lg:justify-between  md:relative md:top-0 md:pb-0 md:gap-0  ${open
               ? "absolute top-[80px] bg-black !w-full pb-5 gap-5 flex"
               : "hidden !w-full"
-          }`}
+            }`}
         >
           <div className="flex items-center justify-between w-[160px] md:w-[130px]">
             <NavLink
               to="/home"
-              className="text-white hover:text-stone-400 hover:transform transition-all duration-500"
+              className="text-white mx-4 text-lg hover:text-stone-400 hover:transform transition-all duration-500 whitespace-nowrap"
             >
               Home
             </NavLink>
             <NavLink
               to="/about"
-              className="text-white hover:text-stone-400 hover:transform transition-all duration-500"
+              className="text-white mx-4 text-lg hover:text-stone-400 hover:transform transition-all duration-500 whitespace-nowrap"
             >
               About Us
+            </NavLink>
+            <NavLink to='/questions' 
+            className="text-white mx-4 text-lg hover:text-stone-400 hover:transform transition-all duration-500 whitespace-nowrap">
+              Questions
             </NavLink>
           </div>
 
@@ -189,7 +194,7 @@ const NavBar = () => {
       </nav>
 
       <div
-        className={`relative`}
+        className={`relative bg-black`}
         style={{ width: `100% `, height: `${top}px` }}
       ></div>
     </>
