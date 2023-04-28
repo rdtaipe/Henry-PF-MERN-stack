@@ -1,13 +1,5 @@
 import axios from "axios";
-import {
-  SET_STATE,
-  PRODUCT_DETAIL,
-  POST_PRODUCT,
-  GET_BRANDS,
-  BRAND_ELECT,
-  GET_COLORS,
-  UPDATE_SCORE,
-} from "./types";
+import {SET_STATE,} from "./types";
 import { setter } from "./actions";
 import { utils } from "./utils";
 
@@ -153,41 +145,6 @@ export const reducer = (state = initialState, action) => {
         ...state,
         ...action.payload,
       }
-
-    case PRODUCT_DETAIL:
-      return {
-        ...state,
-        details: { ...action.payload[0] },
-      };
-
-    case POST_PRODUCT:
-      return {
-        ...state,
-      };
-
-
-    case GET_BRANDS:
-      return {
-        ...state,
-        brands: action.payload,
-      };
-
-    case GET_COLORS:
-      return {
-        ...state,
-        colors: action.payload,
-      };
-    case BRAND_ELECT:
-      return {
-        ...state,
-        selectedBrands: action.payload,
-      };
-    case UPDATE_SCORE:
-      return {
-
-      }
-
-
     default:
       return state;
   }
