@@ -55,9 +55,7 @@ export const DetailPage = () => {
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   };
-  const updateScore = (newScore) => {
-    setScore(newScore);
-  };
+
   const addComment = ({ comment, stars }) => {
     const newComment = {
       name: userData.name,

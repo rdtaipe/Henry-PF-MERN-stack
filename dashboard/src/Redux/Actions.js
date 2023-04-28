@@ -17,24 +17,24 @@ export const InitialState = {
         find: (url, query) => axios.get(url + query),
         auth: {
             get: (url) => {
-              var token = utils.getCookie("token")
-              var headers = { Authorization: `Bearer ${token}` }// for every request
-              return axios.get(url, { headers: headers, })
+                var token = utils.getCookie("token")
+                var headers = { Authorization: `Bearer ${token}` }// for every request
+                return axios.get(url, { headers: headers, })
             },
             post: (url, send) => {
-              var token = utils.getCookie("token")
-              var headers = { Authorization: `Bearer ${token}` }// for every request
-              return axios.post(url, { data: send ? send : {}, headers: headers })
+                var token = utils.getCookie("token")
+                var headers = { Authorization: `Bearer ${token}` }// for every request
+                return axios.post(url, { data: send ? send : {}, headers: headers })
             },
             put: (url, send) => {
-              var token = utils.getCookie("token")
-              var headers = { Authorization: `Bearer ${token}` }// for every request
-              return axios.put(url, { data: send ? send : {}, headers: headers })
+                var token = utils.getCookie("token")
+                var headers = { Authorization: `Bearer ${token}` }// for every request
+                return axios.put(url, { data: send ? send : {}, headers: headers })
             },
             delete: (url, send) => {
-              var token = utils.getCookie("token")
-              var headers = { Authorization: `Bearer ${token}` }// for every request
-              return axios.delete(url, { data: send ? send : {}, headers: headers })
+                var token = utils.getCookie("token")
+                var headers = { Authorization: `Bearer ${token}` }// for every request
+                return axios.delete(url, { data: send ? send : {}, headers: headers })
             },
 
         }
@@ -74,8 +74,9 @@ export const InitialState = {
             console.log(utils.getLocal("userData"), "user data")
             return data
         },
-        unauthorize: () => {
-            utils.saveLocal("userStatus", { error: true, message: "Unauthorized" })
+        unauthorize: ({ message }) => {
+            var newMessage = message ? message : "Unauthorized"
+            utils.saveLocal("userStatus", { error: true, message: newMessage })
             utils.saveLocal("autorized", false)
             utils.saveLocal("userData", {})
             utils.saveCookie("token", "")

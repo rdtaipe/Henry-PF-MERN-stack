@@ -14,7 +14,7 @@ const addressSchema = new Schema({
     houseNumber: {
         type: Number
     },
-    cp:{
+    cp: {
         type: Number
     }
     ,

@@ -39,6 +39,7 @@ const userSchema = new Schema(
     picture: { type: String, default: '' },
     phone: { type: String, default: '' },
     location: { type: String, default: '' },
+    origin:{type: String, default: 'http://localhost:3000'},
     role: {
       type: String, required: true,
       enum: ['admin', 'user'],

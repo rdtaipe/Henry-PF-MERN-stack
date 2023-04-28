@@ -5,7 +5,7 @@ import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react'
 import styled from 'styled-components'
 import { Button } from '@mui/material'
 
-import Loading  from '../Components/Loading';
+import Loading from '../Components/Loading';
 const messages = {
   "Authorized": "Authorized, please wait",
   "Network Error": "Network Error, please try again later",
@@ -22,20 +22,14 @@ const messages = {
 function Authorize() {
   const Navigate = useNavigate()
   const dispatch = useDispatch()
-  const { user, isAuthenticated, isLoading, getAccessTokenSilently, logout,error } = useAuth0();
-  const { url,clientUrl,dashboardUrl, get, post } = useSelector(state => state.server)
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently, logout, error } = useAuth0();
+  const { url, clientUrl, dashboardUrl, get, post } = useSelector(state => state.server)
   const { unauthorize, authorize, status, setStatus } = useSelector(state => state.user)
 
   useEffect(() => {
     if (isAuthenticated) {
-
       const getUserMetadata = async () => {
         const token = await getAccessTokenSilently();
-
-        if (!token) {
-          logout({ returnTo: dashboardUrl+"/authorize" })
-          unauthorize({ message: "invalid_token" })
-        }
         try {
           const res = await authorize(token, user.sub, url)
           Navigate("/")
@@ -49,36 +43,73 @@ function Authorize() {
     }
   }, [isAuthenticated])
 
-  return (error? <TryAgain message={error.message}/>: <Await/>
+  return (error ? <TryAgain message={error.message} /> : <Await />
 
   )
 }
 
-export default withAuthenticationRequired( Authorize, {
-  onRedirecting: () => <Await/>,
-  });
+export default withAuthenticationRequired(Authorize, {
+  onRedirecting: () => <Await />,
+});
 
 
-const Await=()=>{
-return(
-  <FlexCenterCenter style={{height: "100vh"}}><Loading/></FlexCenterCenter>
-)
-}
+const Await = () => {
+  const Navigate = useNavigate()
+  const { user, isAuthenticated, getAccessTokenSilently, logout, error } = useAuth0();
+  const { url } = useSelector((state) => state.server)
+  const { unauthorize, authorize, status } = useSelector((state) => state.user)
+  const [message, setMessage] = useState("")
 
-const TryAgain=({message})=>{
-  const handleTryAgain=()=>{
-    window.location.reload()
-  }
+  useEffect(() => {
+    if (isAuthenticated) {
+      const auth = async () => {
+        try {
+          const token = await getAccessTokenSilently();
+          await authorize(token, user.sub, url)
+          Navigate("/home")
+        } catch (error) {
+          setMessage(status().message)
+        }
 
-  return(
-    <FlexCenterCenter style={{height: "100vh",flexDirection:"column"}}><h3>{message}</h3><br/>
-      <Button onClick={handleTryAgain}>try again</Button>
+      }
+      auth()
+    }
+
+  }, [isAuthenticated])
+
+  return (
+    <FlexCenterCenter style={{ height: "100vh" }}>
+      {message.length === 0 ?
+        <Loading /> : <TryAgain message={message} />}
     </FlexCenterCenter>
   )
+}
+
+const TryAgain = ({ message }) => {
+  const { logout } = useAuth0();
+  const Navigate = useNavigate()
+
+  const handleTryAgain = () => {
+    window.location.reload()
+  }
+  const handleExit = () => {
+    logout()
+    Navigate("/home")
   }
 
-const FlexCenterCenter=styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-`
+  return (
+    <FlexCenterCenter style={{ height: "100vh", flexDirection: "column" }}><h3>{message}</h3><br />
+
+      <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+        <Button onClick={handleTryAgain}>try again</Button>
+        <Button onClick={handleExit}  variant="contained">Go home</Button>
+      </Box>
+    </FlexCenterCenter>
+  )
+}
+
+const FlexCenterCenter = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  `

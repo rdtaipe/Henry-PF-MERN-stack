@@ -17,10 +17,10 @@ export default function Payment(props) {
 
 
     return (
-        <Box  sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+        <div  sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }} className='bg-[white]'>
                 {status[res]}
            
-        </Box>
+        </div>
     )
 }
 

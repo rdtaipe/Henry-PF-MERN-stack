@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const AdressSettings = ({user, updateUser}) => {
+const AddressSettings = ({user, updateUser}) => {
     const [userData, setUserData] = useState(user);
   
     const handleChange = (e) => {
@@ -13,7 +13,7 @@ const AdressSettings = ({user, updateUser}) => {
     return (
       <div style={{borderRadius: "10px", minWidth: "800px"}} className="ml-10 bg-stone-200 flex flex-col mt-1 gap-8 pt-8 pb-8 px-10 shadow-xl transition">
     
-        <h2 className="text-2xl font-bold mb-2">Adress Settings</h2>
+        <h2 className="text-2xl font-bold mb-2">Address Settings</h2>
     
         <div className="flex flex-row flex-wrap gap-24">
 
@@ -84,4 +84,4 @@ const AdressSettings = ({user, updateUser}) => {
   };
   
 
-export default AdressSettings
+export default AddressSettings
