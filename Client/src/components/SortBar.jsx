@@ -33,7 +33,7 @@ export default function SortBar({ setSort }) {
         setSort({ [item.key]: type.value ? 1 : -1 })
     }
     return (
-        <div className='relative w-full h-[40px] flex flex-row justify-start items-center p-2  text-gray z-5'>
+        <div className='relative w-full h-[40px] flex flex-row justify-start items-center p-2  text-gray '>
             {module && module.map((e, i) => {
                 return <MenuItem
                      key={i}
@@ -44,7 +44,7 @@ export default function SortBar({ setSort }) {
                     sx={{ '&:hover': { backgroundColor: 'transparent' } }}
 
                 >
-                    <Typography>{e.key}</Typography>
+                    <Typography sx={{color:"gray"}}>{e.key}</Typography>
 
                     <IconButton sx={{ ml: 1 }} onClick={() => { handleSort(e) }}>
 

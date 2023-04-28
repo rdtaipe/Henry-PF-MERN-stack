@@ -104,7 +104,7 @@ const NavBar = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 z-50 flex justify-between items-center backdrop-filter backdrop-blur-lg backdrop-brightness-[50%] backdrop-saturate-200 w-[100%] h-[80px] text-white`}
+        className={`fixed top-0 left-0 z-[100!important] flex justify-between items-center backdrop-filter backdrop-blur-lg backdrop-brightness-[50%] backdrop-saturate-200 w-[100%] h-[80px] text-white`}
       >
         {modal && (
           <Modal

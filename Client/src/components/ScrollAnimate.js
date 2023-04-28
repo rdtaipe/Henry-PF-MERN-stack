@@ -26,15 +26,8 @@ export default function ScrollAnimate({ footer }) {
       scrollFooter(scroll, 0);
     }
 
-    const scrollSpy = Scroll.scrollSpy;
-    const scroller = Scroll.scroller;
-
-    scrollSpy.update();
-    scroller.scrollTo("scroll-animate", {
-      duration: 500,
-      delay: 1,
-      smooth: "easeInOutQuart",
-    });
+    
+   
 
     window.addEventListener("scroll", handleScroll);
     return () => {
