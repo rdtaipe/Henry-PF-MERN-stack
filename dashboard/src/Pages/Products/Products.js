@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
+import Button from '@mui/material/Button'
+import { Link } from 'react-router-dom';
+
 // import {Button} from '../../Components/Button'
 
 const urls = {
@@ -106,6 +109,9 @@ export default function Products(props) {
 
     return (
         <Container>
+            <Button variant="contained" color="primary" sx={{width: 200,margin: 2}}>
+              <Link to="/products/addproduct">add Product</Link> 
+            </Button>
             <Box sx={{ height: window.innerHeight - top, width: '100%' }}>
                 <DataGrid
                     rows={rows}
