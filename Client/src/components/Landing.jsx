@@ -19,7 +19,11 @@ const Landing = ({ images }) => {
           className={`absolute inset-0 transition-opacity duration-1000 ${
             index === currentImageIndex ? "opacity-100" : "opacity-0"
           }`}
-          style={{ backgroundImage: `url(${image})`, backgroundSize: "cover" }}
+          style={{
+            backgroundImage: `url(${image})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
         >
           <div
             className="absolute inset-0 bg-stone-500 opacity-100"
@@ -38,10 +42,9 @@ const Landing = ({ images }) => {
           </p>
           <div className="flex flex-wrap justify-center ">
             <Link to="/home">
-            <button className="px-8 py-3 m-2 text-lg font-semibold rounded bg-black bg-opacity-80 text-white hover:bg-white hover:text-black transition duration-300">
-              Get started
-            </button>
-
+              <button className="px-8 py-3 m-2 text-lg font-semibold rounded bg-black bg-opacity-80 text-white hover:bg-white hover:text-black transition duration-300">
+                Get started
+              </button>
             </Link>
           </div>
         </div>

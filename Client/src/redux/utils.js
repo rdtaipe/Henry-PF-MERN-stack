@@ -11,7 +11,6 @@ export const utils = {
     // save local storage
     saveLocal: (key, v) => {
         try {
-            console.log(v, "v")
             var fix = typeof v === 'object' ? JSON.stringify(v) : v
             localStorage.setItem(key, fix)
         } catch (e) {
