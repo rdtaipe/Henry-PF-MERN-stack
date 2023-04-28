@@ -3,13 +3,13 @@ import dotenv from 'dotenv';
 
 import PurchaseModel from '../models/purchase.js';
 import ProductModel from '../models/product.js';
-import cartModel from '../models/cart.js';
+import CartModel from '../models/cart.js';
 import UserModel from '../models/user.js';
+import sendEmail from '../utils/mail/send.js'
 
 
 dotenv.config();
 const { MERCADOPAGO_KEY } = process.env;
-
 mercadopago.configure({
   access_token: MERCADOPAGO_KEY,
 });
@@ -37,7 +37,7 @@ export async function payment(req, res) {
     });
 
 
-    let preference = {
+    var preference = {
       items: items,
       back_urls: {
         success: `${url}/payment/success/${userId}`,
@@ -61,15 +61,11 @@ export async function payment(req, res) {
     mercadopago.preferences
       .create(preference)
       .then((response) => {
-
-        console.log(response.body.init_point)
-
-
         res.status(200).send({ response })
 
       })
       .catch((error) => res.status(400).send({ error: error.message }));
-  
+
 
   } catch (error) {
     console.log(error);
@@ -79,53 +75,96 @@ export async function payment(req, res) {
 // success: 
 // failure: 
 // pending
-export async function success(req,res){
-  const {id} = req.params
+export async function success(req, res) {
+  const { id } = req.params; // ID del usuario
 
-  try{
-    const findCard = await cartModel.findOne({id})
+  try {
+    const findCard = await CartModel.findOne({ id });
+    if (findCard) {
+      const findCardProducts = findCard.products.filter((prod) => prod.active); // Productos activos en el carrito
 
-    if(findCard){
-      var newProducts =await findCard.products.forEach(async (prod) => {
-        const findProduct = await ProductModel.findOne({id:prod.id})
-        if(findProduct){
-          findProduct.stock -= prod.total
-          await findProduct.save()
+      if (findCardProducts.length > 0) {
+        const findProduct = await ProductModel.find({ $or: findCardProducts.map((item) => ({ _id: item.id })) });
+
+        // Compara y modifica
+        const newProducts = findProduct.map((item, i) => {
+          const obj = Object.keys(item._doc).reduce((acc, key) => {
+            switch (key) {
+              case "stock":
+                acc[key] = item.stock - findCardProducts[i].total;
+                break;
+              default:
+                acc[key] = item[key];
+            }
+            return acc;
+          }, {});
+          return obj;
+        });
+
+        if (newProducts) {
+          // Actualiza los modelos de carrito y compra
+          const updating = await Promise.all(newProducts.map(async (item, i) => {
+            // Elimina los productos antiguos del carrito
+            await CartModel.findOneAndUpdate({ id: id }, { $pull: { products: { id: item._id } } });
+
+            // Crea un nuevo objeto de compra
+            const newPurchaseModel = {
+              productId: item._id, // ID del producto
+              name: item.name,
+              image: item.image,
+              price: item.price,
+              description: item.description,
+              brand: item.brand,
+              color: item.color,
+              date: Date.now(), // Fecha actual
+              total: findCardProducts[i].total,
+            };
+
+            // Verifica si ya existe un modelo de compra para el usuario
+            const filter = { userId: id };
+            const update = { $push: { products: newPurchaseModel } };
+            const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+            const updatePurchase = await PurchaseModel.findOneAndUpdate(filter, update, options);
+            return updatePurchase;
+          }));
+
+          if (updating) {
+            const findUser = await UserModel.findById(id)
+            const { origin } = findUser
+
+            await sendEmail({ user: findUser, body: { type: "order", issue: "Thank you for purchase", data: findCardProducts } })//send welcome email
+
+            res.redirect(`${origin ? origin : "http://localhost:3000"}/payment/success`)
+
+          }
         }
-        if(prod.active){
-          return prod
-        }
-      })
-      if(newProducts){
-        await cartModel.findOneAndUpdate({id},{$set:{products:newProducts}})
-        await PurchaseModel.create({id,products:newProducts})
-        
       }
-
-
-      res.redirect('http://localhost:3000/payment/success')
     }
-
-
-
-  }catch(error){
+  } catch (error) {
     res.status(500).send({ error: error.message });
-
   }
+}
+
+
+export async function failure(req, res) {
+  const { id } = req.params
+  const findUser = await UserModel.findById(id)
+  const { origin } = findUser
+
+  // await sendEmail({ user: findUser, body: { type: "orderFailure", issue: "Thank you for purchase",data:findCardProducts}})//send welcome email
+  res.redirect(`${origin ? origin : "http://localhost:3000"}/payment/failure`)
+
+
+}
+export async function pending(req, res) {
+  const { id } = req.params
+  const findUser = await UserModel.findById(id)
+  const { origin } = findUser
+
+  // await sendEmail({ user: findUser, body: { type: "orderPending", issue: "Thank you for purchase",data:findCardProducts}})//send welcome email
+  res.redirect(`${origin ? origin : "http://localhost:3000"}/payment/pending`)
+
 
 }
 
-export async function failure(req,res){
-  const {id} = req.params
-
-  res.redirect('http://localhost:3000/payment/failure')
-
-  
-}
-export async function pending(req,res){
-  const {id} = req.params
-
-  res.redirect('http://localhost:3000/payment/pending')
-
-}
 
