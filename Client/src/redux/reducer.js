@@ -29,14 +29,6 @@ export var initialState = {
     refresh: false,
     setter: setter,
     utils: utils,
-    find: {
-      m: "product",
-      q: null,//dont use this
-      filter: null,//[]
-      sort: null,//{}
-      limit: 10,
-      skip: 0,
-    },
     pagination: {
       page: 1,
       pageLimit: 10,
