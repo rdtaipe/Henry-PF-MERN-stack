@@ -48,7 +48,7 @@ const AdressSettings = ({user, updateUser}) => {
           
         </div>
 
-
+        <div className="flex flex-row flex-wrap gap-24">
           <div className="flex flex-col gap-2" style={{width: "300px"}}>
             <label htmlFor="adress">Adress:</label>
             <input 
@@ -63,6 +63,20 @@ const AdressSettings = ({user, updateUser}) => {
             />
           </div>
 
+          <div className="flex flex-col gap-2" style={{width: "300px"}}>
+            <label htmlFor="postal">Postal Code:</label>
+            <input 
+              className={`
+                pl-2 py-1 bg-stone-200 border-b-2 
+                ${userData.postal ? 'border-gray-300 hover:border-stone-400' : 
+                'border-red-500'} focus:border-black focus:outline-none transition`}
+              type="text" 
+              name="postal" 
+              value={userData.postal} 
+              onChange={handleChange} 
+            />
+          </div>
+        </div>
     
       </div>
     );
