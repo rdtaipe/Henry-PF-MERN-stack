@@ -13,7 +13,7 @@ import Offer4 from '../assets/imagesCarousel/Offer4.png'
 import Offer5 from '../assets/imagesCarousel/Offer5.png'
 import Offer6 from '../assets/imagesCarousel/Offer6.png'
 import Offer7 from '../assets/imagesCarousel/Offer7.png'
-import SupportEngine from '../components/SupportEngine'
+
 const Home = () => {
 
   const images = [Offer1, Offer2, Offer3, Offer4, Offer5, Offer6, Offer7]
@@ -82,7 +82,7 @@ const Home = () => {
   
         <SortBar setSort={(e) => { setSort(e) }} />
         <Grid childHeight={260} childWidth={200}>
-        <SupportEngine />
+       
         {products.map((item, index) => {
           return <Card key={index} data={item} />
         })}
