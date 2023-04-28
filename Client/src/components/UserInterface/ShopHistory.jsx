@@ -35,29 +35,29 @@ const ShopHistory = ({ shopHistory }) => {
 
                 <div className="flex items-center bg-stone-300 pl-8 py-2">
 
-                  <div style={{width: "240px"}} class="text-center">
+                  <div style={{width: "240px"}} className="text-center">
                     Items:
                   </div>
 
-                  <div style={{width: "120px"}} class="text-center">
+                  <div style={{width: "120px"}} className="text-center">
                     Total Items:
                   </div>
 
-                  <div style={{width: "120px"}} class="text-center">
+                  <div style={{width: "120px"}} className="text-center">
                     Total:
                   </div>
 
-                  <div style={{width: "120px"}} class="text-center">
+                  <div style={{width: "120px"}} className="text-center">
                     Date:
                   </div>
 
-                  <div style={{width: "120px"}} class="text-center">
+                  <div style={{width: "120px"}} className="text-center">
                     Detail:
                   </div>
 
                 </div>
 
-                <div class="max-h-60 overflow-y-auto">
+                <div className="max-h-60 overflow-y-auto">
                   {shopHistory.map((item) => (
                     <PurchaseItem purchase={item} />
                   ))}

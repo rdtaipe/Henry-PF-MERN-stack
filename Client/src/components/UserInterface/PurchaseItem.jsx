@@ -39,7 +39,7 @@ const PurchaseItem = ({ purchase }) => {
 
   return (
     <>
-      <div style={{ zIndex: 2, position: "relative" }}>
+      <div style={{ zIndex: 3, position: "relative" }}>
         {modalStatus && <PurchaseModal purchase={purchase} onClose={handleCloseDetailPurchase}/>}
       </div>
 

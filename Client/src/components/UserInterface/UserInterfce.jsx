@@ -2,7 +2,7 @@ import React from "react";
 import UserButton from "./UserButton";
 import { useState } from "react";
 import PersonalData from "./PersonalData";
-import AdressSettings from "./AdressSettings";
+import AddressSettings from "./AddressSettings";
 import { FaUser, FaCog, FaShoppingCart } from "react-icons/fa";
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import ShopHistory from "./ShopHistory";
@@ -339,7 +339,7 @@ const UserInterface = () => {
                     <div style={{ width: "365px", borderRadius: "5px", flex: "0 0 auto" }} className=" flex flex-col justify-center items-center mt-1 gap-4">
                     
                         <UserButton text={"Personal data"} icon={<FaUser />} value={"Personal data"} onClick={() => handleActiveSection("Personal data")} status={activeSection}/>
-                        <UserButton text={"Adress settings"} icon={<FaCog />} value={"Adress settings"} onClick={() => handleActiveSection("Adress settings")} status={activeSection}/>
+                        <UserButton text={"Address settings"} icon={<FaCog />} value={"Address settings"} onClick={() => handleActiveSection("Address settings")} status={activeSection}/>
                         <UserButton text={"Shop history"} icon={<FaShoppingCart />}  value={"Shop history"} onClick={() => handleActiveSection("Shop history")} status={activeSection}/>
                         <UserButton text={"Close session"} icon={<RiLogoutBoxRLine />} value={"Close session"} onClick={handleButtonClick}/>
 
@@ -350,8 +350,8 @@ const UserInterface = () => {
                             switch(activeSection) {
                                 case "Personal data":
                                     return <PersonalData user={user} updateUser={handleUserDataChange} />; 
-                                case "Adress settings":
-                                    return <AdressSettings user={user} updateUser={handleUserDataChange} />;
+                                case "Address settings":
+                                    return <AddressSettings user={user} updateUser={handleUserDataChange} />;
                                 case "Shop history":
                                     return <ShopHistory shopHistory={shopHistory}/>
                                 default:
@@ -362,9 +362,10 @@ const UserInterface = () => {
                             
                     </div>
 
-                    <div>
+                    <div style={{zIndex: 9999}}>
                         {isModalOpen && <Modal title={"Log out"} onFalse={handleModalClose} onTrue={handleLogout} message={"Are you sure you want to leave?"}/>}
                     </div>
+
 
                 </div>
             </div>
