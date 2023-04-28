@@ -119,6 +119,13 @@ const NavBar = () => {
           <NavLink to="/">
             <img src={logo} alt="logo" className="w-36" />
           </NavLink>
+          <NavLink to='/about' className="text-white mx-[60px] hover:text-stone-400 hover:transform transition-all duration-500">
+            About Us
+          </NavLink>
+          <NavLink to='/questions' className="text-white mx-[60px] hover:text-stone-400 hover:transform transition-all duration-500">
+            Questions
+          </NavLink>
+
         </div>
 
         <div

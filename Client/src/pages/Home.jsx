@@ -82,7 +82,7 @@ const Home = () => {
   
         <SortBar setSort={(e) => { setSort(e) }} />
         <Grid childHeight={260} childWidth={200}>
-    
+       
         {products.map((item, index) => {
           return <Card key={index} data={item} />
         })}
