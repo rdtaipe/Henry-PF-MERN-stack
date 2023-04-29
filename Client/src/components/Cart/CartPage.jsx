@@ -124,7 +124,7 @@ const CartPage = () => {
               })}
             </div>
 
-            <div className="flex flex-col w-[auto] max-w-[300px]">
+            <div className="flex flex-col w-[full] min-w-[380px]">
               <h1 className="text-2xl font-bold leading-none sm:text-3xl dark:text-black">
                 Order Summary
               </h1>
@@ -144,7 +144,7 @@ const CartPage = () => {
                   );
                 })}
 
-                <div className="flex justify-between border-t border-stone-500 pt-4 mt-6">
+                <div className="flex justify-between border-t border-stone-500 pt-4 mt-6 w-full">
                   <span className="font-bold">
                     Total ({cartProducts.length} items)
                   </span>
