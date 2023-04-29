@@ -49,7 +49,6 @@ export default function Sidebar() {
     console.log(window.location.pathname)
     const HandleActive = (v) => {
         navigate(`/` + v.toLowerCase())
-        // dispatch(actions.setActiveSidebarItem(v))
         dispatch(setter({keys:`sidebar.items.${v}`,value:{active:true},only:true}))
 
     }
