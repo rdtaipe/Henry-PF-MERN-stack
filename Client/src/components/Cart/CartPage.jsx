@@ -161,7 +161,7 @@ const CartPage = () => {
                 onClick={handlePayment}
                 className="bg-gray-800 text-white py-2 rounded mt-10 hover:bg-blue-900 transition"
               >
-                Go to payment
+                Confirm products
               </button>
             </div>
           </div>

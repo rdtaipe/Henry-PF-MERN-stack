@@ -22,7 +22,7 @@ const Cart = () => {
            <Stepper
       steps={[
         {id:1,title:"Cart",text:"Select your products"},
-        {id:2,title:"Payment",text:"Confirm your products"},
+        {id:2,title:"Payment",text:"Confirm products"},
         {id:3,title:"Confirmation",text:"Go to payment "},
 
 
