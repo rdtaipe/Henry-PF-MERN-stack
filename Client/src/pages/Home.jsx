@@ -73,14 +73,14 @@ const Home = () => {
   }
 
   return (
-    <div className='bg-stone-800'>
+    <div className='bg-stone-100'>
 
       <Carousel images={images} />
       <Drawer
         sidebar={<Sidebar setFilter={(e) => { setFilter(e) }} />}
         navbar={<SortBar setSort={(e) => { setSort(e) }} />}
       >
-        <div className='px-2 py-4 bg-white'>
+        <div className='px-2 py-4 '>
           <Grid childHeight={260} childWidth={200}>
             {products.map((item, index) => {
               return <Card key={index} data={item} />

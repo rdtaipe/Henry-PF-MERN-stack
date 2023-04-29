@@ -33,7 +33,7 @@ export default function SortBar({ setSort }) {
         setSort({ [item.key]: type.value ? 1 : -1 })
     }
     return (
-        <div className='relative w-full h-[40px] flex flex-row justify-start items-center p-2  text-gray '>
+        <div className='relative w-full h-[100%] flex flex-row justify-start items-center py-5 text-gray '>
             {module && module.map((e, i) => {
                 return <MenuItem
                      key={i}

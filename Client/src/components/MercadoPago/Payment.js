@@ -90,7 +90,7 @@ const Payment = () => {
             <div className="form-group flex justify-center items-center w-full">
               <button className="btn btn-primary btn-block btn-lg bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-full w-1/2"
                 onClick={(e) => { handlePay(preferenceId) }}>
-                pay with MercadoPago
+                Go to payment
               </button>
 
             </div>
