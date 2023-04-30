@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Tooltip, IconButton, Menu, MenuItem, Typography, Avatar } from "@mui/material";
+
 import logo from "../assets/logo.png";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
@@ -126,8 +128,8 @@ const NavBar = () => {
         <div
           style={{ width: `calc(100% - ${width}px)` }}
           className={`flex-col items-center md:flex md:flex-row md:justify-around lg:justify-between  md:relative md:top-0 md:pb-0 md:gap-0  ${open
-              ? "absolute top-[80px] bg-black !w-full pb-5 gap-5 flex"
-              : "hidden !w-full"
+            ? "absolute top-[80px] bg-black !w-full pb-5 gap-5 flex"
+            : "hidden !w-full"
             }`}
         >
           <div className="flex items-center justify-between w-[160px] md:w-[130px]">
@@ -143,8 +145,8 @@ const NavBar = () => {
             >
               About Us
             </NavLink>
-            <NavLink to='/questions' 
-            className="text-white mx-4 text-lg hover:text-stone-400 hover:transform transition-all duration-500 whitespace-nowrap">
+            <NavLink to='/questions'
+              className="text-white mx-4 text-lg hover:text-stone-400 hover:transform transition-all duration-500 whitespace-nowrap">
               Questions
             </NavLink>
           </div>
@@ -166,13 +168,12 @@ const NavBar = () => {
               </div>
             </NavLink>
 
-            <div className="text-black bg-white w-[45px] h-[40px] flex justify-center items-center transition-all duration-200 ml-0 mr-0 lg:ml-[5px] lg:mr-[30px] rounded-[4px] overflow-hidden">
-              <button
-                className="flex items-center justify-center  hover:bg-stone-400 transition-all duration-200 w-[60px] h-[100%] px-[8px] md:w-[100%] lg:px-0 lg:w-[60px]"
-                onClick={handleProfile}
-              >
-                {profileState.icon}
-              </button>
+            <div className=" bg-white w-[40px] h-[40px] flex justify-center items-center transition-all duration-200 ml-0 mr-0 lg:ml-[5px] lg:mr-[30px] hover:bg-stone-400 transition-all duration-200 rounded-[4px] overflow-hidden">
+                <IconButton onClick={handleProfile} >
+                  <Avatar alt={userData.name} src={userData.picture} sx={{width:30,height:30}} />
+                </IconButton>
+            
+
             </div>
           </div>
         </div>

@@ -7,13 +7,14 @@ import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import TuneIcon from '@mui/icons-material/Tune';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const drawerWidth = 281;
 
 export default function PersistentDrawerLeft({ sidebar, navbar, children }) {
-  
+
     const [open, setOpen] = React.useState(false);
 
     const handleDrawerOpen = () => {
@@ -23,35 +24,31 @@ export default function PersistentDrawerLeft({ sidebar, navbar, children }) {
     return (
         <Box>
 
-            <MuiAppBar elevation={0} position="relative" style={{
-                height: 60,
-                background: "white"
-            }}>
+            <AppBar elevation={3} position="relative" style={{ height: 50, background: "white" }}>
                 <Toolbar>
                     <IconButtonBox
-                        color="inherit"
-                        aria-label="open drawer"
                         onClick={handleDrawerOpen}
                         edge="start"
-                        style={{ color: "gray", marginLeft: `${open ? drawerWidth : 0}px` }}
+                        style={{ color: "gray", marginLeft: `${open ? drawerWidth-65 : 0}px` }}
 
                     >
-                        {open ? open? <ChevronLeftIcon /> : <ChevronRightIcon /> : <MenuIcon />}
+                        {open ? <TuneIcon /> : <MenuIcon />}
                     </IconButtonBox>
                     {navbar}
                 </Toolbar>
-            </MuiAppBar>
+            </AppBar>
             <Drawer position="relative" sx={{
-                overflowX:"none",
+                overflowX: "none",
                 '& .MuiDrawer-paper': {
                     position: "absolute",
                     top: "auto",
                     width: drawerWidth,
                     boxSizing: 'border-box',
-                    background:"transparent",
-                    transition:"all .4s ease-in-out!important",
-                    overflowX:"none!important",
-                    zIndex:"0!important"
+                    background: "transparent",
+                    transition: "all .4s ease-in-out!important",
+                    overflowX: "none!important",
+                    zIndex: "0!important",
+                    border: "none"
 
                 },
             }}
@@ -73,8 +70,15 @@ const Main = styled.div`
     position: relative;
     background: transparent;
     transition: margin-left .4s ease-in-out!important;
-    overflow-x: none!important;
+    overflow-x: none!important
 `
 const IconButtonBox = styles(IconButton)` 
-    transition: margin-left .4s ease-in-out;
-`;
+transition: all .4s ease-in-out!important;
+margin-right:10px
+`
+const AppBar = styles(MuiAppBar)`
+display: flex;
+justify-content: center;
+width: 100%
+
+`
