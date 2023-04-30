@@ -1,8 +1,8 @@
 import express from "express";
-import checkJwt from '../../middlewares/auth0.js';
 import userModel from "../../models/user.js";
 import { allUsers, userProfile, userLoggin, Admins, createUser, updateUser, updateUserAdmin } from '../../controllers/UsersController.js'
 import { userAuthorize } from '../../controllers/authorize.js'
+
 const router = express.Router();
 
 // router.use(checkJwt)

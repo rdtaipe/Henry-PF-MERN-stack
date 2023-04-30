@@ -17,208 +17,10 @@ import { RxAvatar } from 'react-icons/rx'
 import Modal from "../Modal";
 
 const UserInterface = () => {
-
-    const historyHarcoded = [
-        {
-            total: "540.00",
-            userId: "123123123123",
-            date: "13/12/2019",
-            totalItems: 4,
-            items: [
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Zapatos deportivos Nike",
-                    amount: "2",
-                    total: "180.00",
-                    image: "https://falabella.scene7.com/is/image/FalabellaPE/882693798_1?wid=1004&hei=1500&crop=248,0,1004,1500&qlt=70",
-                },
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Vestido de noche elegante",
-                    amount: "1",
-                    total: "560.00",
-                    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0KqMDrmmIHhEj6j1NtXGwmOSiLgvIV_bthA&usqp=CAU"
-                },
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Bearcliff Man Shirts",
-                    amount: "1",
-                    total: "50.00",
-                    image: "https://falabella.scene7.com/is/image/FalabellaPE/882693798_1?wid=1004&hei=1500&crop=248,0,1004,1500&qlt=70"
-                },
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Zapatos deportivos Nike",
-                    amount: "2",
-                    total: "180.00",
-                    image: "https://falabella.scene7.com/is/image/FalabellaPE/882693798_1?wid=1004&hei=1500&crop=248,0,1004,1500&qlt=70",
-                },
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Vestido de noche elegante",
-                    amount: "1",
-                    total: "560.00",
-                    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0KqMDrmmIHhEj6j1NtXGwmOSiLgvIV_bthA&usqp=CAU"
-                },
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Bearcliff Man Shirts",
-                    amount: "1",
-                    total: "50.00",
-                    image: "https://falabella.scene7.com/is/image/FalabellaPE/882693798_1?wid=1004&hei=1500&crop=248,0,1004,1500&qlt=70"
-                },
-            ]
-        },
-        {
-            total: "1200.00",
-            userId: "123123123123",
-            date: "13/12/2019",
-            totalItems: 5,
-            items: [
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Zapatos deportivos Nike",
-                    amount: "1",
-                    total: "180.00",
-                    image: "https://falabella.scene7.com/is/image/FalabellaPE/882693798_1?wid=1004&hei=1500&crop=248,0,1004,1500&qlt=70"
-                },
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Vestido de noche elegante",
-                    amount: "1",
-                    total: "560.00",
-                    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0KqMDrmmIHhEj6j1NtXGwmOSiLgvIV_bthA&usqp=CAU"
-                },
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Bearcliff Man Shirts",
-                    amount: "3",
-                    total: "50.00",
-                    image: "https://falabella.scene7.com/is/image/FalabellaPE/882693798_1?wid=1004&hei=1500&crop=248,0,1004,1500&qlt=70"
-                },
-            ]
-        },
-        {
-            total: "800.00",
-            userId: "123123123123",
-            date: "13/12/2019",
-            totalItems: 3,
-            items: [
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Zapatos deportivos Nike",
-                    amount: "2",
-                    total: "180.00",
-                    image: "https://falabella.scene7.com/is/image/FalabellaPE/882693798_1?wid=1004&hei=1500&crop=248,0,1004,1500&qlt=70"
-                },
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Vestido de noche elegante",
-                    amount: "1",
-                    total: "560.00",
-                    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0KqMDrmmIHhEj6j1NtXGwmOSiLgvIV_bthA&usqp=CAU"
-                },
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Bearcliff Man Shirts",
-                    amount: "1",
-                    total: "50.00",
-                    image: "https://falabella.scene7.com/is/image/FalabellaPE/882693798_1?wid=1004&hei=1500&crop=248,0,1004,1500&qlt=70"
-                },
-            ]
-        },
-        {
-            total: "800.00",
-            userId: "123123123123",
-            date: "13/12/2019",
-            totalItems: 3,
-            items: [
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Zapatos deportivos Nike",
-                    amount: "2",
-                    total: "180.00",
-                    image: "https://falabella.scene7.com/is/image/FalabellaPE/882693798_1?wid=1004&hei=1500&crop=248,0,1004,1500&qlt=70"
-                },
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Vestido de noche elegante",
-                    amount: "1",
-                    total: "560.00",
-                    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0KqMDrmmIHhEj6j1NtXGwmOSiLgvIV_bthA&usqp=CAU"
-                },
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Bearcliff Man Shirts",
-                    amount: "1",
-                    total: "50.00",
-                    image: "https://falabella.scene7.com/is/image/FalabellaPE/882693798_1?wid=1004&hei=1500&crop=248,0,1004,1500&qlt=70"
-                },
-            ]
-        },
-        {
-            total: "540.00",
-            userId: "123123123123",
-            date: "13/12/2019",
-            totalItems: 4,
-            items: [
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Zapatos deportivos Nike",
-                    amount: "2",
-                    total: "180.00",
-                    image: "https://falabella.scene7.com/is/image/FalabellaPE/882693798_1?wid=1004&hei=1500&crop=248,0,1004,1500&qlt=70",
-                },
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Vestido de noche elegante",
-                    amount: "1",
-                    total: "560.00",
-                    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0KqMDrmmIHhEj6j1NtXGwmOSiLgvIV_bthA&usqp=CAU"
-                },
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Bearcliff Man Shirts",
-                    amount: "1",
-                    total: "50.00",
-                    image: "https://falabella.scene7.com/is/image/FalabellaPE/882693798_1?wid=1004&hei=1500&crop=248,0,1004,1500&qlt=70"
-                },
-            ]
-        },
-        {
-            total: "540.00",
-            userId: "123123123123",
-            date: "13/12/2019",
-            totalItems: 4,
-            items: [
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Zapatos deportivos Nike",
-                    amount: "2",
-                    total: "180.00",
-                    image: "https://falabella.scene7.com/is/image/FalabellaPE/882693798_1?wid=1004&hei=1500&crop=248,0,1004,1500&qlt=70",
-                },
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Vestido de noche elegante",
-                    amount: "1",
-                    total: "560.00",
-                    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0KqMDrmmIHhEj6j1NtXGwmOSiLgvIV_bthA&usqp=CAU"
-                },
-                {
-                    id: "6437010ab6dc8f57b10a98f8",
-                    name: "Bearcliff Man Shirts",
-                    amount: "1",
-                    total: "50.00",
-                    image: "https://falabella.scene7.com/is/image/FalabellaPE/882693798_1?wid=1004&hei=1500&crop=248,0,1004,1500&qlt=70"
-                },
-            ]
-        },
-        
-    ]
     
     const { isAutorized, unauthorize, status, data } = useSelector(({ state }) => state.user)
-    const { url } = useSelector(({ state }) => state.server);
+    const { url, auth} = useSelector(({ state }) => state.server);
+
 
     const { isAuthenticated, logout } = useAuth0();
     const userAutorized = isAutorized()
@@ -233,7 +35,7 @@ const UserInterface = () => {
     
     const [isModalOpen, setIsModalOpen] = useState(false);
     
-    const [shopHistory, setShopHistory] = useState(historyHarcoded)
+    const [shopHistory, setShopHistory] = useState([])
 
     useEffect(() => {
         if (!_.isEqual(user, originalUser)) {
@@ -275,19 +77,37 @@ const UserInterface = () => {
 
     // Cuando se arma el componente se trae el historial de compra del usuario
 
-    // useEffect(() => {
-    //     axios.get(`${url}/purchase/${userData._id}`)
-    //     .then((response) => {
-    //         setShopHistory(response.data)
-    //         console.log(response)
-    //     })
-    //     .catch(error => {
-    //         Notification('error', "Shopping history couldn't be obtained", 'bottom-end', 5000)
-    //     }) 
-    // }, [])
-    
+     useEffect(() => {
+         auth.get(`${url}/purchase/${userData._id}`)
+         .then((res) => {
+             const productsByDate = res.data.products.reduce((acc, prod) => {
+                 const date = new Date(prod.date).toLocaleDateString();
+                 acc[date] = acc[date] ? [...acc[date], prod] : [prod];
+                 return acc;
+               }, {});
+            
+      
+              const groupedProducts = Object.entries(productsByDate).map(([date, products]) => {
+                return {
+                  date: date,
+                  userId:data.userId,
+                  total:products.reduce((acc, item) => acc + item.total * item.price, 0),
+                  totalItems:products.length,
+                  items: products,
+                }
+              });
+
+              setShopHistory(groupedProducts)
+              
+         })
+         .catch(error => {
+            console.log(error.message)
+             Notification('error', "Shopping history couldn't be obtained", 'bottom-end', 5000)
+         }) 
+     }, [])
+
     useEffect(() => {
-        axios.get(`${url}/users/find/${userData._id}`)
+        auth.get(`${url}/users/find/${userData._id}`)
         .then((response) => {
             setOriginalUser(response.data)
             setUser(response.data)
