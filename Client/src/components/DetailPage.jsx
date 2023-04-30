@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
 
-import Stars from "./Stars";
 import CommentBox from "./CommentBox";
 import Comment from "./Comment";
 import Rating from "./Rating";

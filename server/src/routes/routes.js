@@ -11,7 +11,6 @@ import favorites from './favoritesRouter.js'
 import purchase from './purchaseRouter.js'
 import find from "./findRouter.js";
 import dev from "./devRouter.js";
-import auth from "./authRouter.js";
 //privete
 import users from './private/userRouter.js'
 
@@ -61,9 +60,6 @@ server.use('/email', email)
 server.use('/find?', find);
 //-------- dev utils routes ----------
 server.use('/dev',dev)
-
-//-------- Auth Routes ----------
-server.use("/auth", auth)
 
 //-------- Stats Routes ----------
 server.use("/stats", stats)
