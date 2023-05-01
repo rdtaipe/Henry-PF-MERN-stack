@@ -25,5 +25,6 @@ place-items: center;
 
 & .card{
     height: ${props => props.childHeight? props.childHeight+"px": '260px'};
+    max-width: 200px;
 }
 `

@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from "react";
-import Card from "../components/Card";
-import { useDispatch, useSelector } from "react-redux";
-import Sidebar from "../components/Sidebar/Sidebar";
-import Grid from "../components/Grid";
-import Pagination from "../components/Pagination";
-import SortBar from "../components/SortBar";
-import Carousel from "../components/Carousel";
-import Offer1 from "../assets/imagesCarousel/Offer1.png";
-import Offer2 from "../assets/imagesCarousel/Offer2.png";
-import Offer3 from "../assets/imagesCarousel/Offer3.png";
-import Offer4 from "../assets/imagesCarousel/Offer4.png";
-import Offer5 from "../assets/imagesCarousel/Offer5.png";
-import Offer6 from "../assets/imagesCarousel/Offer6.png";
-import Offer7 from "../assets/imagesCarousel/Offer7.png";
+import React, { useEffect, useState } from 'react'
+import Card from '../components/Card'
+import { useDispatch, useSelector } from 'react-redux'
+import Sidebar from '../components/Sidebar/Sidebar'
+import Grid from '../components/Grid'
+import Pagination from '../components/Pagination'
+import SortBar from '../components/SortBar'
+import Carousel from '../components/Carousel'
+import Drawer from '../components/Drawer'
+import Offer1 from '../assets/imagesCarousel/Offer1.png'
+import Offer2 from '../assets/imagesCarousel/Offer2.png'
+import Offer3 from '../assets/imagesCarousel/Offer3.png'
+import Offer4 from '../assets/imagesCarousel/Offer4.png'
+import Offer5 from '../assets/imagesCarousel/Offer5.png'
+import Offer6 from '../assets/imagesCarousel/Offer6.png'
+import Offer7 from '../assets/imagesCarousel/Offer7.png'
 import Typography from "@mui/material/Typography";
 import { IconButton, MenuItem } from "@mui/material";
 import NorthRoundedIcon from "@mui/icons-material/NorthRounded";
@@ -23,12 +24,12 @@ const Home = () => {
   //testing redux
   const dispatch = useDispatch();
   //global state
-  const { url, get } = useSelector(({ state }) => state.server);
-  const { setter } = useSelector(({ state }) => state);
-  const products = useSelector((state) => state.products);
-  const { top, width } = useSelector(({ state }) => state.sidebar);
-  const { queryString } = useSelector(({ state }) => state.utils);
-  const search = useSelector((state) => state.searchName);
+  const { url, get } = useSelector(({ state }) => state.server)
+  const { setter } = useSelector(({ state }) => state)
+  const products = useSelector(state => state.products)
+  const { top, width } = useSelector(({ state }) => state.sidebar)
+  const { queryString } = useSelector(({ state }) => state.utils)
+  const search = useSelector(state => state.searchName)
 
   //local state
   const [data, setData] = useState([]);
@@ -39,10 +40,14 @@ const Home = () => {
   const [sort, setSort] = useState({});
 
   useEffect(() => {
-    getData({ filter: { name: [search], ...filter }, sort: sort });
-  }, [filter, sort, search, page]);
+    getData({ filter: { name: [search], ...filter }, sort: sort })
 
-  const getData = ({ filter, sort }) => {
+  }, [filter,sort, search, page])
+
+
+
+  const getData = ({filter,sort}) => {
+
     const obj = {
       m: "product",
       filter: filter,
@@ -61,8 +66,8 @@ const Home = () => {
       dispatch(setter({ keys: "products", value: resData }));
       setData(resData);
 
-      let n = Math.ceil(documents / limit);
-      setCount(page === 1 && resData.length < limit ? 1 : n);
+      let n = Math.ceil(documents / limit)
+      setCount((page === 1 && resData.length < limit) ? 1 : n)
       if (page > 1 && resData.length === 0) {
         setPage(1);
       }
@@ -76,68 +81,22 @@ const Home = () => {
   };
 
   return (
-    <div className="bg-stone-800">
-      <Carousel images={images} />
-      <div>
-        <Sidebar
-          setFilter={(e) => {
-            setFilter(e);
-          }}
-          className={`md:block md:w-[280px] ${open ? "block" : "hidden"}`}
-        />
-        <div className={`px-2 md:ml-[280px] bg-white`}>
-          <div className="flex items-center">
-            {open ? (
-              <div className="md:hidden">
-                <MenuItem
-                  disableGutters
-                  disableRipple
-                  disableTouchRipple
-                  sx={{ "&:hover": { background: "transparent" } }}
-                >
-                  <Typography>Filtros</Typography>
-                  <IconButton sx={{ ml: 1 }} onClick={sidebarMenu}>
-                    <NorthRoundedIcon fontSize="small"></NorthRoundedIcon>
-                  </IconButton>
-                </MenuItem>
-              </div>
-            ) : (
-              <div className="md:hidden">
-                <MenuItem
-                  disableGutters
-                  disableRipple
-                  disableTouchRipple
-                  sx={{ "&:hover": { background: "transparent" } }}
-                >
-                  <Typography>Filtros</Typography>
-                  <IconButton sx={{ ml: 1 }} onClick={sidebarMenu}>
-                    <SouthRoundedIcon fontSize="small"></SouthRoundedIcon>
-                  </IconButton>
-                </MenuItem>
-              </div>
-            )}
-            <SortBar
-              setSort={(e) => {
-                setSort(e);
-              }}
-            />
-          </div>
+    <div className='bg-stone-100'>
 
+      <Carousel images={images} />
+      <Drawer
+        sidebar={<Sidebar setFilter={(e) => { setFilter(e) }} />}
+        navbar={<SortBar setSort={(e) => { setSort(e) }} />}
+      >
+        <div className='px-2 py-4 '>
           <Grid childHeight={260} childWidth={200}>
             {products.map((item, index) => {
-              return <Card key={index} data={item} />;
+              return <Card key={index} data={item} />
             })}
           </Grid>
-
-          <Pagination
-            page={page}
-            count={count}
-            setPage={(n) => {
-              setPage(n);
-            }}
-          />
+          <Pagination page={page} count={count} setPage={n => { setPage(n) }} />
         </div>
-      </div>
+      </Drawer>
     </div>
   );
 };
