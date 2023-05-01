@@ -314,7 +314,7 @@ const UserInterface = () => {
 <>
         {userAutorized ? (
 
-            <div style={{height: "700px"}} className="flex flex-col items-center bg-stone-100">
+            <div className="flex flex-col justify-center items-center bg-stone-100 h-[820px]">
 
                 <div style={{borderRadius: "10px", width: "1220px", display: "flex", justifyContent: "space-between"}} className="mt-20 bg-stone-200 gap-8 py-5 px-10 shadow-xl">
 
