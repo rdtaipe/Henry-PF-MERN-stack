@@ -2,6 +2,7 @@ import { Schema, model } from 'mongoose';
 
 const productSchema = new Schema(
     {
+        
         name: {
             type: String,
             required: true,
@@ -10,6 +11,9 @@ const productSchema = new Schema(
             type: String,
         },
         stock: {
+            type: Number,
+        },
+        cost: {
             type: Number,
         },
         color: {//filtrado
@@ -66,7 +70,7 @@ const productSchema = new Schema(
         }
     },
     {
-        timestamps: true,
+        timestamps: true ,
         versionKey: false,
     }
 );

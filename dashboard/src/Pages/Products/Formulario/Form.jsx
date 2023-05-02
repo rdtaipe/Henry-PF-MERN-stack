@@ -72,6 +72,7 @@ const Form = () => {
       genre,
       brand,
       price,
+      cost,
     } = data;
 
     /*       const newObj = {
@@ -108,8 +109,9 @@ const Form = () => {
       formData.append("price", price);
       formData.append("active", active);
       formData.append("feactured", feactured);
+      formData.append("cost", cost);
       console.log(data);
-      post(url + "products", formData);
+      post(url + "products", formData).then((res) => res.status == 201 && Notification('success', 'product added successfully', 'top-end', 3000))
 
       /*             console.log(formData.get('name'));
             console.log(formData.get('description'));
@@ -151,7 +153,7 @@ const Form = () => {
       <div>
         {/*        <Header/> */}
         <div className="container-form">
-{/*           <Link
+          {/*           <Link
             to="/home"
             className="flex items-center justify-center absolute bg-[#dadada] top-[100px] left-[300px] w-[150px] h-[70px] rounded-full hover:bg-[#000] hover:text-white hover:transform hover:scale-110 transition-all duration-500  index_boton"
           >
@@ -261,6 +263,30 @@ const Form = () => {
               </div>
 
               <div>
+                <label>
+                  <span className="text">cost</span>
+                </label>
+                <input
+                  className="input2"
+                  type="text"
+                  name="cost"
+                  placeholder="0"
+                  /*    min="0"
+                                    step="0" */
+                  /*   autocomplete="off" */
+                  {...register("cost", {
+                    required: true,
+                    pattern: /^[0-9]*$/,
+                  })}
+                />
+                {errors.cost?.type === "required" && (
+                  <p className="error">cost required</p>
+                )}
+                {errors.cost?.type === "pattern" && (
+                  <p className="error">Only numbers </p>
+                )}
+              </div>
+              <div>
                 <label htmlFor="price">
                   <span className="text">Price</span>
                 </label>
@@ -285,7 +311,8 @@ const Form = () => {
                   <p className="error"> Only numbers </p>
                 )}
               </div>
-
+            </div>
+            <div className="container2">
               <div>
                 <select
                   className="inputSelector2"
@@ -322,7 +349,7 @@ const Form = () => {
                 </select>
                 {errors.size && <p className="error">size required</p>}
               </div>
-            </div>{" "}
+            </div>
             {/* fin contenedor medio */}
             {/* inicio contenedor de abajo */}
             <div className="container2">

@@ -27,13 +27,13 @@ ChartJS.register(
 
 const Sales = () => {
   const [year, setYear] = useState(new Date().getFullYear());
-  const [month, setMonth] = useState(1);
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [sold, setSold] = useState();
   const [purchase, setPurchase] = useState();
 
   function fetchSold() {
     axios
-      .get(`http://localhost:5000/stats/sales?month=${month}&year=${year - 1}`)
+      .get(`http://localhost:5000/stats/sales?month=${month}&year=${year}`)
       .then((res) => {
         setSold(res.data);
       });
@@ -41,11 +41,10 @@ const Sales = () => {
   function fetchPurchase() {
     axios
       .get(
-        `http://localhost:5000/stats/purchase?month=${month}&year=${year - 1}`
+        `http://localhost:5000/stats/purchases?month=${month}&year=${year}`
       )
       .then((res) => {
         setPurchase(res.data);
-        console.log(purchase);
       });
   }
 
@@ -67,16 +66,21 @@ const Sales = () => {
     },
   };
 
-  function handleCharts(data) {
-    const labels = data.map((el) => el.day);
+  function handleCharts(sold, purchase) {
+    const labels = Object.keys(sold)
     const datagrap = {
       labels,
       datasets: [
         {
-          label: "ventas",
-          data: data.map((el) => el.sold),
+          label: "entradas",
+          data: Object.values(sold),
           backgroundColor: "green",
         },
+        {
+          label: "salidas",
+          data: Object.values(purchase),
+          backgroundColor: "red",
+        }
       ],
     };
     return datagrap;
@@ -111,7 +115,7 @@ const Sales = () => {
           ))}
         </Select>
       </FormControl>
-      {sold && <Bar options={options} data={handleCharts(sold)} height={80} />}
+      {sold && purchase && <Bar options={options} data={handleCharts(sold,purchase)} height={80} />}
     </div>
   );
 };

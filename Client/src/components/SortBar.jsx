@@ -1,32 +1,29 @@
-import { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
-import Typography from '@mui/material/Typography';
+import Typography from "@mui/material/Typography";
 
-import {IconButton, MenuItem } from '@mui/material'
+import { IconButton, MenuItem } from "@mui/material";
 
-import NorthRoundedIcon from '@mui/icons-material/NorthRounded';
-import SouthRoundedIcon from '@mui/icons-material/SouthRounded';
+import NorthRoundedIcon from "@mui/icons-material/NorthRounded";
+import SouthRoundedIcon from "@mui/icons-material/SouthRounded";
 
-const values = ["name","stock","price"]
+const values = ["name", "stock", "price"];
 
 export default function SortBar({ setSort }) {
+  const { get, url } = useSelector(({ state }) => state.server);
+  const [type, setType] = useState({ key: "name", value: null });
+  const [module, setModule] = useState([]);
 
-    const { get, url } = useSelector(({ state }) => state.server)
-    const [type, setType] = useState({ key: "name", value: null })
-    const [module, setModule] = useState([])
+  const getModule = () => {
+    get(url + `/dev/module/product`).then((res) => {
+      setModule(res.data.filter((e) => values.includes(e.key)));
+    });
+  };
 
-    const getModule = () => {
-        get(url + `/dev/module/product`).then(res => {
-            setModule(res.data.filter((e) => values.includes(e.key)))
-        })
-    }
-
-    useEffect(() => {
-        getModule()
-
-
-    }, [(module.length > 0 ? null : module)])
+  useEffect(() => {
+    getModule();
+  }, [module.length > 0 ? null : module]);
 
     const handleSort = (item) => {
         setType({ key: item.key, value: type.value === null ? true : !type.value})

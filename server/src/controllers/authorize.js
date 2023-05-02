@@ -18,9 +18,9 @@ const origins = {
 
 // name,sub,picture,email,ip,phone,location,role,status
 // name,sub,picture,phone,email,ip,location,role,status
-const compareUser = async (newUser,origin) => {
+const compareUser = async (newUser, origin) => {
 
-    const validate = await validator(newUser,origin);
+    const validate = await validator(newUser, origin);
 
     if (!validate) {
         throw new Error('User data not valid')
@@ -37,8 +37,8 @@ const compareUser = async (newUser,origin) => {
         return updateUser(user, validate);
     }
 }
-const validator = async (user,origin) => {
-    
+const validator = async (user, origin) => {
+
     try {
         const { name, user_id, picture, email, email_verified, given_name } = user;
         if (!name || !user_id || !picture || !email || !email_verified) { throw new Error('User data not valid') }
@@ -52,7 +52,7 @@ const validator = async (user,origin) => {
             role: 'user',
             status: 'active',
             email_verified: email_verified,
-            origin:origin,
+            origin: origin,
         }
         return newUser;
     } catch (error) {
@@ -62,20 +62,19 @@ const validator = async (user,origin) => {
 }
 const updateUser = async (user, newUser) => {
     try {
-        const { name, picture, email, email_verified,origin } = newUser;
+        const { name, picture, email, email_verified, origin } = newUser;
         const userObj = {
             name: name,
             picture: picture,
             email: email,
             email_verified: email_verified,
-            origin:origin
+            origin: origin
         }
 
         const updatedUser = await UserModel.findByIdAndUpdate(user._id.toString(), userObj, { new: true });
         return updatedUser;
     } catch (error) {
         console.log('error: in updateUser')
-
         throw new Error('User data not valid')
     }
 
@@ -112,9 +111,9 @@ export const userAuthorize = async (req, res) => {
             },
         });
         const userData = response.data;
-        const newUser = await compareUser(userData,origin);
+        const newUser = await compareUser(userData, origin);
 
-        const mixData =  {...userData,...newUser._doc} 
+        const mixData = { ...userData, ...newUser._doc }
 
         //  if(newUser===null){res.status(401).json({message:"Unauthorized",error:'user not found'});}
         //  if(newUser.role==='admin'&&origins.admin.includes(origin)){
