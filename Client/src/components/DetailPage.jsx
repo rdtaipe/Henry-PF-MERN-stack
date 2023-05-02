@@ -56,12 +56,6 @@ export const DetailPage = () => {
   };
 
   const addComment = ({ comment, stars }) => {
-    const promScore = comments.length
-      ? (comments.reduce((acc, el) => acc + el.score, 0) + stars) /
-        (comments.length + 1)
-      : stars;
-
-    console.log(promScore);
     const newComment = {
       name: userData.name,
       picture: userData.picture,
@@ -70,7 +64,6 @@ export const DetailPage = () => {
       body: comment,
       score: stars,
       date: new Date(),
-      promScore,
     };
     auth.post(`${url}/comments/send`, newComment).then((res) => {
       getCurrentComments();

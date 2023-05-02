@@ -4,7 +4,7 @@ import uploadCloudinary from "../middlewares/cloudinary.js";
 
 export const getProducts = async (req, res) => {
   const { name } = req.query;
-  const allProducts = await productsModel.find({}, { _id: 1, stars: 1,name:1 });
+  const allProducts = await productsModel.find({});
   if (allProducts) {
     if (name) {
       const result = allProducts.filter((f) =>

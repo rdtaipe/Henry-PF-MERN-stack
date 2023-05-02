@@ -95,7 +95,7 @@ export const getPurchases = async (req, res) => {
 };
 
 /*  */ /*  */ /*  */
-export const getUsersLog = async (req, res) => {
+export const getUsersGenres = async (req, res) => {
   const {} = req.body;
 
   const data = await userModel.find();
@@ -114,7 +114,30 @@ export const getUsersLog = async (req, res) => {
 
 /*  */ /*  */ /*  */
 export const getProductsBestValued = async (req, res) => {
-  const data = await productModel.find();
-  const resp = data.sort((a, b) => b.stars - a.stars);
-  res.json(resp);
+  try {
+    const data = await productModel.find();
+    const resp = data.sort((a, b) => b.stars - a.stars);
+    res.json(resp);
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+};
+
+/*  */ /*  */ /*  */
+export const getProductsGenres = async (req, res) => {
+  try {
+    const male = await productModel.find({ genre: "male" });
+    const female = await productModel.find({ genre: "female" });
+    const unisex = await productModel.find({ genre: "unisex" });
+
+    const resp = {
+      male: male.length,
+      female: female.length,
+      unisex: unisex.length,
+    };
+
+    res.json(resp);
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
 };
