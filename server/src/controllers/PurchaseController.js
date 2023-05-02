@@ -7,8 +7,8 @@ import { GetMP } from './MP.js'
 
 
 export const getPurchase = async (req, res, next) => {
-    const { userId, purchaseId } = req.query;
-    const purchases = await purchaseModel.find({})
+    const { userId, productId } = req.query;
+    const purchases = await purchaseModel.findOne({ userId: userId })
 
     try {
         if (userId) {
@@ -34,22 +34,33 @@ export const getPurchase = async (req, res, next) => {
         next(error)
     }
 }
-
 export const getPurchaseById = async (req, res) => {
-    const { id } = req.params;//user id
-    
+    const { productId } = req.query;
+    const { userId } = req.params;//user id
+
     try {
-        const findPurchase=await purchaseModel.findOne({userId:id})
-        if(findPurchase){
-            res.status(200).json(findPurchase)
-        }else{
-            res.status(200).json({})
+        const findPurchase = await purchaseModel.findOne({ userId: userId })
+
+        if (userId && !productId) {
+
+            if (findPurchase) {
+                res.status(200).json(findPurchase)
+            } else {
+                res.status(200).json({})
+            }
+        } else if (userId && productId) {
+            const product = findPurchase.products.find(p => p.productId === productId);
+            if (product) {
+                res.status(200).json(product)
+            } else {
+                res.status(200).json({})
+            }
         }
 
-    } catch (error) {
-        res.status(500).json({message:error.message})
-    }
 
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
 
 }
 

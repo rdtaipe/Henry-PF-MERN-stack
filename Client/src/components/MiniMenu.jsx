@@ -1,79 +1,88 @@
-import React,{useEffect,useState,useContext } from 'react'
-import axios from 'axios';
-import {Tooltip,IconButton,Menu,MenuItem,Typography,Avatar} from "@mui/material";
-import { useAuth0 } from "@auth0/auth0-react";
-import { useSelector,useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import * as React from 'react';
+import Button from '@mui/joy/Button';
+import Menu from '@mui/joy/Menu';
+import MenuItem from '@mui/joy/MenuItem';
+import Apps from '@mui/icons-material/Apps';
+import IconButton from '@mui/joy/IconButton';
+import ListItemDecorator from '@mui/joy/ListItemDecorator';
+import ListDivider from '@mui/joy/ListDivider';
+import MoreVert from '@mui/icons-material/MoreVert';
+import Edit from '@mui/icons-material/Edit';
+import DeleteForever from '@mui/icons-material/DeleteForever';
 
-// 'Profile', 'Account', 'Dashboard', 'Logout'
 
-//no funciona todavia
+const menuTest = [
+  {
+    close: false,
+    onClick: () => { console.log("1") },
+    icon: <Edit />,
+    text: "Edit post"
+  }, {
+    close: false,
+    onClick: () => { console.log("2") },
+    text: "Draft post",
+    props: { disabled: true },
+    divider: true,
+  }, {
+    close: false,
+    onClick: () => { console.log("2") },
+    icon: <DeleteForever />,
+    text: "Delete",
+    props: { disabled: true, variant: "soft", color: "danger" },
+  },
+]
 
-const Profile = ({anchorElUser,setAnchorElUser}) => {
-  const dispatch=useDispatch()
-  const Navigate=useNavigate()
-  const actions=useSelector(state=>state.actions)
-  const { unauthorize, status, setStatus, data} = useSelector(state => state.user)
-  const userData = data()
-  const { logout } = useAuth0();
+export default function SelectedMenu({id, iconAtributes, menuAtributes, icon, menu }) {
 
-  const settings = [
-    {text:'Profile',icon:'Profile',fun:(e)=>{handleCloseUserMenu()}},
-    {text:'Account',icon:'Account',fun:(e)=>{handleCloseUserMenu()}},
-    {text:'Logout',icon:'Logout',fun:(e)=>{handleLogout()}},
-  ];
+  var newIcon = icon ? icon : <MoreVert />
+  var newMenu = menu ? menu : menuTest
 
-const handleLogout=()=>{
-  unauthorize({ message: "Unauthorized" })
-  logout()
-}
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-  useEffect(() => {
-
-  }, [userData]);
-
-  console.log(userData,"userData")
   return (
-
-    userData&&<>
-        <Tooltip title={userData.name}>
-            <IconButton onClick={handleOpenUserMenu} disableRipple>
-                <Avatar alt={userData.name} src={userData.picture } />
-          </IconButton>
-       
-          </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((item,i) => (
-                <MenuItem key={i} onClick={item.fun}>
-                  <Typography textAlign="center">{item.text}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-      </>
-    
+    <div>
+      <IconButton
+        id="positioned-demo-button"
+        aria-controls={open ? 'positioned-demo-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        variant="outlined"
+        color="neutral"
+        onClick={handleClick}
+        {...iconAtributes}
+      >
+        {newIcon}
+      </IconButton>
+      <Menu
+        id="positioned-demo-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="positioned-demo-button"
+        placement="bottom-end"
+        {...menuAtributes}
+      >
+        {newMenu.map((item) => {
+          item.id=id?id:null
+          return (<>
+            <MenuItem onClick={(e) => { item.close ? null: handleClose(e) ; item.onClick ? item.onClick(e, item) : null }} {...item.props}>
+              <ListItemDecorator sx={{ color: 'inherit' }}>
+                {item.icon ? item.icon : null}
+              </ListItemDecorator>{' '}
+              {item.text ? item.text : null}
+            </MenuItem>
+            {item.divider ? <ListDivider /> : null}
+          </>
+          )
+        })}
+      </Menu>
+    </div>
   );
-};
-
-export default Profile;
+}
