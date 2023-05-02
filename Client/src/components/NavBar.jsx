@@ -92,21 +92,21 @@ const NavBar = () => {
             onTrue={handleModal}
           />
         )}
-        <div className="relative flex justify-center w-[200px] lg:w-[300px] p-5">
+        <div className="relative flex justify-center w-[200px] p-5">
           <NavLink to="/">
-            <img src={logo} alt="logo" className="w-36" />
+            <img src={logo} alt="logo" className="w-32" />
           </NavLink>
 
         </div>
 
         <div
           style={{ width: `calc(100% - ${width}px)` }}
-          className={`flex-col items-center md:flex md:flex-row md:justify-around lg:justify-between  md:relative md:top-0 md:pb-0 md:gap-0  ${open
+          className={`flex-col items-center md:flex md:flex-row md:justify-around md:relative md:top-0 md:pb-0 md:gap-0 md:pl-6  ${open
             ? "absolute top-[80px] bg-black !w-full pb-5 gap-5 flex"
             : "hidden !w-full"
             }`}
         >
-          <div className="flex items-center justify-between w-[160px] md:w-[130px]">
+          <div className="flex items-center justify-center w-[160px] md:w-[130px]">
             <NavLink
               to="/home"
               className="text-white mx-4 text-lg hover:text-stone-400 hover:transform transition-all duration-500 whitespace-nowrap"
@@ -142,7 +142,7 @@ const NavBar = () => {
               </div>
             </NavLink>
 
-            <div className=" bg-white w-[40px] h-[40px] flex justify-center items-center transition-all duration-200 ml-0 mr-0 lg:ml-[5px] lg:mr-[30px] hover:bg-stone-400 transition-all duration-200 rounded-[4px] overflow-hidden">
+            <div className=" bg-white w-[40px] h-[40px] flex justify-center items-center ml-0 mr-0 lg:ml-[5px] lg:mr-[30px] hover:bg-stone-400 transition-all duration-200 rounded-[4px] overflow-hidden">
                 <IconButton onClick={handleProfile} >
                   <Avatar alt={userData.name} src={userData.picture} sx={{width:30,height:30}} />
                 </IconButton>
