@@ -1,7 +1,6 @@
 
  import React,{useEffect, useState} from 'react'
  import axios from 'axios';
-
  import {useSelector}from 'react-redux'
 import {
   Table,
@@ -15,7 +14,7 @@ import {
 } from "@tremor/react";
 import { CheckIcon } from "@heroicons/react/outline";
 import { PencilIcon,MinusCircleIcon } from "@heroicons/react/solid";
-
+import {Link} from 'react-router-dom'
 
 
 
@@ -113,7 +112,12 @@ const [users,setUsers]=useState([]);
         <div >
          <Card >
           <Title className='text-center'> Table of Users  </Title> 
-          <Button className='boton' size='lg'>Add users </Button>
+        
+            
+             <Link to='/formUser'>
+              <Button className='boton' size='lg' >Add user</Button>
+             </Link>
+   
          <Table>
              <TableHead>
                 <TableRow >
