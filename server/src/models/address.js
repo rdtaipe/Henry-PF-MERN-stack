@@ -28,10 +28,10 @@ const addressSchema = new Schema({
         type: String
     },
 },
-    {
-        timestamps: true,
-        versionKey: false
-    })
+{
+    timestamps: true,
+    versionKey: false
+})
 
 const addressModel = model('Address', addressSchema)
 
