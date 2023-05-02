@@ -80,6 +80,7 @@ const UserInterface = () => {
      useEffect(() => {
          auth.get(`${url}/purchase/${userData._id}`)
          .then((res) => {
+            console.log(res.data)
              const productsByDate = res.data.products.reduce((acc, prod) => {
                  const date = new Date(prod.date).toLocaleDateString();
                  acc[date] = acc[date] ? [...acc[date], prod] : [prod];

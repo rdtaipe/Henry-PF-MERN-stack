@@ -4,7 +4,7 @@ import { getPurchase, getPurchaseById, createPurchase, updatePurchase } from '..
 const router = express.Router();
 ////////////////////////////////////////
 router.get('/', getPurchase)
-router.get('/:id',getPurchaseById)
+router.get('/:userId',getPurchaseById)
 router.post('/', createPurchase)
 ////////////////////////////////////////
 router.put('/:id', updatePurchase)
