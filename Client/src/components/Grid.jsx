@@ -21,6 +21,7 @@ grid-gap: 1rem;
 grid-template-rows: auto;
 justify-content: center;
 align-items: flex-start;
+place-items: center;
 
 & .card{
     height: ${props => props.childHeight? props.childHeight+"px": '260px'};
