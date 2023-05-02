@@ -11,14 +11,14 @@ const AddressSettings = ({user, updateUser}) => {
     };
   
     return (
-      <div style={{borderRadius: "10px", minWidth: "800px"}} className="ml-10 bg-stone-200 flex flex-col mt-1 gap-8 pt-8 pb-8 px-10 shadow-xl transition">
+      <div style={{borderRadius: "10px"}} className="xl:ml-10 bg-stone-200 flex flex-col mt-1 gap-8 pt-8 pb-8 px-10 shadow-xl transition lg:min-w-[800px]">
     
         <h2 className="text-2xl font-bold mb-2">Address Settings</h2>
     
-        <div className="flex flex-row flex-wrap gap-24">
+        <div className="flex lg:flex-row flex-col flex-wrap gap-8 lg:gap-24">
 
-         <div className="flex flex-col gap-2" style={{width: "300px"}}>
-           <label htmlFor="country">Country:</label>
+         <div className="flex flex-col gap-2 w-[90%] sm:w-[300px]">
+           <label htmlFor="country" className="font-bold">Country:</label>
            <input 
               className={`
                 pl-2 py-1 bg-stone-200 border-b-2 
@@ -31,8 +31,8 @@ const AddressSettings = ({user, updateUser}) => {
             />
           </div>
          
-          <div className="flex flex-col gap-2" style={{width: "300px"}}>
-            <label htmlFor="location">State / Province:</label>
+          <div className="flex flex-col gap-2 w-[90%] sm:w-[300px]">
+            <label htmlFor="location" className="font-bold">State / Province:</label>
             <input 
                className={`
                 pl-2 py-1 bg-stone-200 border-b-2 
@@ -48,9 +48,9 @@ const AddressSettings = ({user, updateUser}) => {
           
         </div>
 
-        <div className="flex flex-row flex-wrap gap-24">
-          <div className="flex flex-col gap-2" style={{width: "300px"}}>
-            <label htmlFor="adress">Adress:</label>
+        <div className="flex lg:flex-row flex-col flex-wrap gap-8 lg:gap-24">
+          <div className="flex flex-col gap-2 w-[90%] sm:w-[300px]">
+            <label htmlFor="adress" className="font-bold">Adress:</label>
             <input 
               className={`
                 pl-2 py-1 bg-stone-200 border-b-2 
@@ -63,8 +63,8 @@ const AddressSettings = ({user, updateUser}) => {
             />
           </div>
 
-          <div className="flex flex-col gap-2" style={{width: "300px"}}>
-            <label htmlFor="postal">Postal Code:</label>
+          <div className="flex flex-col gap-2 w-[90%] sm:w-[300px]">
+            <label htmlFor="postal" className="font-bold">Postal Code:</label>
             <input 
               className={`
                 pl-2 py-1 bg-stone-200 border-b-2 
