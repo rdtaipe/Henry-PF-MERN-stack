@@ -2,6 +2,19 @@ import productModel from "../models/product.js";
 import purchaseModel from "../models/purchase.js";
 import userModel from "../models/user.js";
 
+function sumByDay(purchases) {
+  const result = [];
+  purchases.forEach(purchase => {
+    const existing = result.find(p => p.day === purchase.day);
+    if (existing) {
+      existing.purchase += purchase.purchase;
+    } else {
+      result.push({ day: purchase.day, purchase: purchase.purchase });
+    }
+  });
+  return result;
+}
+
 /*  */ /*  */ /*  */
 export const getSales = async (req, res) => {
   const { month, year } = req.query;
@@ -71,7 +84,7 @@ export const getPurchases = async (req, res) => {
 
     const addDays = [];
     for (let i = 1; i <= endDate.getDate(); i++) {
-      const dayData = formatData.find((item) => item.day === i);
+      const dayData = sumByDay(formatData).find((item) => item.day === i);
       if (dayData) {
         addDays.push(dayData);
       } else {
