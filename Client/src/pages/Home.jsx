@@ -74,12 +74,6 @@ const Home = () => {
     });
   };
 
-  const [open, setOpen] = useState(false);
-
-  const sidebarMenu = () => {
-    setOpen(!open);
-  };
-
   return (
     <div className='bg-stone-100'>
 
