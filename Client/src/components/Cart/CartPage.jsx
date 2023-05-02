@@ -124,7 +124,7 @@ const CartPage = () => {
               })}
             </div>
 
-            <div className="flex flex-col w-[full] min-w-[380px]">
+            <div className="flex flex-col w-full md:w-[395px]">
               <h1 className="text-2xl font-bold leading-none sm:text-3xl dark:text-black">
                 Order Summary
               </h1>
