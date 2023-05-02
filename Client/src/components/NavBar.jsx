@@ -18,6 +18,8 @@ import Badge from "./Badge";
 import Modal from "./Modal";
 import Tabs from './Tabs'
 
+import { useLocation } from "react-router-dom";
+
 const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -77,6 +79,8 @@ const NavBar = () => {
     setModal(false);
   };
 
+  let location = useLocation()
+
   return (
     <>
       <nav
@@ -101,12 +105,12 @@ const NavBar = () => {
 
         <div
           style={{ width: `calc(100% - ${width}px)` }}
-          className={`flex-col items-center md:flex md:flex-row md:justify-around md:relative md:top-0 md:pb-0 md:gap-0 md:pl-6  ${open
+          className={`flex-col items-center md:flex md:flex-row md:relative md:top-0 md:pb-0 md:gap-0  ${open
             ? "absolute top-[80px] bg-black !w-full pb-5 gap-5 flex"
             : "hidden !w-full"
-            }`}
+            } ${location.pathname === "/home" ? "md:justify-around" : "md:justify-between"}`}
         >
-          <div className="flex items-center justify-center w-[160px] md:w-[130px]">
+          <div className="flex items-center justify-center w-[160px] md:w-fit">
             <NavLink
               to="/home"
               className="text-white mx-4 text-lg hover:text-stone-400 hover:transform transition-all duration-500 whitespace-nowrap"
@@ -125,7 +129,7 @@ const NavBar = () => {
             </NavLink>
           </div>
 
-          <div className="text-white">
+          <div className={`text-white ${location.pathname === "/home" ? "" : "hidden"}`}>
             <SearchBar />
           </div>
 
