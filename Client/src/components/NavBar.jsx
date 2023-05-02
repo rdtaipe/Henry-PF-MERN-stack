@@ -33,10 +33,6 @@ const NavBar = () => {
   const userAutorized = isAutorized();
   const userData = data();
 
-  const [profileState, setProfileState] = useState({
-    text: <Link to={"/authorize"}>Log In</Link>,
-    icon: <RxAvatar size={25} className="mr-[10px]" />,
-  });
   const [cartProducts, setCartProducts] = useState({
     length: 0,
     products: [],
@@ -51,25 +47,9 @@ const NavBar = () => {
   };
 
   useEffect(() => {
-    if (userAutorized && isAuthenticated) {
+    if (userAutorized) {
       getProductCart();
-
-      setProfileState({
-        text: <span>Log Out</span>,
-        icon: (
-          <img
-            src={userData.picture}
-            alt="avatar"
-            className="w-[25px] h-[25px] rounded-full "
-          />
-        ),
-      });
-    } else {
-      setProfileState({
-        text: <span>Loguin</span>,
-        icon: <RxAvatar size={25} />,
-      });
-    }
+    } 
   }, [userAutorized, isAuthenticated, refresh, modal]);
 
   const getProductCart = () => {
@@ -82,13 +62,7 @@ const NavBar = () => {
     });
   };
 
-  const hadleText = () => {
-    if (isAuthenticated) {
-      setModal(true);
-    } else {
-      navigate("/authorize");
-    }
-  };
+
   const handleProfile = () => {
     if (isAuthenticated) {
       navigate("/user");
