@@ -6,6 +6,7 @@ import Grid from '../components/Grid'
 import Pagination from '../components/Pagination'
 import SortBar from '../components/SortBar'
 import Carousel from '../components/Carousel'
+import SupportEngine from '../components/SupportEngine'
 import Offer1 from '../assets/imagesCarousel/Offer1.png'
 import Offer2 from '../assets/imagesCarousel/Offer2.png'
 import Offer3 from '../assets/imagesCarousel/Offer3.png'
@@ -82,7 +83,9 @@ const Home = () => {
   
         <SortBar setSort={(e) => { setSort(e) }} />
         <Grid childHeight={260} childWidth={200}>
-    
+
+        <SupportEngine />
+
         {products.map((item, index) => {
           return <Card key={index} data={item} />
         })}

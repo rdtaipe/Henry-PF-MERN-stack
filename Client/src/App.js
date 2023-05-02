@@ -12,6 +12,7 @@ import User from "./pages/User";
 import Payment from "./pages/Payment/Payment";
 import { useSelector, useDispatch } from "react-redux";
 import ScrollAnimate from "./components/ScrollAnimate";
+import SupportAdmin from "./components/SupportAdmin";
 
 import NavBar from "./components/NavBar";
 
@@ -47,6 +48,7 @@ function App() {
         <Route path="/products/:productId" element={<Detail />} />
         <Route path="/authorize" element={<Authorize />} />
         <Route path="/user" element={<User />} />
+        <Route path="/support" element={<SupportAdmin/>} />
       </Routes>
 
       {page !== "/" && <ScrollAnimate footer={<Footer />} />}
