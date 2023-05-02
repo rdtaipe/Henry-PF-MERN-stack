@@ -6,7 +6,7 @@ import Grid from '../components/Grid'
 import Pagination from '../components/Pagination'
 import SortBar from '../components/SortBar'
 import Carousel from '../components/Carousel'
-import SupportEngine from '../components/SupportEngine'
+import Drawer from '../components/Drawer'
 import Offer1 from '../assets/imagesCarousel/Offer1.png'
 import Offer2 from '../assets/imagesCarousel/Offer2.png'
 import Offer3 from '../assets/imagesCarousel/Offer3.png'
@@ -22,7 +22,7 @@ const Home = () => {
   const dispatch = useDispatch()
   //global state
   const { url, get } = useSelector(({ state }) => state.server)
-  const {setter} = useSelector(({state}) => state)
+  const { setter } = useSelector(({ state }) => state)
   const products = useSelector(state => state.products)
   const { top, width } = useSelector(({ state }) => state.sidebar)
   const { queryString } = useSelector(({ state }) => state.utils)
@@ -38,13 +38,13 @@ const Home = () => {
 
 
   useEffect(() => {
-    getData({ filter:{name: [search], ...filter},sort:sort })
+    getData({ filter: { name: [search], ...filter }, sort: sort })
 
-  }, [filter,sort, search, page])
+  }, [filter, sort, search, page])
 
 
 
-  const getData = ({filter,sort}) => {
+  const getData = ({ filter, sort }) => {
 
     const obj = {
       m: "product",
@@ -64,7 +64,7 @@ const Home = () => {
       dispatch(setter({ keys: "products", value: resData }))
       setData(resData)
 
-      let n = Math.ceil(documents/ limit)
+      let n = Math.ceil(documents / limit)
       setCount((page === 1 && resData.length < limit) ? 1 : n)
       if (page > 1 && resData.length === 0) {
         setPage(1)
@@ -73,30 +73,22 @@ const Home = () => {
   }
 
   return (
-    <div className='bg-stone-800'>
-      
-      <Sidebar setFilter={(e) => { setFilter(e) }} />
-      <div style={{ marginLeft: width }} className="bg-white">
-   
-        <Carousel images={images} />
-        <div className='px-2'>
-  
-        <SortBar setSort={(e) => { setSort(e) }} />
-        <Grid childHeight={260} childWidth={200}>
+    <div className='bg-stone-100'>
 
-        <SupportEngine />
-
-        {products.map((item, index) => {
-          return <Card key={index} data={item} />
-        })}
-        </Grid>
-        
-        <Pagination page={page} count={count} setPage={n => { setPage(n) }} />
+      <Carousel images={images} />
+      <Drawer
+        sidebar={<Sidebar setFilter={(e) => { setFilter(e) }} />}
+        navbar={<SortBar setSort={(e) => { setSort(e) }} />}
+      >
+        <div className='px-2 py-4 '>
+          <Grid childHeight={260} childWidth={200}>
+            {products.map((item, index) => {
+              return <Card key={index} data={item} />
+            })}
+          </Grid>
+          <Pagination page={page} count={count} setPage={n => { setPage(n) }} />
         </div>
-
-
-      </div>
-
+      </Drawer>
     </div>
   )
 }

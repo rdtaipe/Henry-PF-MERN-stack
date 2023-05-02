@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import { google } from "googleapis";
-import welcome from '../../utils/mail/welcome.js';
+import welcome from './welcome.js';
+import Order from "./order.js";
 
 
 const OAuth2 = google.auth.OAuth2;
@@ -52,10 +53,10 @@ const sendEmail = async (mailOptions) => {
 const send = async ({ model, body, user }) => {
     const types = {
         welcome: welcome,
-        order: `<div>order</div>`,
+        order: Order,
         notification: `<div>notification</div>`
     }
-    const { html, issue, text, from, to, type } = body;
+    const { html, issue, text, from, to, type,data } = body;
 
     var newHtml = html ? html : types[type] ? types[type] : undefined;
     var newIssue = issue ? issue : 'undefined';
@@ -74,7 +75,7 @@ const send = async ({ model, body, user }) => {
         from: newFrom,
         to:newTo,
         subject: newIssue,
-        html: newHtml({ name: newUser.name }),
+        html: newHtml(newUser,data),
         text: text
     };
 

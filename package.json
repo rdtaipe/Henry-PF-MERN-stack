@@ -1,10 +1,7 @@
 {
     "scripts": {
         "server": "cd server && npm i && npm run dev",
-        "dashboard": "cd dashboard && npm i && npm start",
+        "dashboard":"cd dashboard && npm i && npm start",
         "client": "cd client && npm i && npm start"
-    },
-    "dependencies": {
-        "react-chat-engine": "^1.11.28"
     }
 }

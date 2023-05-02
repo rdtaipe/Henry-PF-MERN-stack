@@ -12,9 +12,11 @@ import User from "./pages/User";
 import Payment from "./pages/Payment/Payment";
 import { useSelector, useDispatch } from "react-redux";
 import ScrollAnimate from "./components/ScrollAnimate";
-import SupportAdmin from "./components/SupportAdmin";
 
 import NavBar from "./components/NavBar";
+import Questions from "./pages/Questions";
+
+
 
 const server = {
   local: "http://localhost:5000",
@@ -48,7 +50,8 @@ function App() {
         <Route path="/products/:productId" element={<Detail />} />
         <Route path="/authorize" element={<Authorize />} />
         <Route path="/user" element={<User />} />
-        <Route path="/support" element={<SupportAdmin/>} />
+        <Route path="/questions" element={<Questions/>} />
+     
       </Routes>
 
       {page !== "/" && <ScrollAnimate footer={<Footer />} />}
