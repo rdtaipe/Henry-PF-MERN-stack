@@ -6,7 +6,7 @@ import userModel from "../models/user.js";
 export const getSales = async (req, res) => {
   const { month, year } = req.query;
   const startDate = new Date(year, month - 1, 1);
-  const endDate = new Date(year, month, 0);
+  const endDate = new Date(year, month, 0, 23);
 
   try {
     const data = await purchaseModel.find({
@@ -57,12 +57,12 @@ export const getPurchases = async (req, res) => {
   try {
     const data = await productModel.find(
       { createdAt: { $gte: startDate, $lt: endDate } },
-      { stock: 1, cost: 1, createdAt: 1 }
+      { stock: 1, price: 1, createdAt: 1 }
     );
 
     const formatData = data.map((el) => {
       const day = new Date(el.createdAt).getDate();
-      const purchase = el.stock * el.cost;
+      const purchase = el.stock * el.price;
       return {
         day,
         purchase,
@@ -98,17 +98,23 @@ export const getPurchases = async (req, res) => {
 export const getUsersLog = async (req, res) => {
   const {} = req.body;
 
-  const data = await userModel.find()
+  const data = await userModel.find();
+  const males = await userModel.find({ genre: "male" });
+  const females = await userModel.find({ genre: "female" });
 
-  res.json(data)
+  const resp = {
+    total: data.length,
+    males: males.length,
+    females: females.length,
+    undefined: data.length - (males.length + females.length),
+  };
+
+  res.json(resp);
 };
 
-
-/*  */  /*  */  /*  */
-export const getProductsBestValued =  async (req,res) => {
-
-  const data = await productModel.find()
-
-  const resp = data.map(el => el.stars)
-  res.json(resp)
-}
+/*  */ /*  */ /*  */
+export const getProductsBestValued = async (req, res) => {
+  const data = await productModel.find();
+  const resp = data.sort((a, b) => b.stars - a.stars);
+  res.json(resp);
+};

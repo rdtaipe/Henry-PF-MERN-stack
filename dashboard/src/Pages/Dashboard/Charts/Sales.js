@@ -41,7 +41,7 @@ const Sales = () => {
   function fetchPurchase() {
     axios
       .get(
-        `http://localhost:5000/stats/purchase?month=${month}&year=${year}`
+        `http://localhost:5000/stats/purchases?month=${month}&year=${year}`
       )
       .then((res) => {
         setPurchase(res.data);
@@ -115,7 +115,7 @@ const Sales = () => {
           ))}
         </Select>
       </FormControl>
-      {sold && <Bar options={options} data={handleCharts(sold,purchase)} height={80} />}
+      {sold && purchase && <Bar options={options} data={handleCharts(sold,purchase)} height={80} />}
     </div>
   );
 };
