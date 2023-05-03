@@ -67,6 +67,60 @@ export const AboutUs = () => {
           />
         </div>
       </div>
+
+      <div>
+        <p className="text-4xl font-bold text-center p-10">All the collaborators of this project</p>
+        <div className="flex justify-center items-center flex-wrap relative">
+          <p className="font-bold text-xl absolute top-[5px] left-[110px]">Alejo Andino</p>
+          <div className="w-[100px] h-[100px] rounded-full overflow-hidden m-10">
+            <a href="https://github.com/AlejoAndino" target="_blank" rel="noopener noreferrer">
+              <img src="https://avatars.githubusercontent.com/u/104437588?s=400&u=403ccf7ae0c85f239c9b79530707dfb1ae534297&v=4" alt="Alejo Andino" className="w-150 h-150 object-cover" />
+            </a>
+          </div>
+          <p className="font-bold text-xl absolute top-[140px] left-[280px]">Rolando Taipe</p>
+          <div className="w-[100px] h-[100px] rounded-full overflow-hidden m-10">
+            <a href="https://github.com/rdtaipe" target="_blank" rel="noopener noreferrer">
+              <img src="https://avatars.githubusercontent.com/u/77520484?v=4" alt="Integrante 1" className="w-150 h-150 object-cover" />
+            </a>
+          </div>
+          <p className="font-bold text-xl absolute top-[5px] left-[465px]">Juan Andres</p>
+          <div className="w-[100px] h-[100px] rounded-full overflow-hidden m-10">
+            <a href="https://github.com/DrewAce" target="_blank" rel="noopener noreferrer">
+              <img src="https://avatars.githubusercontent.com/u/98987069?v=4" alt="Integrante 1" className="w-150 h-150 object-cover" />
+            </a>
+          </div>
+          <p className="font-bold text-xl absolute top-[140px] left-[640px]">Jacobo Cohello</p>
+          <div className="w-[100px] h-[100px] rounded-full overflow-hidden m-10">
+            <a href="https://github.com/Jcooob" target="_blank" rel="noopener noreferrer">
+              <img src="https://avatars.githubusercontent.com/u/118378780?v=4" alt="Integrante 1" className="w-150 h-150 object-cover" />
+            </a>
+          </div>
+          <p className="font-bold text-xl absolute top-[5px] left-[800px]">Maximo Guzman</p>
+          <div className="w-[100px] h-[100px] rounded-full overflow-hidden m-10">
+            <a href="https://github.com/vmaximoguzman" target="_blank" rel="noopener noreferrer">
+              <img src="https://avatars.githubusercontent.com/u/110482724?v=4" alt="Integrante 2" className="w-150 h-150 object-cover" />
+            </a>
+          </div>
+          <p className="font-bold text-xl absolute top-[140px] left-[975px]">Francisco Piedrahita</p>
+          <div className="w-[100px] h-[100px] rounded-full overflow-hidden m-10">
+            <a href="https://github.com/FranPiedrahita" target="_blank" rel="noopener noreferrer">
+              <img src="https://avatars.githubusercontent.com/u/112909883?v=4" alt="Integrante 3" className="w-150 h-150 object-cover" />
+            </a>
+          </div>
+          <p className="font-bold text-xl absolute top-[5px] right-[293px]">Ariel Zarate</p>
+          <div className="w-[100px] h-[100px] rounded-full overflow-hidden m-10">
+            <a href="https://github.com/arielZarate" target="_blank" rel="noopener noreferrer">
+              <img src="https://avatars.githubusercontent.com/u/43224834?v=4" alt="Integrante 3" className="w-150 h-150 object-cover" />
+            </a>
+          </div>
+          <p className="font-bold text-xl absolute top-[140px] right-[85px]">Renzo Cervantes</p>
+          <div className="w-[100px] h-[100px] rounded-full overflow-hidden m-10">
+            <a href="https://github.com/Razaca" target="_blank" rel="noopener noreferrer">
+              <img src="https://avatars.githubusercontent.com/u/88416218?v=4" alt="Integrante 3" className="w-150 h-150 object-cover" />
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
