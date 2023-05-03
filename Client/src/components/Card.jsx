@@ -27,7 +27,7 @@ const Card = (props) => {
         var resData = res.data.products;
         dispatch(setter({ keys: "state.user.cart", value: resData }));
       });
-      Notification("success", `${name} added to the cart`, "bottom-end", 5000);
+      Notification("success", `${name} added to the cart`, "bottom-start", 5000);
     } else {
       //si no esta autorizado
       navigate("/authorize");
