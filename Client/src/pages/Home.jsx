@@ -92,7 +92,7 @@ const Home = () => {
         sidebar={<Sidebar setFilter={(e) => { setFilter(e) }} />}
         navbar={<SortBar setSort={(e) => { setSort(e) }} />}
       >
-        <div className='px-2 py-4 '>
+        <div className='px-4 py-8'>
           <Grid childHeight={260} childWidth={200}>
             {products.map((item, index) => {
               return <Card key={index} data={item} />
