@@ -8,7 +8,7 @@ Esta función se llama Notify y acepta cuatro parámetros:
 tipo: info, warning, error, o success.
 mensaje: el mensaje que deseas mostrar al usuario.
 tiempo: el tiempo que deseas que el mensaje se muestre antes de desaparecer, en milisegundos.
-posicion:  top, top-start, top-end, center, center-start, center-end, bottom, bottom-start, o bottom-end.
+posicion: top, top-start, top-end, center, center-start, center-end, bottom, bottom-start, o bottom-end.
 
 */
 
