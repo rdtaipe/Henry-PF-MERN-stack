@@ -11,8 +11,8 @@ const Card = (props) => {
   const { isAutorized, data, cart } = useSelector(({ state }) => state.user);
   const userData = data();
 
-  const discount = Math.round(Math.random() * 20);
-  const priceDiscount = Math.round(price - (price * discount) / 20);
+  // const discount = Math.round(Math.random() * 20);
+  // const priceDiscount = Math.round(price - (price * discount) / 20);
   /* const stars = Math.round(Math.random() * 5); */
 
   const handleNameClick = (e, item) => {
@@ -45,21 +45,23 @@ const Card = (props) => {
   }
 
   return (
+    
     <div className="rounded-lg justify-center items-center w-[200px] min-h-200 bg-stone-300 hover:shadow-xl hover:scale-105 transition duration-500 ease-in-out mb-1">
       <div className="relative h-full">
         <div className="relative h-40">
+        <Link to={`/products/${_id}`}>
           <img
-            className="relative object-cover w-full h-full rounded-t-lg"
+            className="relative object-cover w-full h-40 rounded-t-lg"
             src={image[0]}
             alt={name}
           />
-          {discount && (
+          {/* {discount && ( 
             <div className="absolute top-0 right-0 m-2">
               <p className="text-xs font-semibold text-white bg-red-500 rounded-full px-2 py-1">
                 {discount}% off
               </p>
             </div>
-          )}
+          )} */}
           <div className="absolute left-3 bottom-2">
             {/* stars */}
             <div className="flex items-center">
@@ -90,34 +92,37 @@ const Card = (props) => {
               </p>
             </div>
           </div>
+       </Link>
         </div>
-
-        <div className="w-full h-40 px-3">
+    
+        <div className="w-full h-35 px-3">
           <div className="mt-2 pb-3">
+          <Link to={`/products/${_id}`}>
             <p
               className="text-ml font-bold text-gray-900 cursor-pointer"
-              onClick={handleNameClick}
+            
               title={name}
             >
               {name.length > 34 ? name.slice(0, 34) + "..." : name}
             </p>
-            <p className="text-sm text-gray-700 mb-2 ">Stock: {stock}</p>
+            </Link>
             {/* price */}
+            <Link to={`/products/${_id}`}>
             <div className="flex justify-between items-center">
               <p className="text-ms font-semibold text-gray-700">
-                {discount ? (
+                {/* {discount ? (
                   <>
                     <span className="line-through text-gray-500">${price}</span>
                     <span className="text-green-500">${priceDiscount}</span>
                   </>
-                ) : (
-                  <span className="text-green-500 dark:text-green-400">
+                ) : ( */}
+                  <span className="text-green-600 dark:text-green-600">
                     ${price}
                   </span>
-                )}
+               
               </p>
             </div>
-            <div className="absolute bottom-3 flex justify-between mt-2">
+            </Link>
               <button
                 style={{ borderRadius: "5px" }}
                 className="text-md px-2 ml-auto text-white bg-gray-900 hover:bg-blue-900 transition"
@@ -125,18 +130,13 @@ const Card = (props) => {
               >
                 Add to cart
               </button>
-              <Link
-                to={`/products/${_id}`}
-                style={{ borderRadius: "5px", marginBottom: "-5px" }}
-                className="font-medium ml-6 px-4 font-md transition"
-              >
-                Detail
-              </Link>
+
             </div>
           </div>
         </div>
       </div>
-    </div>
+
+  
   );
 };
 
