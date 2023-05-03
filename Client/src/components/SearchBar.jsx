@@ -18,7 +18,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div  className="flex w-[auto] md:w-[240px] lg:w-[300px] h-[40px] rounded-[4px] bg-[white]">
+    <div  className="flex w-[100%] md:w-[270px] lg:w-[350px] h-[40px] rounded-[4px] bg-[white]">
       <IconButton
         type="button"
         className="bg-[#f0f2f5] rounded-[4px] w-[40px] h-[40px] flex justify-center items-center"

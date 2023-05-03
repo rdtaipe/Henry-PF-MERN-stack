@@ -129,7 +129,7 @@ const NavBar = () => {
             </NavLink>
           </div>
 
-          <div className={`text-white ${location.pathname === "/home" ? "" : "hidden"}`}>
+          <div className={`text-white ${location.pathname === "/home" ? "" : "hidden"} w-[83%] sm:w-[65%] md:w-auto`}>
             <SearchBar />
           </div>
 
