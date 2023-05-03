@@ -69,7 +69,7 @@ export const userProfile = async (req, res) => {
 
 export const createUser = async (req, res, next) => {
     let {
-        fullName,
+        name,
         email,
         password,
         birthDate,
@@ -78,7 +78,7 @@ export const createUser = async (req, res, next) => {
         postal,
         location,
         address,
-        tel,
+        phone,
         image,
         isAdmin
     } = req.body
@@ -88,7 +88,7 @@ export const createUser = async (req, res, next) => {
 
     try {
         const userCreate= new userModel({
-            fullName, 
+            name, 
             email, 
             password, 
             birthDate, 
@@ -97,7 +97,7 @@ export const createUser = async (req, res, next) => {
             postal,
             location,
             address, 
-            tel, 
+            phone, 
             image,
             isAdmin: isAdmin || false,
             active: true,
@@ -120,7 +120,7 @@ export const updateUser = async (req, res, next) => {
     try {
         const { id } = req.params
         let {
-            fullName,
+            name,
             email,
             birthDate,
             genre,
@@ -129,14 +129,14 @@ export const updateUser = async (req, res, next) => {
             postal,
             address,
             identificationNumber,
-            tel,
+            phone,
             image,
         } = req.body
 
         await userModel.findByIdAndUpdate(
             id,
             {
-                fullName: fullName,
+                name: name,
                 email: email,
                 birthDate: birthDate,
                 genre: genre,
@@ -145,7 +145,7 @@ export const updateUser = async (req, res, next) => {
                 location: location,
                 address: address,
                 identificationNumber: identificationNumber,
-                tel: tel,
+                phone: phone,
                 image: image,
             },
             { new: true } 
@@ -172,7 +172,7 @@ export const updateUserAdmin = async (req, res, next) => {
             location,
             address,
             identificationNumber,
-            tel,
+            phone,
             image,
             active,
             isAdmin,
@@ -189,7 +189,7 @@ export const updateUserAdmin = async (req, res, next) => {
                 location: location,
                 address: address,
                 identificationNumber,
-                tel: tel,
+                phone: phone,
                 image: image,
                 active: active,
                 isAdmin: isAdmin,
@@ -221,4 +221,3 @@ export const Admins = async (req, res, next) => {
         next(error)
     }
 }
-

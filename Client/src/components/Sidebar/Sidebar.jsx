@@ -68,7 +68,7 @@ function Sidebar({className, setFilter}) {
    
   
  return (
-      <div className="py-4">
+      <div className="py-4 relative">
         {module.map((item,i)=>{
           return(
           <Accordion 
