@@ -1,36 +1,152 @@
 import productModel from "../models/product.js";
+import purchaseModel from "../models/purchase.js";
+import userModel from "../models/user.js";
 
+function sumByDay(purchases) {
+  const result = [];
+  purchases.forEach((purchase) => {
+    const existing = result.find((p) => p.day === purchase.day);
+    if (existing) {
+      existing.purchase += purchase.purchase;
+    } else {
+      result.push({ day: purchase.day, purchase: purchase.purchase });
+    }
+  });
+  return result;
+}
+
+/*  */ /*  */ /*  */
 export const getSales = async (req, res) => {
   const { month, year } = req.query;
-  try {
-    const startDate = new Date(year, month - 1, 1);
-    const endDate = new Date(year, month, 0);
+  const startDate = new Date(year, month - 1, 1);
+  const endDate = new Date(year, month, 0, 23);
 
-    const data = fakeData.filter((purchase) => {
-      const purchaseDate = new Date(purchase.time);
-      return purchaseDate >= startDate && purchaseDate <= endDate;
+  try {
+    const data = await purchaseModel.find({
+      createdAt: { $gte: startDate, $lt: endDate },
     });
 
     const formatData = data.map((el) => {
-      const date = new Date(el.time);
-      const sold = el.products.reduce((accumulator, product) => {
-        return accumulator + product.price * product.quantity;
+      const total = el.products.reduce((accumulator, product) => {
+        return accumulator + product.price * product.total;
       }, 0);
       return {
-        day: date.getDate(),
-        sold,
+        total,
+        day: new Date(el.createdAt).getDate(),
       };
     });
 
-    const resp = [];
+    const addDays = [];
     for (let i = 1; i <= endDate.getDate(); i++) {
       const dayData = formatData.find((item) => item.day === i);
       if (dayData) {
-        resp.push(dayData);
+        addDays.push(dayData);
       } else {
-        resp.push({ day: i, sold: 0 });
+        addDays.push({ day: i, total: 0 });
       }
     }
+
+    const salesByDay = {};
+    for (const { day, total } of addDays) {
+      if (salesByDay[day]) {
+        salesByDay[day] += total;
+      } else {
+        salesByDay[day] = total;
+      }
+    }
+
+    res.json(salesByDay);
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+};
+
+/*  */ /*  */ /*  */
+export const getPurchases = async (req, res) => {
+  const { month, year } = req.query;
+  const startDate = new Date(year, month - 1, 1);
+  const endDate = new Date(year, month, 0);
+
+  try {
+    const data = await productModel.find(
+      { createdAt: { $gte: startDate, $lt: endDate } },
+      { stock: 1, cost: 1, createdAt: 1 }
+    );
+
+    const formatData = data.map((el) => {
+      const day = new Date(el.createdAt).getDate();
+      const purchase = el.stock * el.cost;
+      return {
+        day,
+        purchase,
+      };
+    });
+
+    const addDays = [];
+    for (let i = 1; i <= endDate.getDate(); i++) {
+      const dayData = sumByDay(formatData).find((item) => item.day === i);
+      if (dayData) {
+        addDays.push(dayData);
+      } else {
+        addDays.push({ day: i, purchase: 0 });
+      }
+    }
+
+    const purchasesByDay = {};
+    for (const { day, purchase } of addDays) {
+      if (purchasesByDay[day]) {
+        purchasesByDay[day] += purchase;
+      } else {
+        purchasesByDay[day] = purchase;
+      }
+    }
+
+    res.json(purchasesByDay);
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+};
+
+/*  */ /*  */ /*  */
+export const getUsersGenres = async (req, res) => {
+  const {} = req.body;
+
+  const data = await userModel.find();
+  const males = await userModel.find({ genre: "male" });
+  const females = await userModel.find({ genre: "female" });
+
+  const resp = {
+    males: males.length,
+    females: females.length,
+    undefined: data.length - (males.length + females.length),
+  };
+
+  res.json(resp);
+};
+
+/*  */ /*  */ /*  */
+export const getProductsBestValued = async (req, res) => {
+  try {
+    const data = await productModel.find();
+    const resp = data.sort((a, b) => b.stars - a.stars);
+    res.json(resp.slice(0, 5));
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+};
+
+/*  */ /*  */ /*  */
+export const getProductsGenres = async (req, res) => {
+  try {
+    const male = await productModel.find({ genre: "male" });
+    const female = await productModel.find({ genre: "female" });
+    const unisex = await productModel.find({ genre: "unisex" });
+
+    const resp = {
+      male: male.length,
+      female: female.length,
+      unisex: unisex.length,
+    };
 
     res.json(resp);
   } catch (error) {
@@ -38,198 +154,12 @@ export const getSales = async (req, res) => {
   }
 };
 
-export const getPurchases = async (req, res) => {
-  const { month, year } = req.query;
-
-  const data = await productModel.find({}, { stock: 1, price: 1 });
-
-  const formatData = data.map((el) => {
-    return {
-      year: el._id.getTimestamp().getFullYear(),
-      month: el._id.getTimestamp().getMonth() + 1,
-      day: el._id.getTimestamp().getDate(),
-      total: el.stock * el.price,
-    };
-  });
-
-  res.json(formatData);
+/*  */ /*  */ /*  */
+export const getProductWithoutStock = async (req, res) => {
+  try {
+    const products = await productModel.find({ stock: { $eq: 0 } });
+    res.json(products);
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
 };
-
-const fakeData = [
-  {
-    _id: "6167bdf83c3de3f3c8d92819",
-    paymentId: "1234567890",
-    userId: "user123",
-    products: [
-      {
-        productId: "prod123",
-        name: "Product Name",
-        quantity: 2,
-        price: 19.99,
-      },
-      {
-        productId: "prod456",
-        name: "Another Product",
-        quantity: 1,
-        price: 9.99,
-      },
-    ],
-    addressId: "addr123",
-    time: "2022-01-01T12:34:56.789Z",
-    state: "Delivered",
-  },
-  {
-    _id: "6167bdf83c3de3f3c8d92820",
-    paymentId: "0987654321",
-    userId: "user456",
-    products: [
-      {
-        productId: "prod789",
-        name: "Product Name",
-        quantity: 1,
-        price: 29.99,
-      },
-      {
-        productId: "prod012",
-        name: "Another Product",
-        quantity: 3,
-        price: 14.99,
-      },
-    ],
-    addressId: "addr456",
-    time: "2022-01-03T08:12:34.567Z",
-    state: "Delivered",
-  },
-  {
-    _id: "6167bdf83c3de3f3c8d92821",
-    paymentId: "1357908642",
-    userId: "user789",
-    products: [
-      {
-        productId: "prod345",
-        name: "Product Name",
-        quantity: 1,
-        price: 49.99,
-      },
-      {
-        productId: "prod678",
-        name: "Another Product",
-        quantity: 2,
-        price: 24.99,
-      },
-    ],
-    addressId: "addr789",
-    time: "2022-01-05T15:43:21.210Z",
-    state: "Delivered",
-  },
-  {
-    _id: "6167bdf83c3de3f3c8d92822",
-    paymentId: "2468135790",
-    userId: "user012",
-    products: [
-      {
-        productId: "prod901",
-        name: "Product Name",
-        quantity: 3,
-        price: 9.99,
-      },
-      {
-        productId: "prod234",
-        name: "Another Product",
-        quantity: 1,
-        price: 19.99,
-      },
-    ],
-    addressId: "addr012",
-    time: "2022-01-08T11:22:33.444Z",
-    state: "Delivered",
-  },
-  {
-    _id: "6167bdf83c3de3f3c8d92823",
-    paymentId: "3692581470",
-    userId: "user345",
-    products: [
-      {
-        productId: "prod567",
-        name: "Product Name",
-        quantity: 2,
-        price: 29.99,
-      },
-      {
-        productId: "prod890",
-        name: "Another Product",
-        quantity: 1,
-        price: 14.99,
-      },
-    ],
-    addressId: "addr345",
-    time: "2022-01-10T17:32:10.987Z",
-    state: "Delivered",
-  },
-  {
-    _id: "6167bdf83c3de3f3c8d92824",
-    paymentId: "4829103765",
-    userId: "user678",
-    products: [
-      {
-        productId: "prod123",
-        name: "Product Name",
-        quantity: 1,
-        price: 39.99,
-      },
-      {
-        productId: "prod456",
-        name: "Another Product",
-        quantity: 2,
-        price: 19.99,
-      },
-    ],
-    addressId: "addr678",
-    time: "2022-02-15T09:08:07.654Z",
-    state: "Delivered",
-  },
-  {
-    _id: "6167bdf83c3de3f3c8d92825",
-    paymentId: "9753108642",
-    userId: "user901",
-    products: [
-      {
-        productId: "prod789",
-        name: "Product Name",
-        quantity: 2,
-        price: 29.99,
-      },
-      {
-        productId: "prod012",
-        name: "Another Product",
-        quantity: 1,
-        price: 14.99,
-      },
-    ],
-    addressId: "addr901",
-    time: "2022-02-17T14:21:43.210Z",
-    state: "Delivered",
-  },
-  {
-    _id: "6167bdf83c3de3f3c8d92826",
-    paymentId: "8642097531",
-    userId: "user234",
-    products: [
-      {
-        productId: "prod345",
-        name: "Product Name",
-        quantity: 1,
-        price: 19.99,
-      },
-      {
-        productId: "prod678",
-        name: "Another Product",
-        quantity: 3,
-        price: 9.99,
-      },
-    ],
-    addressId: "addr234",
-    time: "2022-02-21T18:54:32.109Z",
-    state: "Delivered",
-  },
-];

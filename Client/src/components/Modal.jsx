@@ -9,8 +9,9 @@ const pos = {
     left: "text-left",
     right: "text-right"
 }
-function Modal({ title, message, onTrue, onFalse, onClose, position }) {
+function Modal({type, title, message, onTrue, onFalse, onClose, position }) {
     position = position ? pos[position] : "text-center"
+    type=type?type:"negative"
 
     return (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-30 flex justify-center items-center ">
@@ -29,10 +30,10 @@ function Modal({ title, message, onTrue, onFalse, onClose, position }) {
                 <p className={`text-ml mb-4 ${position} text-gray-700`}>{message}</p>
                 {(onFalse || onTrue) && <div className="relative w-full h-[40px] flex rounded-lg">
                     <div className="absolute bottom-0 right-0">
-                        <Stack direction="row" spacing={1}>
+                        <Stack direction={`${type==="negative"?"row":"row-reverse"}`} spacing={1}>
                             {onTrue && <Chip
                                 label="Yes"
-                                color="default"
+                                color={type==="negative"?"default":"primary"}
                                 onClick={onTrue}
                                 style={{ width: "55px" }}
                                 clickable
@@ -40,7 +41,7 @@ function Modal({ title, message, onTrue, onFalse, onClose, position }) {
 
                             {onFalse && <Chip
                                 label="No"
-                                color="primary"
+                                color={type==="negative"?"primary":"default"}
                                 onClick={onFalse}
                                 style={{ width: "55px" }}
                                 clickable

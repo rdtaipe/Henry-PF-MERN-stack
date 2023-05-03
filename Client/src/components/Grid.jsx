@@ -3,11 +3,12 @@ import styled from 'styled-components'
 
 export default function Grid({style,children, childHeight,childWidth,className}) {
     
+    const content = children.length > 0 ? children : "No items found"
 
     return (
-        <Container style={style} childHeight={childHeight} childWidth={childWidth} className={`min-h-[800px]`}>
+        <Container style={style} childHeight={childHeight} childWidth={childWidth} className={`min-h-[35rem] mt-6`}>
             {
-            children
+            content
             }
             
         </Container>
@@ -21,6 +22,7 @@ grid-gap: 1rem;
 grid-template-rows: auto;
 justify-content: center;
 align-items: flex-start;
+place-items: center;
 
 & .card{
     height: ${props => props.childHeight? props.childHeight+"px": '260px'};

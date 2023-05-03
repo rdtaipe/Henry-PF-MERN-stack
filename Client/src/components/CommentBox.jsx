@@ -14,11 +14,12 @@ const labels = {
 };
 
 
-export default function TextareaValidator({ onSubmit, text, avatar }) {
+export default function TextareaValidator({avatar,value, onSubmit }) {
+  
  
-    const [stars, setStars] = React.useState(0);
+    const [stars, setStars] = React.useState(value?value.score:0);
 
-    const [comment, setComment] = React.useState('');
+    const [comment, setComment] = React.useState(value?value.body:"");
 
     const getLabelText = () => {
         return `${stars} Star${stars !== 1 ? 's' : ''}, ${labels[stars]}`;
@@ -28,7 +29,7 @@ export default function TextareaValidator({ onSubmit, text, avatar }) {
     };
     React.useEffect(() => {
      
-    }, [stars,comment])
+    }, [stars,comment,value])
 
 
     return (
@@ -37,7 +38,7 @@ export default function TextareaValidator({ onSubmit, text, avatar }) {
                 placeholder="Type something here…"
                 minRows={3}
                 maxRows={4}
-                value={text}
+                value={comment}
                 onChange={handleCommentChange}
                 startDecorator={
                     <Box sx={{ display: 'flex', gap: 0.5 }}>

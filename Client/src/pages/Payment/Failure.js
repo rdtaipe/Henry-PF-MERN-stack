@@ -7,7 +7,7 @@ export default function Failure(props) {
 
     return (
 
-        <Box  sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+        <Box  sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', textAlign: "center"}}>
             <Typography variant="h4" component="h4" gutterBottom>
                 Sorry, your payment was not successful
             </Typography>

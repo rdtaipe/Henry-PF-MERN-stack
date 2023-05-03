@@ -1,6 +1,7 @@
 import axios from "axios";
 import UserModel from '../models/user.js'
 import CartModel from "../models/cart.js";
+import PurchaseModel from "../models/purchase.js";
 import send from '../utils/mail/send.js';
 
 
@@ -39,13 +40,35 @@ const compareUser = async (newUser, origin) => {
 }
 const validator = async (user, origin) => {
 
+    const test = {
+        created_at: '2023-05-03T15:42:30.804Z',
+        email: 'wofohok463@soombo.com',//
+        email_verified: false,
+        identities: [
+            {
+                connection: 'Username-Password-Authentication',
+                provider: 'auth0',
+                user_id: '645280e60af2d0582e5c1608',
+                isSocial: false
+            }
+        ],
+        name: 'wofohok463@soombo.com',//
+        nickname: 'wofohok463',
+        picture: 'https://s.gravatar.com/avatar/b02225330fa04ce8213ffee4f5a676ab?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fwo.png',//
+        updated_at: '2023-05-03T15:42:30.804Z',
+        user_id: 'auth0|645280e60af2d0582e5c1608',//
+        last_ip: '201.230.37.42',
+        last_login: '2023-05-03T15:42:30.798Z',
+        logins_count: 1
+    }
+
     try {
-        const { name, user_id, picture, email, email_verified, given_name } = user;
-        if (!name || !user_id || !picture || !email || !email_verified) { throw new Error('User data not valid') }
+        const { name, user_id, picture, email, email_verified, given_name,nickname } = user;
+        if (!name || !user_id || !picture || !email) { throw new Error('User data not valid') }
 
         const newUser = {
             fullName: name,
-            name: given_name,
+            name: given_name?given_name:nickname?nickname:name,
             sub: user_id,
             picture: picture,
             email: email,
@@ -62,9 +85,8 @@ const validator = async (user, origin) => {
 }
 const updateUser = async (user, newUser) => {
     try {
-        const { name, picture, email, email_verified, origin } = newUser;
+        const { picture, email, email_verified, origin } = newUser;
         const userObj = {
-            name: name,
             picture: picture,
             email: email,
             email_verified: email_verified,
@@ -83,10 +105,11 @@ const createNewUser = async (newUser) => {
     try {
         const save = new UserModel(newUser);
         const newCart = new CartModel({ id: save._id });
+        // const newPurchase = new PurchaseModel({userId:save._id})
         await save.save();
-
         console.log('new user saved and welcome email send')
         await newCart.save();
+
         console.log('new user saved')
         return save;
     } catch (error) {
@@ -111,6 +134,7 @@ export const userAuthorize = async (req, res) => {
             },
         });
         const userData = response.data;
+        console.log(userData)
         const newUser = await compareUser(userData, origin);
 
         const mixData = { ...userData, ...newUser._doc }

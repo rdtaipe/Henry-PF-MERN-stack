@@ -47,6 +47,8 @@ const Payment = () => {
 
     window.location.href = url
 
+    console.log(`https://sandbox.mercadopago.com.ar/checkout/v1/redirect?pref_id=${preferenceId}`)
+
 
   }
 

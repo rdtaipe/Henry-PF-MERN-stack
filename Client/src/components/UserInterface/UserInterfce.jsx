@@ -18,11 +18,11 @@ import Modal from "../Modal";
 
 const UserInterface = () => {
     
-    const { isAutorized, unauthorize, status, data } = useSelector(({ state }) => state.user)
+    const { isAutorized, unauthorize, status, data} = useSelector(({ state }) => state.user)
     const { url, auth} = useSelector(({ state }) => state.server);
 
 
-    const { isAuthenticated, logout } = useAuth0();
+    const { isAuthenticated, logout,getAccessTokenSilently} = useAuth0();
     const userAutorized = isAutorized()
     const userData = data()
     
@@ -30,6 +30,9 @@ const UserInterface = () => {
     
     const [user, setUser] = useState({});
     const [originalUser, setOriginalUser] = useState({});
+
+    console.log(user)
+    console.log(originalUser)
     
     const [saveStatus, setSaveStatus] = useState(true)
     
@@ -61,13 +64,12 @@ const UserInterface = () => {
     const handleSaveUserData = () => {
         axios.put(`${url}/users/${user._id}`, user)
           .then(response => {
-            Notification('success', "Profile updated successfully!", 'bottom-end', 5000);
+            Notification('success', "Profile updated successfully!", 'bottom-start', 5000);
             setOriginalUser(user);
             setSaveStatus(false);
-            console.log(response)
           })
           .catch(error => {
-            Notification('error', "Something went wrong", 'bottom-end', 5000);
+            Notification('error', "Something went wrong", 'bottom-start', 5000);
           });
       }
     
@@ -78,6 +80,7 @@ const UserInterface = () => {
     // Cuando se arma el componente se trae el historial de compra del usuario
 
      useEffect(() => {
+        
          auth.get(`${url}/purchase/${userData._id}`)
          .then((res) => {
              const productsByDate = res.data.products.reduce((acc, prod) => {
@@ -101,8 +104,7 @@ const UserInterface = () => {
               
          })
          .catch(error => {
-            console.log(error.message)
-             Notification('error', "Shopping history couldn't be obtained", 'bottom-end', 5000)
+            return null
          }) 
      }, [])
 
@@ -113,7 +115,7 @@ const UserInterface = () => {
             setUser(response.data)
         })
         .catch((error) => {
-            console.log(error);
+            return null
         });
     }, []);
     
@@ -129,22 +131,52 @@ const UserInterface = () => {
       unauthorize({message:"Unauthorize"})
       logout({ returnTo: window.location.origin })
     }
+    const handleVerified=async()=>{
+        const audience="https://dev-zcla3tzkhoocgn1y.us.auth0.com/api/v2/"
+       const  clientId= "4XnRrKDQ94UFtWYnHpfnjQ5n3WXApUNm"
+        const token = await getAccessTokenSilently();
+        const accessToken = await getAccessTokenSilently({ audience: audience });
 
-    return (
+       
+        const identity=userData.identities[0]
+        console.log(identity)
+
+        var options = {
+            method: 'POST',
+            url: 'https://dev-zcla3tzkhoocgn1y.us.auth0.com/api/v2/jobs/verification-email',
+            headers: {
+              'content-type': 'application/json',
+              authorization: `Bearer ${accessToken}`,
+            },
+            data: {
+              user_id: `${userData.sub}`,
+              client_id:`${clientId}`,
+              identity: {user_id: identity.user_id, provider:identity.provider}
+
+            }
+          };
+
+        axios.request(options).then((res) => {
+          console.log(res.data);
+        });
+      };
+
+return (
 <>
         {userAutorized ? (
 
-            <div style={{height: "700px"}} className="flex flex-col items-center bg-stone-100">
+            <div className="flex flex-col justify-center items-center bg-stone-100 h-full min-h-[820px]">
+              
 
-                <div style={{borderRadius: "10px", width: "1220px", display: "flex", justifyContent: "space-between"}} className="mt-20 bg-stone-200 gap-8 py-5 px-10 shadow-xl">
+                <div style={{borderRadius: "10px", display: "flex", justifyContent: "space-between"}} className="mt-16 md:mt-24 lg:mt-32 bg-stone-200 gap-8 py-5 px-5 sm:px-10 shadow-xl w-[90%] xl:w-[1220px]">
 
                     <div style={{display: "flex", alignItems: "center"}}>
-                        <img src={userData.picture} alt="user" style={{width: "70px", height: "70px", borderRadius: "50%", marginRight: "50px"}} />
-                        <h2 className="text-3xl font-bold pt-2">Hello {userData.given_name}!</h2>
+                        <img src={originalUser.picture} alt={(user.name)} style={{borderRadius: "50%"}} className="sm:w-[70px] sm:h-[70px] w-[60px] sm:mr-[50px] mr-[20px]" />
+                        <h2 className="sm:text-3xl text-2xl font-bold pt-2">Hello {originalUser.name}!</h2>
                     </div>
-
+               
                     <button
-                        className={saveStatus ? "bg-blue-900 text-white font-medium hover:bg-blue-600 px-5 py-2 mb-2 transition cursor-pointer" : "bg-stone-500 font-medium text-white cursor-default px-5 py-2 mb-2 transition"}
+                        className={saveStatus ? "bg-blue-900 text-white font-medium hover:bg-blue-600 px-3 sm:px-5 py-2 mb-2 transition cursor-pointer" : "bg-stone-500 font-medium text-white cursor-default px-3 sm:px-5 py-2 mb-2 transition"}
                         style={{ marginTop: "20px", borderRadius: "5px"}}
                         disabled={!saveStatus}
                         onClick={handleSaveUserData}
@@ -154,9 +186,9 @@ const UserInterface = () => {
 
                 </div>
 
-                <div className="py-10 pb-32 flex items-start justify-content-center">
+                <div className="py-10 pb-32 flex items-center xl:items-start justify-center flex-col xl:flex-row w-full xl:w-auto">
 
-                    <div style={{ width: "365px", borderRadius: "5px", flex: "0 0 auto" }} className=" flex flex-col justify-center items-center mt-1 gap-4">
+                    <div style={{  borderRadius: "5px" }} className=" flex flex-col justify-center items-center mt-1 gap-4 w-[90%] xl:w-[365px]">
                     
                         <UserButton text={"Personal data"} icon={<FaUser />} value={"Personal data"} onClick={() => handleActiveSection("Personal data")} status={activeSection}/>
                         <UserButton text={"Address settings"} icon={<FaCog />} value={"Address settings"} onClick={() => handleActiveSection("Address settings")} status={activeSection}/>
@@ -165,7 +197,7 @@ const UserInterface = () => {
 
                     </div>
 
-                    <div style={{ flex: "1 0 auto", marginLeft: "20px" }}>
+                    <div className="w-[90%] xl:w-auto mt-[16px] xl:mt-0 xl:ml-[20px]">
                         {(() => {
                             switch(activeSection) {
                                 case "Personal data":

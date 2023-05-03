@@ -20,7 +20,7 @@ import Questions from "./pages/Questions";
 
 const server = {
   local: "http://localhost:5000",
-  production: "https://xmk0mx-5000.csb.app",
+  production: "https://wgxjjo-5000.csb.app",
 };
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
   const { setter } = useSelector(({ state }) => state.server);
   const href = useHref();
   dispatch(setter({ keys: "state.server.url", value: server.local }));
-  const [page, setPage] = useState("");
+  const [page, setPage] = useState("/");
   useEffect(() => {
     setPage(href);
   }, [href]);
