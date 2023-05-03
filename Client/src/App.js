@@ -12,7 +12,7 @@ import User from "./pages/User";
 import Payment from "./pages/Payment/Payment";
 import { useSelector, useDispatch } from "react-redux";
 import ScrollAnimate from "./components/ScrollAnimate";
-
+////////////////////////////////////////////
 import NavBar from "./components/NavBar";
 import Questions from "./pages/Questions";
 
