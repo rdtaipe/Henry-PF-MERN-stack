@@ -30,6 +30,9 @@ const UserInterface = () => {
     
     const [user, setUser] = useState({});
     const [originalUser, setOriginalUser] = useState({});
+
+    console.log(user)
+    console.log(originalUser)
     
     const [saveStatus, setSaveStatus] = useState(true)
     
@@ -61,13 +64,12 @@ const UserInterface = () => {
     const handleSaveUserData = () => {
         axios.put(`${url}/users/${user._id}`, user)
           .then(response => {
-            Notification('success', "Profile updated successfully!", 'bottom-end', 5000);
+            Notification('success', "Profile updated successfully!", 'bottom-start', 5000);
             setOriginalUser(user);
             setSaveStatus(false);
-            console.log(response)
           })
           .catch(error => {
-            Notification('error', "Something went wrong", 'bottom-end', 5000);
+            Notification('error', "Something went wrong", 'bottom-start', 5000);
           });
       }
     
@@ -80,7 +82,6 @@ const UserInterface = () => {
      useEffect(() => {
          auth.get(`${url}/purchase/${userData._id}`)
          .then((res) => {
-            console.log(res.data)
              const productsByDate = res.data.products.reduce((acc, prod) => {
                  const date = new Date(prod.date).toLocaleDateString();
                  acc[date] = acc[date] ? [...acc[date], prod] : [prod];
@@ -102,8 +103,7 @@ const UserInterface = () => {
               
          })
          .catch(error => {
-            console.log(error.message)
-             Notification('error', "Shopping history couldn't be obtained", 'bottom-end', 5000)
+            return null
          }) 
      }, [])
 
@@ -114,7 +114,7 @@ const UserInterface = () => {
             setUser(response.data)
         })
         .catch((error) => {
-            console.log(error);
+            return null
         });
     }, []);
     
@@ -140,8 +140,8 @@ return (
                 <div style={{borderRadius: "10px", display: "flex", justifyContent: "space-between"}} className="mt-16 md:mt-24 lg:mt-32 bg-stone-200 gap-8 py-5 px-5 sm:px-10 shadow-xl w-[90%] xl:w-[1220px]">
 
                     <div style={{display: "flex", alignItems: "center"}}>
-                        <img src={userData.picture} alt="user" style={{borderRadius: "50%"}} className="sm:w-[70px] sm:h-[70px] w-[60px] sm:mr-[50px] mr-[20px]" />
-                        <h2 className="sm:text-3xl text-2xl font-bold pt-2">Hello {userData.given_name}!</h2>
+                        <img src={originalUser.picture} alt={(user.name)} style={{borderRadius: "50%"}} className="sm:w-[70px] sm:h-[70px] w-[60px] sm:mr-[50px] mr-[20px]" />
+                        <h2 className="sm:text-3xl text-2xl font-bold pt-2">Hello {originalUser.name}!</h2>
                     </div>
 
                     <button

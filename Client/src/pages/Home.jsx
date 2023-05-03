@@ -7,20 +7,24 @@ import Pagination from '../components/Pagination'
 import SortBar from '../components/SortBar'
 import Carousel from '../components/Carousel'
 import Drawer from '../components/Drawer'
-import Offer1 from '../assets/imagesCarousel/Offer1.png'
-import Offer2 from '../assets/imagesCarousel/Offer2.png'
-import Offer3 from '../assets/imagesCarousel/Offer3.png'
-import Offer4 from '../assets/imagesCarousel/Offer4.png'
-import Offer5 from '../assets/imagesCarousel/Offer5.png'
-import Offer6 from '../assets/imagesCarousel/Offer6.png'
-import Offer7 from '../assets/imagesCarousel/Offer7.png'
+
+import Image1 from '../assets/imagesCarousel/Image1.png'
+import Image2 from '../assets/imagesCarousel/Image2.png'
+import Image3 from '../assets/imagesCarousel/Image3.png'
+import Image4 from '../assets/imagesCarousel/Image4.png'
+import Image5 from '../assets/imagesCarousel/Image5.png'
+import Image6 from '../assets/imagesCarousel/Image6.png'
+import Image7 from '../assets/imagesCarousel/Image7.png'
+import Image8 from '../assets/imagesCarousel/Image8.png'
+import Image9 from '../assets/imagesCarousel/Image9.png'
+
 import Typography from "@mui/material/Typography";
 import { IconButton, MenuItem } from "@mui/material";
 import NorthRoundedIcon from "@mui/icons-material/NorthRounded";
 import SouthRoundedIcon from "@mui/icons-material/SouthRounded";
 
 const Home = () => {
-  const images = [Offer1, Offer2, Offer3, Offer4, Offer5, Offer6, Offer7];
+  const images = [Image1, Image2, Image3, Image4, Image5, Image6, Image7, Image8, Image9 ];
   //testing redux
   const dispatch = useDispatch();
   //global state
@@ -88,7 +92,8 @@ const Home = () => {
         sidebar={<Sidebar setFilter={(e) => { setFilter(e) }} />}
         navbar={<SortBar setSort={(e) => { setSort(e) }} />}
       >
-        <div className='px-2 py-4 relative'>
+        
+        <div className='px-4 py-8 relative'>
           <Grid childHeight={260} childWidth={200}>
             {products.map((item, index) => {
               return <Card key={index} data={item} />
