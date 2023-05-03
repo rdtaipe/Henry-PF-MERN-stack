@@ -1,9 +1,10 @@
 
 import styled from 'styled-components'
+import Loader from './Loader'
 
 export default function Grid({style,children, childHeight,childWidth,className}) {
     
-    const content = children.length > 0 ? children : "No items found"
+    const content = children.length > 0 ? children : <Loader/>
 
     return (
         <Container style={style} childHeight={childHeight} childWidth={childWidth} className={`min-h-[35rem] mt-6 place-items-center`}>
