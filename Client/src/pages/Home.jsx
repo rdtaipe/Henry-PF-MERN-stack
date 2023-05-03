@@ -22,7 +22,7 @@ const Home = () => {
 
   const images = [ Image1, Image2, Image3, Image4, Image5, Image6, Image7, Image8, Image9 ]
   //testing redux
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   //global state
   const { url, get } = useSelector(({ state }) => state.server)
   const { setter } = useSelector(({ state }) => state)
@@ -32,48 +32,53 @@ const Home = () => {
   const search = useSelector(state => state.searchName)
 
   //local state
-  const [data, setData] = useState([])
-  const [page, setPage] = useState(1)
-  const [limit, setLimit] = useState(10)
-  const [count, setCount] = useState(0)
-  const [filter, setFilter] = useState({})
-  const [sort, setSort] = useState({})
-
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [count, setCount] = useState(0);
+  const [filter, setFilter] = useState({});
+  const [sort, setSort] = useState({});
 
   useEffect(() => {
     getData({ filter: { name: [search], ...filter }, sort: sort })
 
-  }, [filter, sort, search, page])
+  }, [filter,sort, search, page])
 
 
 
-  const getData = ({ filter, sort }) => {
+  const getData = ({filter,sort}) => {
 
     const obj = {
       m: "product",
       filter: filter,
       options: "i",
-      // regex:"all", 
+      // regex:"all",
       sort: sort,
       limit: 10,
-      skip: limit * page - 10
-    }
+      skip: limit * page - 10,
+    };
 
-    const query = queryString(obj)
+    const query = queryString(obj);
 
-    get(url + `/find?${query}`).then(res => {
-      var resData = res.data.product
-      var documents = res.data.documents
-      dispatch(setter({ keys: "products", value: resData }))
-      setData(resData)
+    get(url + `/find?${query}`).then((res) => {
+      var resData = res.data.product;
+      var documents = res.data.documents;
+      dispatch(setter({ keys: "products", value: resData }));
+      setData(resData);
 
       let n = Math.ceil(documents / limit)
       setCount((page === 1 && resData.length < limit) ? 1 : n)
       if (page > 1 && resData.length === 0) {
-        setPage(1)
+        setPage(1);
       }
-    })
-  }
+    });
+  };
+
+  const [open, setOpen] = useState(false);
+
+  const sidebarMenu = () => {
+    setOpen(!open);
+  };
 
   return (
     <div className='bg-stone-100'>
@@ -93,7 +98,7 @@ const Home = () => {
         </div>
       </Drawer>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

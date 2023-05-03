@@ -12,7 +12,7 @@ import SidebarButton from "./SideBarButton";
 
 
 
-const values=["category","brand","color","genre","price"]
+const values = ["category", "brand", "color", "genre", "price"];
 
 function Sidebar({className, setFilter}) {
   const dispatch = useDispatch()
@@ -31,41 +31,38 @@ function Sidebar({className, setFilter}) {
   }
 
   const [selections, setSelections] = useState({
-    "Category": [],
-    "Brand": [],
-    "Color": [],
-    "Genre": [],
-    "Price": [],
+    Category: [],
+    Brand: [],
+    Color: [],
+    Genre: [],
+    Price: [],
   });
 
   useEffect(() => {
-    getModule()
+    getModule();
     for (const [key, value] of Object.entries(selections)) {
       if (value.length === 0) {
         delete selections[key];
       }
     }
 
-    setFilter(selections)
-  
-  }, [(module.length>0?null:module),selections])
+    setFilter(selections);
+  }, [module.length > 0 ? null : module, selections]);
 
   const handleSelection = (title, selectedItems) => {
-
     setSelections((prevSelections) => {
       return {
         ...prevSelections,
-        [title]: selectedItems
-      }
-    })
-  
+        [title]: selectedItems,
+      };
+    });
   };
 
   // console.log(selections)
 
   const firstLetterCapitalized = (str) => {
-    return str.charAt(0).toUpperCase() + str.substring(1)
-  }
+    return str.charAt(0).toUpperCase() + str.substring(1);
+  };
 
   
    
