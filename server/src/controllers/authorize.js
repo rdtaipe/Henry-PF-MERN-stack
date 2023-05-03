@@ -1,6 +1,7 @@
 import axios from "axios";
 import UserModel from '../models/user.js'
 import CartModel from "../models/cart.js";
+import PurchaseModel from "../models/purchase.js";
 import send from '../utils/mail/send.js';
 
 
@@ -83,10 +84,11 @@ const createNewUser = async (newUser) => {
     try {
         const save = new UserModel(newUser);
         const newCart = new CartModel({ id: save._id });
+        // const newPurchase = new PurchaseModel({userId:save._id})
         await save.save();
-
         console.log('new user saved and welcome email send')
         await newCart.save();
+        
         console.log('new user saved')
         return save;
     } catch (error) {

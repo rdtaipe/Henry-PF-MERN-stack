@@ -4,8 +4,8 @@ import userModel from "../models/user.js";
 
 function sumByDay(purchases) {
   const result = [];
-  purchases.forEach(purchase => {
-    const existing = result.find(p => p.day === purchase.day);
+  purchases.forEach((purchase) => {
+    const existing = result.find((p) => p.day === purchase.day);
     if (existing) {
       existing.purchase += purchase.purchase;
     } else {
@@ -70,12 +70,12 @@ export const getPurchases = async (req, res) => {
   try {
     const data = await productModel.find(
       { createdAt: { $gte: startDate, $lt: endDate } },
-      { stock: 1, price: 1, createdAt: 1 }
+      { stock: 1, cost: 1, createdAt: 1 }
     );
 
     const formatData = data.map((el) => {
       const day = new Date(el.createdAt).getDate();
-      const purchase = el.stock * el.price;
+      const purchase = el.stock * el.cost;
       return {
         day,
         purchase,
@@ -116,7 +116,6 @@ export const getUsersGenres = async (req, res) => {
   const females = await userModel.find({ genre: "female" });
 
   const resp = {
-    total: data.length,
     males: males.length,
     females: females.length,
     undefined: data.length - (males.length + females.length),
@@ -130,7 +129,7 @@ export const getProductsBestValued = async (req, res) => {
   try {
     const data = await productModel.find();
     const resp = data.sort((a, b) => b.stars - a.stars);
-    res.json(resp);
+    res.json(resp.slice(0, 5));
   } catch (error) {
     res.status(400).json(error.message);
   }
@@ -150,6 +149,16 @@ export const getProductsGenres = async (req, res) => {
     };
 
     res.json(resp);
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+};
+
+/*  */ /*  */ /*  */
+export const getProductWithoutStock = async (req, res) => {
+  try {
+    const products = await productModel.find({ stock: { $eq: 0 } });
+    res.json(products);
   } catch (error) {
     res.status(400).json(error.message);
   }

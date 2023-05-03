@@ -80,10 +80,13 @@ export async function success(req, res) {
 
   try {
     const findCard = await CartModel.findOne({ id });
+
     if (findCard) {
       const findCardProducts = findCard.products.filter((prod) => prod.active); // Productos activos en el carrito
 
       if (findCardProducts.length > 0) {
+
+
         const findProduct = await ProductModel.find({ $or: findCardProducts.map((item) => ({ _id: item.id })) });
 
         // Compara y modifica
@@ -102,8 +105,10 @@ export async function success(req, res) {
         });
 
         if (newProducts) {
+
           // Actualiza los modelos de carrito y compra
           const updating = await Promise.all(newProducts.map(async (item, i) => {
+
             // Elimina los productos antiguos del carrito
             await CartModel.findOneAndUpdate({ id: id }, { $pull: { products: { id: item._id } } });
 
@@ -128,9 +133,12 @@ export async function success(req, res) {
             return updatePurchase;
           }));
 
+
           if (updating) {
+
             const findUser = await UserModel.findById(id)
             const { origin } = findUser
+
 
             await sendEmail({ user: findUser, body: { type: "order", issue: "Thank you for purchase", data: findCardProducts } })//send welcome email
 
@@ -144,6 +152,57 @@ export async function success(req, res) {
     res.status(500).send({ error: error.message });
   }
 }
+
+
+
+async function getActiveCart(userId) {
+  return await CartModel.findOne({ id: userId })
+}
+
+async function getProducts(productList) {
+  const productIds = productList.filter((product) => product.active).map((product) => product.id);
+  return await ProductModel.find({ _id: { $in: productIds } });
+}
+
+async function updateProducts(products, cartProducts) {
+  const updatedProducts = [];
+  for (let i = 0; i < products.length; i++) {
+    const product = products[i];
+    const cartProduct = cartProducts.find((p) => p.id === product._id.toString() && p.active);
+    if (!cartProduct) {
+      continue;
+    }
+    const updatedProduct = {
+      ...product._doc,
+      stock: product.stock - cartProduct.total,
+    };
+    updatedProducts.push(updatedProduct);
+  }
+  if (!updatedProducts.length) {
+    return null;
+  }
+  return updatedProducts;
+}
+
+async function createOrUpdatePurchase(userId, products) {
+  const purchase = await PurchaseModel.findOneAndUpdate({ userId },
+    { $setOnInsert: { userId }, $push: { products } },
+    { upsert: true, new: true }
+  );
+  return purchase;
+}
+
+async function getUser(userId) {
+  return await UserModel.findById(userId);
+}
+
+async function sendPurchaseEmail(user, products) {
+  await sendEmail({
+    user,
+    body: { type: 'order', issue: 'Thank you for your purchase', data: products },
+  });
+}
+
 
 
 export async function failure(req, res) {

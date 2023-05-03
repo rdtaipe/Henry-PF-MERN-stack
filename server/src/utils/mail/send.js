@@ -12,7 +12,7 @@ const gmailConfig = {
         pass: 'ctpixsqrulounfhz',
         clientId: "956005574935-qerrom8npnp0ri09po4scb8cqa6b52gf.apps.googleusercontent.com",
         clientSecret: "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",
-        refreshToken: "1//043kKgV4lnlhlCgYIARAAGAQSNwF-L9IroUobCVvzElkPKMQYGPDuMSRXCY8Q8XMFSiT6FuqBkmphpPxVd-TWR7mdp8eG6FFNV2A"
+        refreshToken: "1//04EVMBTo-90ZvCgYIARAAGAQSNwF-L9Ir-JZD5-ZhF3fc4HtZ-bY6AEHE75P3nhcnxixZw_fflBLJQTghcfjVbgUYMs0wg4un34w"
     }
 }
 
