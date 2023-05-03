@@ -2,8 +2,8 @@ import { Schema, model } from 'mongoose';
 
 
 const productShema = new Schema({
-    productId: { type: String, required: true },//product id
-    name: { type: String, required: true },
+    productId: { type: String},//product id
+    name: { type: String},
     image: { type: Array },
     price: { type: Number },
     description: { type: String },
@@ -12,24 +12,22 @@ const productShema = new Schema({
     date: {
         type: Date,
         default: Date.now,
-        required: true,
     },
-    total: { type: Number, required: true,},
+    total: { type: Number},
     attr: {
         type: Object,
         default: {}
     }
-},{ timestamps: true,versionKey: false,})
+},)
 
-const purchaseSchema = new Schema(
-    {
-        userId: { type: String, required: true, unique: true },
-        products: {
+const purchaseSchema = new Schema({
+        userId: { type: String, required: true, unique:true },
+        products:{
             type: [productShema],
             default: []
         },
-    },
-    {
+
+    },{
         timestamps: true,
         versionKey: false,
     }
