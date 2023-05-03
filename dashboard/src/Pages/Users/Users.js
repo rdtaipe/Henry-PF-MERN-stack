@@ -1,7 +1,6 @@
-
- import React,{useEffect, useState} from 'react'
- import axios from 'axios';
- import {useSelector}from 'react-redux'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
 import {
   Table,
   TableHead,
@@ -9,188 +8,152 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Card,Badge, Title,
-  Button,Icon
+  Card,
+  Badge,
+  Title,
+  Button,
+  Icon,
 } from "@tremor/react";
-import { CheckIcon } from "@heroicons/react/outline";
-import { PencilIcon,MinusCircleIcon } from "@heroicons/react/solid";
-import {Link} from 'react-router-dom'
 
+import { ToggleOff, ToggleOn, Done, Adjust } from "@mui/icons-material";
 
-
-import data from './data.json'
+//import data from './data.json'
 /* import './user.css' */
 
-export default  function Users(props) {
-const [users,setUsers]=useState([]);
+export default function Users(props) {
+  const [users, setUsers] = useState();
 
-//no se como conseguir la url
-//let selector=useSelector();
-//let users=selector(state=>state.server)
+  /*   const [isOn, setIsOn] = useState(false); */
+  const [isAdmin, setIsAdmin] = useState(false);
 
+  //no se como conseguir la url
+  //let selector=useSelector();
+  //let users=selector(state=>state.server)
 
- const loadUser=async()=>{
-    const res= await axios.get('http://localhost:5000/users');  
+  const loadUser = async () => {
+    const res = await axios.get("http://localhost:5000/users");
 
     //await setUsers(res.data);
-   // return res.data;
-   let all=await res.data;
-   setUsers(all);
+    // return res.data;
+    let all = await res.data;
+    setUsers(all);
+  };
 
- }   
-    
-  
-  useEffect(()=>{
+  useEffect(() => {
     loadUser();
-   },[]) 
+  }, []);
 
-/* 
+  const handleEnable = (status, id) => {
+    console.log("cambio", status, id);
+    // setIsOn(!isOn);
+    if (status === "active") {
+      //actualiza
+      axios
+        .put(`http://localhost:5000/users/${id}`, { status: "inactive" })
+        .then(() => window.location.reload());
+      //console.log("id del active :", id);
+    } else if (status === "inactive" || status === "suspend") {
+      //actualiza
+      axios
+        .put(`http://localhost:5000/users/${id}`, { status: "active" })
+        .then(() => window.location.reload());
+      //console.log("id del inactive :", id);
+    }
+  };
 
+  //NOTA PARA PROBAR TAILDWIND AGREGUE RAPIDAMENTE EL LINK CDN AL HTML pero no iria a a quedar asi
+  //no te que hicieron uaconfiguracion especial de css que no pude ver bien coo usar
 
-    fullName: { type: String, },
-    name: { type: String, required: true },
-    email: { type: String, required: true },
-    email_verified: { type: Boolean, default: false },
-    password: { type: String, },
-    genre: { type: String, },
-    country: { type: String, },
-    address: { type: String, },
-    postal: { type: String, },
-    sub: { type: String, required: true, unique: true },
-    picture: { type: String, default: '' },
-    phone: { type: String, default: '' },
-    location: { type: String, default: '' },
-    role: {
-      type: String, required: true,
-      enum: ['admin', 'user'],
-      default: 'user'
-    },
+  return (
+    <>
+      <div>
+        <Card>
+          <Title className="text-center"> Table of Users </Title>
 
-
-
-
-//////////
-  {
-
-   "_id": "644990ce5402ef846423b117",
-    "fullName": "Maximo Guzman",
-    "name": "Maximo",
-    "email": "siyofuertu@gmail.com",
-    "email_verified": true,
-    "sub": "google-oauth2|100371452612897113506",
-    "picture": "https://lh3.googleusercontent.com/a/AGNmyxZ_N2HbBM046YbE1QM3JHga3Uf5bxMoSmiHcnSN=s96-c",
-    "phone": "",
-    "location": "",
-    "role": "user",
-    "status": "active"
-
-    //////////////
-    "_id": "6441a1c4677a8b26e0e2dd8b",
-    "email": "rejcoob@gmail.com",
-    "name": "Jacobo",
-    "sub": "google-oauth2|118093711230624684802",
-    "picture": "https://lh3.googleusercontent.com/a/AGNmyxYiIl03_HIuOPYg0mtfdLxxGVNjG_GnxCZ0PX9r=s96-c",
-    "phone": "+51973395235",
-    "location": "Arequipa",
-    "role": "user",
-    "status": "active",
-    "genre": "Masculino",
-    "country": "Peru",
-    "address": "Calle los juanetes 1234",
-    "email_verified": true,
-    "postal": "04014"
-  },
-
-*/
-
-    //NOTA PARA PROBAR TAILDWIND AGREGUE RAPIDAMENTE EL LINK CDN AL HTML pero no iria a a quedar asi 
-    //no te que hicieron uaconfiguracion especial de css que no pude ver bien coo usar
-    
-    return (
-        <>
-     
-        <div >
-         <Card >
-          <Title className='text-center'> Table of Users  </Title> 
-        
-            
-             <Link to='/formUser'>
-              <Button className='boton' size='lg' >Add user</Button>
-             </Link>
-   
-         <Table>
-             <TableHead>
-                <TableRow >
-                    <TableHeaderCell >Name</TableHeaderCell>
-                    <TableHeaderCell >Email</TableHeaderCell>
-                    <TableHeaderCell >Email verified</TableHeaderCell>
-                    <TableHeaderCell >Phone</TableHeaderCell>
-                    <TableHeaderCell >Country</TableHeaderCell>
-                    <TableHeaderCell >Role</TableHeaderCell>
-                    <TableHeaderCell >Genre</TableHeaderCell>
-                    <TableHeaderCell >Status</TableHeaderCell>
-                    <TableHeaderCell className='text-center' >Action</TableHeaderCell>
-                </TableRow>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableHeaderCell>ID</TableHeaderCell>
+                <TableHeaderCell>Name</TableHeaderCell>
+                <TableHeaderCell>Email</TableHeaderCell>
+                <TableHeaderCell>Email verified</TableHeaderCell>
+                <TableHeaderCell>Phone</TableHeaderCell>
+                <TableHeaderCell>Country</TableHeaderCell>
+                <TableHeaderCell>Role</TableHeaderCell>
+                <TableHeaderCell>Genre</TableHeaderCell>
+                <TableHeaderCell>Status</TableHeaderCell>
+                <TableHeaderCell className="text-center">
+                  Enable User
+                </TableHeaderCell>
+                <TableHeaderCell className="text-center">Admin</TableHeaderCell>
+              </TableRow>
             </TableHead>
             <TableBody>
+              {users &&
+                users.map((item) => (
+                  <TableRow key={item._id}>
+                    <TableCell>{item._id}</TableCell>
+                    <TableCell>{item.name}</TableCell>
+                    <TableCell>{item.email}</TableCell>
+                    <TableCell>
+                      {item.email_verified === true
+                        ? "verified"
+                        : "Not verified"}
+                    </TableCell>
+                    <TableCell>{item.phone}</TableCell>
+                    <TableCell>{item.country}</TableCell>
+                    <TableCell>{item.role}</TableCell>
+                    <TableCell>{item.genre}</TableCell>
 
+                    <TableCell>
+                      {item.status === "active" ? (
+                        <Badge color="emerald" icon={Done}>
+                          {item.status}
+                        </Badge>
+                      ) : item.status === "suspended" ? (
+                        <Badge color="red" icon={Adjust}>
+                          {item.status}
+                        </Badge>
+                      ) : (
+                        <Badge color="red" icon={Adjust}>
+                          {item.status}
+                        </Badge>
+                      )}
+                    </TableCell>
 
-                  {
-                    users&& users.map(item=>
-                        (
-                        <TableRow key={item._id}>
-                            <TableCell >{item.name}</TableCell>
-                            <TableCell >{item.email}</TableCell>
-                            <TableCell >{
-                               item.email_verified===true?"verified":"Not verified"
-                              }</TableCell>
-                            <TableCell >{item.phone}</TableCell>
-                            <TableCell >{item.country}</TableCell>
-                            <TableCell >{item.role}</TableCell>
-                            <TableCell >{item.genre}</TableCell>
-                            
-                            <TableCell > 
-                            {
-                             item.status==="active"? <Badge color="emerald" icon={CheckIcon}>
-                              {item.status}
-                            </Badge> : (item.status==="suspended")?<Badge color="orange" icon={CheckIcon}>
-                              {item.status}
-                            </Badge>:
-                            <Badge color="red" icon={CheckIcon}>
-                              {item.status}
-                            </Badge>
-                            }
-                            </TableCell>
-
-                            <TableCell>
-                                <Button color='white' >
-                                  <Icon size="lg" icon={PencilIcon} color='orange' />
-                                </Button>
-                                <Button color='white' >
-                                  <Icon size="lg" icon={MinusCircleIcon} color='red' />
-                                </Button>
-
-                            </TableCell>
-                        </TableRow>
-                        )
-                    ) 
-                }
+                    <TableCell>
+                      <Button
+                        onClick={() => handleEnable(item.status, item._id)}
+                        size="xl"
+                        color="white"
+                      >
+                        {/* <Icon size='xl' icon={ToggleOn}color='green'  /> */}{" "}
+                        {/* <Icon size='xl' icon={ToggleOff}  color='red'/> */}
+                        {item.status === "active" ? (
+                          <Icon size="xl" icon={ToggleOn} color="green" />
+                        ) : (
+                          <Icon size="xl" icon={ToggleOff} color="red" />
+                        )}
+                      </Button>
+                    </TableCell>
+                    <TableCell>
+                      <Button onClick="" color="white" size="xl">
+                        {isAdmin ? (
+                          <Icon size="xl" icon={ToggleOn} color="green" />
+                        ) : (
+                          <Icon size="xl" icon={ToggleOff} color="red" />
+                        )}
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
-             </Table>
+          </Table>
         </Card>
-
-    </div>
-            
-        </>
-    )
+      </div>
+    </>
+  );
 }
-
-
-
-
-
-
-
 
 /*  import React from 'react'
 import {
@@ -267,11 +230,3 @@ export default function Users(props) {
         </>
     )
 } */
-
-
-
-
-
-
-
-

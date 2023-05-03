@@ -131,9 +131,12 @@ export const updateUser = async (req, res, next) => {
             identificationNumber,
             tel,
             image,
+            role,
+            status
         } = req.body
 
-        await userModel.findByIdAndUpdate(
+      //let updateProducts= 
+      await userModel.findByIdAndUpdate(
             id,
             {
                 fullName: fullName,
@@ -146,14 +149,21 @@ export const updateUser = async (req, res, next) => {
                 address: address,
                 identificationNumber: identificationNumber,
                 tel: tel,
+                status:status,
+                role:role,
                 image: image,
             },
             { new: true } 
         )
+
+
+       // res.json(updateProducts)
         .then(() => {
             
             res.status(200).send('User Successfully Updated')
-        })
+        }) 
+
+
     } catch (error) {
         console.error('Failed to update the user')
         next(error)
