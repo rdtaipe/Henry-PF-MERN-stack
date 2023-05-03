@@ -110,7 +110,7 @@ export function Detail() {
       setStatus({comment:true,myComment:true})
     } else {
       setUserComment(null)
-      setStatus({comment:true,myComment:false})
+      setStatus({comment:true,myComment:null})
     }
     });
   };
@@ -120,7 +120,7 @@ export function Detail() {
 
     if (myComment) {
       const newComments=comments.filter((item) => item.userId !== userData._id)
-setComments(newComments)
+      setComments(newComments)
       setUserComment(myComment)
       setStatus({comment:true,myComment:false})
     } else {
@@ -156,7 +156,7 @@ setComments(newComments)
       props: { variant: "soft", color: "danger" },
     }
   ]
-  console.log(userComment)
+  console.log(status.comment,!status.myComment)
 
   return (
     <div>
@@ -272,12 +272,13 @@ setComments(newComments)
         <div className="w-full my-8 px-[2%]  py-4">
 
         {isAuthenticated?//if registered
+        status.comment?
         status.comment&&!status.myComment?<div className="w-full my-8 px-[2%] bg-gray-100 py-4">
               <p className="text-m font-bold py-2">Qualify {product.name}</p>
               <CommentBox avatar={userData.picture} onSubmit={handleComment} value={userComment} />
             </div>
           :  
-            <p className="text-lg">You have comment</p>
+            <p className="text-lg">You have comment</p>:<p className="text-lg">buy this product for a comment</p>
         : 
         <p className="text-lg">
           <Link to="/authorize">Register to comment</Link>
