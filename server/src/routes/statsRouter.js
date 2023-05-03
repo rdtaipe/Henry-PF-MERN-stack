@@ -5,6 +5,7 @@ import {
   getProductsBestValued,
   getProductsGenres,
   getUsersGenres,
+  getProductWithoutStock,
 } from "../controllers/statsController.js";
 
 const router = express.Router();
@@ -16,7 +17,7 @@ router.get("/usersgenres", getUsersGenres);
 /* products */
 router.get("/bestproducts", getProductsBestValued);
 router.get("/genreproducts", getProductsGenres);
-
+router.get("/whitoutstock", getProductWithoutStock);
 
 /////////////////////////////////////////////
 

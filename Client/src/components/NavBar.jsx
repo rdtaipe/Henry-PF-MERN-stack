@@ -125,7 +125,7 @@ const NavBar = () => {
             </NavLink>
             <NavLink to='/questions'
               className="text-white mx-2 lg:mx-4 text-lg hover:text-stone-400 hover:transform transition-all duration-500 whitespace-nowrap">
-              Questions
+              FAQs
             </NavLink>
           </div>
 

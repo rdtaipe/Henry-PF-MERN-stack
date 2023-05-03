@@ -15,6 +15,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Container from "@mui/material/Container";
 
 ChartJS.register(
   CategoryScale,
@@ -40,9 +41,7 @@ const Sales = () => {
   }
   function fetchPurchase() {
     axios
-      .get(
-        `http://localhost:5000/stats/purchases?month=${month}&year=${year}`
-      )
+      .get(`http://localhost:5000/stats/purchases?month=${month}&year=${year}`)
       .then((res) => {
         setPurchase(res.data);
       });
@@ -50,7 +49,7 @@ const Sales = () => {
 
   useEffect(() => {
     fetchSold();
-    fetchPurchase()
+    fetchPurchase();
   }, [month]);
 
   const options = {
@@ -67,7 +66,7 @@ const Sales = () => {
   };
 
   function handleCharts(sold, purchase) {
-    const labels = Object.keys(sold)
+    const labels = Object.keys(sold);
     const datagrap = {
       labels,
       datasets: [
@@ -80,7 +79,7 @@ const Sales = () => {
           label: "salidas",
           data: Object.values(purchase),
           backgroundColor: "red",
-        }
+        },
       ],
     };
     return datagrap;
@@ -111,11 +110,37 @@ const Sales = () => {
         <InputLabel>Month</InputLabel>
         <Select value={month} label="month" onChange={(e) => handleMonth(e)}>
           {monthList.map((el, i) => (
-            <MenuItem value={i + 1} key={i}>{el}</MenuItem>
+            <MenuItem value={i + 1} key={i}>
+              {el}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
-      {sold && purchase && <Bar options={options} data={handleCharts(sold,purchase)} height={80} />}
+      {sold && purchase && (
+        <Bar
+          options={options}
+          data={handleCharts(sold, purchase)}
+          height={80}
+        />
+      )}
+      {sold && purchase && (
+        <Container>
+          <div>
+            total sold:{" "}
+            {Object.values(sold).reduce(
+              (acumulador, valorActual) => acumulador + valorActual,
+              0
+            ).toFixed(2)}
+          </div>
+          <div>
+            total purchase:{" "}
+            {Object.values(purchase).reduce(
+              (acumulador, valorActual) => acumulador + valorActual,
+              0
+            ).toFixed(2)}
+          </div>
+        </Container>
+      )}
     </div>
   );
 };
