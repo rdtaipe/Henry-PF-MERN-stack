@@ -35,7 +35,7 @@ root.render(
 
   <Provider store={Store}>
     <ActionsProvider/>
-    <Auth0Provider
+     <Auth0Provider
       domain={config.domain}
       clientId={config.clientId}
       authorizationParams={{
@@ -43,11 +43,11 @@ root.render(
         audience: config.audience,
         scope: config.scope
       }}
-    >
+    > 
       <RouterProvider router={Router} />
-    </Auth0Provider>
+   </Auth0Provider> 
 
-  </Provider >
+ </Provider > 
 )
 
 

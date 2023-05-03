@@ -54,6 +54,7 @@ export const createProducts = async (req, res, next) => {
       feactured,
       cost,
     } = req.body;
+    //file imagen
     let file = req.file;
 
     let upload = await uploadCloudinary(file);

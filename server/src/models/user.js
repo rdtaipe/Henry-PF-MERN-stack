@@ -25,29 +25,30 @@ import { Schema, model } from "mongoose";
 } */
 const userSchema = new Schema(
   {
-    fullName: { type: String, },
+    fullName: { type: String },
     name: { type: String, required: true },
     email: { type: String, required: true },
     email_verified: { type: Boolean, default: false },
-    password: { type: String, },
-    genre: { type: String, },
-    country: { type: String, },
-    address: { type: String, },
-    postal: { type: String, },
+    password: { type: String },
+    genre: { type: String },
+    country: { type: String },
+    address: { type: String },
+    postal: { type: String },
     sub: { type: String, required: true, unique: true },
-    picture: { type: String, default: '' },
-    phone: { type: String, default: '' },
-    location: { type: String, default: '' },
-    origin:{type: String, default: 'http://localhost:3000'},
+    picture: { type: String, default: "" },
+    phone: { type: String, default: "" },
+    location: { type: String, default: "" },
+    origin: { type: String, default: "http://localhost:3000" },
     role: {
-      type: String, required: true,
-      enum: ['admin', 'user'],
-      default: 'user'
+      type: String,
+      required: true,
+      enum: ["admin", "user"],
+      default: "user",
     },
     status: {
       type: String,
-      enum: ['active', 'inactive', 'suspended'],
-      default: 'active'
+      enum: ["active", "inactive", "suspended"],
+      default: "active",
     },
   },
   {
@@ -55,7 +56,6 @@ const userSchema = new Schema(
     versionKey: false,
   }
 );
-
 
 const userModel = model("User", userSchema);
 
