@@ -18,11 +18,11 @@ import Modal from "../Modal";
 
 const UserInterface = () => {
     
-    const { isAutorized, unauthorize, status, data } = useSelector(({ state }) => state.user)
+    const { isAutorized, unauthorize, status, data} = useSelector(({ state }) => state.user)
     const { url, auth} = useSelector(({ state }) => state.server);
 
 
-    const { isAuthenticated, logout } = useAuth0();
+    const { isAuthenticated, logout,getAccessTokenSilently} = useAuth0();
     const userAutorized = isAutorized()
     const userData = data()
     
@@ -80,6 +80,7 @@ const UserInterface = () => {
     // Cuando se arma el componente se trae el historial de compra del usuario
 
      useEffect(() => {
+        
          auth.get(`${url}/purchase/${userData._id}`)
          .then((res) => {
              const productsByDate = res.data.products.reduce((acc, prod) => {
@@ -130,12 +131,42 @@ const UserInterface = () => {
       unauthorize({message:"Unauthorize"})
       logout({ returnTo: window.location.origin })
     }
+    const handleVerified=async()=>{
+        const audience="https://dev-zcla3tzkhoocgn1y.us.auth0.com/api/v2/"
+       const  clientId= "4XnRrKDQ94UFtWYnHpfnjQ5n3WXApUNm"
+        const token = await getAccessTokenSilently();
+        const accessToken = await getAccessTokenSilently({ audience: audience });
+
+       
+        const identity=userData.identities[0]
+        console.log(identity)
+
+        var options = {
+            method: 'POST',
+            url: 'https://dev-zcla3tzkhoocgn1y.us.auth0.com/api/v2/jobs/verification-email',
+            headers: {
+              'content-type': 'application/json',
+              authorization: `Bearer ${accessToken}`,
+            },
+            data: {
+              user_id: `${userData.sub}`,
+              client_id:`${clientId}`,
+              identity: {user_id: identity.user_id, provider:identity.provider}
+
+            }
+          };
+
+        axios.request(options).then((res) => {
+          console.log(res.data);
+        });
+      };
 
 return (
 <>
         {userAutorized ? (
 
             <div className="flex flex-col justify-center items-center bg-stone-100 h-full min-h-[820px]">
+              
 
                 <div style={{borderRadius: "10px", display: "flex", justifyContent: "space-between"}} className="mt-16 md:mt-24 lg:mt-32 bg-stone-200 gap-8 py-5 px-5 sm:px-10 shadow-xl w-[90%] xl:w-[1220px]">
 
@@ -143,7 +174,7 @@ return (
                         <img src={originalUser.picture} alt={(user.name)} style={{borderRadius: "50%"}} className="sm:w-[70px] sm:h-[70px] w-[60px] sm:mr-[50px] mr-[20px]" />
                         <h2 className="sm:text-3xl text-2xl font-bold pt-2">Hello {originalUser.name}!</h2>
                     </div>
-
+               
                     <button
                         className={saveStatus ? "bg-blue-900 text-white font-medium hover:bg-blue-600 px-3 sm:px-5 py-2 mb-2 transition cursor-pointer" : "bg-stone-500 font-medium text-white cursor-default px-3 sm:px-5 py-2 mb-2 transition"}
                         style={{ marginTop: "20px", borderRadius: "5px"}}
