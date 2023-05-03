@@ -80,10 +80,14 @@ export async function success(req, res) {
 
   try {
     const findCard = await CartModel.findOne({ id });
+    console.log(findCard)
+
     if (findCard) {
       const findCardProducts = findCard.products.filter((prod) => prod.active); // Productos activos en el carrito
 
       if (findCardProducts.length > 0) {
+
+
         const findProduct = await ProductModel.find({ $or: findCardProducts.map((item) => ({ _id: item.id })) });
 
         // Compara y modifica
@@ -102,8 +106,10 @@ export async function success(req, res) {
         });
 
         if (newProducts) {
+
           // Actualiza los modelos de carrito y compra
           const updating = await Promise.all(newProducts.map(async (item, i) => {
+            
             // Elimina los productos antiguos del carrito
             await CartModel.findOneAndUpdate({ id: id }, { $pull: { products: { id: item._id } } });
 
@@ -128,13 +134,16 @@ export async function success(req, res) {
             return updatePurchase;
           }));
 
+
           if (updating) {
+
             const findUser = await UserModel.findById(id)
             const { origin } = findUser
 
+
             await sendEmail({ user: findUser, body: { type: "order", issue: "Thank you for purchase", data: findCardProducts } })//send welcome email
 
-            res.redirect(`${origin ? origin : "http://localhost:3000"}/payment/success`)
+             res.redirect(`${origin ? origin : "http://localhost:3000"}/payment/success`)
 
           }
         }

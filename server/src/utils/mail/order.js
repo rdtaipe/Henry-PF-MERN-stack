@@ -10,13 +10,13 @@ const Header = cheerio.load(fs.readFileSync('./src/utils/mail/templates/header.h
 
 
 export default function Order(user,data) {
-    console.log(user,data)
+    // console.log(user,data)
     var brand="ChicCloset"
     const msg = {
         title: `Thank you for purchase in ${brand}`,
         intro: `¡Hi ${user.name}!`,
         body: `
-        <h4>Tus productos</h4>
+        <h4>you products</h4>
         
         <ul>
         ${data.map(item=>{
