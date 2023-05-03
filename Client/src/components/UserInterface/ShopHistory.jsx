@@ -8,11 +8,11 @@ const ShopHistory = ({ shopHistory }) => {
     return (
       <>
         {!shopHistory || shopHistory.length === 0 ? (
-          <div style={{borderRadius: "10px", minWidth: "800px"}} className="ml-10 bg-stone-200 flex flex-col mt-1 gap-8 pt-8 pb-4 px-10 shadow-xl text-center transition">
+          <div style={{borderRadius: "10px"}} className="xl:ml-10 bg-stone-200 flex flex-col mt-1 gap-8 pt-8 pb-4 px-10 shadow-xl text-center transition xl:min-w-[800px]">
 
             <h2 className="text-2xl font-bold mb-2 mx-auto">Your shop history is empty, let's get chic!</h2>
 
-            <div className="flex flex-row flex-wrap items-center justify-center gap-24">
+            <div className="flex lg:flex-row flex-col flex-wrap items-center justify-center gap-24">
 
               <div className="flex flex-col pb-8">
                 <FaShoppingCart  size={150} className="my-4 mx-auto"/>

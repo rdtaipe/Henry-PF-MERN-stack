@@ -8,7 +8,7 @@ export default function Success(props) {
 
     return (
 
-        <Box  sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+        <Box  sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', textAlign: "center" }}>
             <Typography variant="h4" component="h4" gutterBottom>
                 Thank you for your purchase!
             </Typography>

@@ -14,12 +14,15 @@ import Offer4 from '../assets/imagesCarousel/Offer4.png'
 import Offer5 from '../assets/imagesCarousel/Offer5.png'
 import Offer6 from '../assets/imagesCarousel/Offer6.png'
 import Offer7 from '../assets/imagesCarousel/Offer7.png'
+import Typography from "@mui/material/Typography";
+import { IconButton, MenuItem } from "@mui/material";
+import NorthRoundedIcon from "@mui/icons-material/NorthRounded";
+import SouthRoundedIcon from "@mui/icons-material/SouthRounded";
 
 const Home = () => {
-
-  const images = [Offer1, Offer2, Offer3, Offer4, Offer5, Offer6, Offer7]
+  const images = [Offer1, Offer2, Offer3, Offer4, Offer5, Offer6, Offer7];
   //testing redux
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   //global state
   const { url, get } = useSelector(({ state }) => state.server)
   const { setter } = useSelector(({ state }) => state)
@@ -29,48 +32,53 @@ const Home = () => {
   const search = useSelector(state => state.searchName)
 
   //local state
-  const [data, setData] = useState([])
-  const [page, setPage] = useState(1)
-  const [limit, setLimit] = useState(10)
-  const [count, setCount] = useState(0)
-  const [filter, setFilter] = useState({})
-  const [sort, setSort] = useState({})
-
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [count, setCount] = useState(0);
+  const [filter, setFilter] = useState({});
+  const [sort, setSort] = useState({});
 
   useEffect(() => {
     getData({ filter: { name: [search], ...filter }, sort: sort })
 
-  }, [filter, sort, search, page])
+  }, [filter,sort, search, page])
 
 
 
-  const getData = ({ filter, sort }) => {
+  const getData = ({filter,sort}) => {
 
     const obj = {
       m: "product",
       filter: filter,
       options: "i",
-      // regex:"all", 
+      // regex:"all",
       sort: sort,
       limit: 10,
-      skip: limit * page - 10
-    }
+      skip: limit * page - 10,
+    };
 
-    const query = queryString(obj)
+    const query = queryString(obj);
 
-    get(url + `/find?${query}`).then(res => {
-      var resData = res.data.product
-      var documents = res.data.documents
-      dispatch(setter({ keys: "products", value: resData }))
-      setData(resData)
+    get(url + `/find?${query}`).then((res) => {
+      var resData = res.data.product;
+      var documents = res.data.documents;
+      dispatch(setter({ keys: "products", value: resData }));
+      setData(resData);
 
       let n = Math.ceil(documents / limit)
       setCount((page === 1 && resData.length < limit) ? 1 : n)
       if (page > 1 && resData.length === 0) {
-        setPage(1)
+        setPage(1);
       }
-    })
-  }
+    });
+  };
+
+  const [open, setOpen] = useState(false);
+
+  const sidebarMenu = () => {
+    setOpen(!open);
+  };
 
   return (
     <div className='bg-stone-100'>
@@ -90,7 +98,7 @@ const Home = () => {
         </div>
       </Drawer>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
