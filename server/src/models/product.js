@@ -24,8 +24,8 @@ const productSchema = new Schema(
         },
         size: {
             type: String,
-            enum: ['xs', 's', 'm', 'l', 'xl', 'xxl'],
-            input: ['xs', 's', 'm', 'l', 'xl', 'xxl'],
+            enum: ['xs', 's', 'm', 'l', 'xl', 'xxl' ,'35','36','37','38','39','40','41','42','43','44'],
+            input: ['xs', 's', 'm', 'l', 'xl', 'xxl','35','36','37','38','39','40','41','42','43','44'],
             default: 'm'
         },
         category: {//filtrado
