@@ -11,6 +11,7 @@ import App from "../App/App.js";
 import Authorize from "../Components/Authorize";
 import Form from "../Pages/Products/Formulario/Form";
 
+
 export default createBrowserRouter([
   // defauld rute
   {
@@ -51,6 +52,7 @@ export default createBrowserRouter([
         path: "/permissions",
         element: <Permissions />,
       },
+      
     ],
   },
   {
