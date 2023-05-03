@@ -6,7 +6,7 @@ export default function Grid({style,children, childHeight,childWidth,className})
     const content = children.length > 0 ? children : "No items found"
 
     return (
-        <Container style={style} childHeight={childHeight} childWidth={childWidth} className={`min-h-[35rem] mt-6`}>
+        <Container style={style} childHeight={childHeight} childWidth={childWidth} className={`min-h-[35rem] mt-6 place-items-center`}>
             {
             content
             }
