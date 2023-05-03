@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
 import {
   Table,
   TableHead,
@@ -12,19 +11,17 @@ import {
   Badge,
   Title,
   Button,
-  Icon,
+  //Icon,
 } from "@tremor/react";
 
-import { ToggleOff, ToggleOn, Done, Adjust } from "@mui/icons-material";
+//import { ToggleOff, ToggleOn, Done, Adjust } from "@mui/icons-material";
+import { Notification } from "../../Components/Notification/Notification";
 
 //import data from './data.json'
 /* import './user.css' */
 
 export default function Users(props) {
   const [users, setUsers] = useState();
-
-  /*   const [isOn, setIsOn] = useState(false); */
-  const [isAdmin, setIsAdmin] = useState(false);
 
   //no se como conseguir la url
   //let selector=useSelector();
@@ -43,21 +40,57 @@ export default function Users(props) {
     loadUser();
   }, []);
 
+  // habilitar usuarios
   const handleEnable = (status, id) => {
-    console.log("cambio", status, id);
-    // setIsOn(!isOn);
+    // console.log("cambio", status, id);
+
     if (status === "active") {
-      //actualiza
-      axios
-        .put(`http://localhost:5000/users/${id}`, { status: "inactive" })
-        .then(() => window.location.reload());
-      //console.log("id del active :", id);
+      axios.put(`http://localhost:5000/users/${id}`, { status: "inactive" });
+
+      Notification(
+        "warning",
+        `user ${id} has been disabled `,
+        "bottom-start",
+        2000
+      );
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } else if (status === "inactive" || status === "suspend") {
-      //actualiza
-      axios
-        .put(`http://localhost:5000/users/${id}`, { status: "active" })
-        .then(() => window.location.reload());
-      //console.log("id del inactive :", id);
+      axios.put(`http://localhost:5000/users/${id}`, { status: "active" });
+      Notification(
+        "success",
+        `user ${id} has been enabled `,
+        "bottom-end",
+        3000
+      );
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    }
+  };
+
+  // agregar mas usuarios
+  const handleAdmin = (role, id) => {
+    console.log(role, id);
+
+    if (role === "admin") {
+      axios.put(`http://localhost:5000/users/${id}`, { role: "user" });
+      Notification("info", `user role changed`, "bottom-start", 3000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } else {
+      axios.put(`http://localhost:5000/users/${id}`, { role: "admin" });
+      Notification(
+        "warning",
+        `user role changed to ADMIN `,
+        "bottom-end",
+        3000
+      );
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     }
   };
 
@@ -73,7 +106,7 @@ export default function Users(props) {
           <Table>
             <TableHead>
               <TableRow>
-                <TableHeaderCell>ID</TableHeaderCell>
+                {/*  <TableHeaderCell>ID</TableHeaderCell> */}
                 <TableHeaderCell>Name</TableHeaderCell>
                 <TableHeaderCell>Email</TableHeaderCell>
                 <TableHeaderCell>Email verified</TableHeaderCell>
@@ -92,7 +125,7 @@ export default function Users(props) {
               {users &&
                 users.map((item) => (
                   <TableRow key={item._id}>
-                    <TableCell>{item._id}</TableCell>
+                    {/*  <TableCell>{item._id}</TableCell> */}
                     <TableCell>{item.name}</TableCell>
                     <TableCell>{item.email}</TableCell>
                     <TableCell>
@@ -127,21 +160,23 @@ export default function Users(props) {
                         size="xl"
                         color="white"
                       >
-                        {/* <Icon size='xl' icon={ToggleOn}color='green'  /> */}{" "}
-                        {/* <Icon size='xl' icon={ToggleOff}  color='red'/> */}
                         {item.status === "active" ? (
-                          <Icon size="xl" icon={ToggleOn} color="green" />
+                          <Button color="green">Active</Button>
                         ) : (
-                          <Icon size="xl" icon={ToggleOff} color="red" />
+                          <Button color="pink">Inactive</Button>
                         )}
                       </Button>
                     </TableCell>
                     <TableCell>
-                      <Button onClick="" color="white" size="xl">
-                        {isAdmin ? (
-                          <Icon size="xl" icon={ToggleOn} color="green" />
+                      <Button
+                        color="white"
+                        size="xl"
+                        onClick={() => handleAdmin(item.role, item._id)}
+                      >
+                        {item.role === "admin" ? (
+                          <Button color="purple">Admin</Button>
                         ) : (
-                          <Icon size="xl" icon={ToggleOff} color="red" />
+                          <Button color="grey">User</Button>
                         )}
                       </Button>
                     </TableCell>
@@ -154,79 +189,3 @@ export default function Users(props) {
     </>
   );
 }
-
-/*  import React from 'react'
-import {
-  Table,
-  TableHead,
-  TableHeaderCell,
-  TableBody,
-  TableRow,
-  TableCell,
-  Card,Badge, Title
-} from "@tremor/react";
-import { CheckIcon } from "@heroicons/react/outline";
-
-import data from './data.json'
-import './user.css'
-
-export default function Users(props) {
-    
-
-    //NOTA PARA PROBAR TAILDWIND AGREGUE RAPIDAMENTE EL LINK CDN AL HTML pero no iria a a quedar asi 
-    //no te que hicieron uaconfiguracion especial de css que no pude ver bien coo usar
-    
-    return (
-        <>
-     
-        <div className='container'>
-         <Card className='user-card'>
-          <Title className='title'> Table of Users  </Title> 
-         <Table className='table'>
- 
-            <TableHead>
-                <TableRow className='table-row'>
-                    <TableHeaderCell className='table-cell'>Fullname</TableHeaderCell>
-                    <TableHeaderCell className='table-cell'>Email</TableHeaderCell>
-                    <TableHeaderCell className='table-cell'>Country</TableHeaderCell>
-                    <TableHeaderCell className='table-cell'>Adress</TableHeaderCell>
-                    <TableHeaderCell className='table-cell'>Telefono</TableHeaderCell>
-                    <TableHeaderCell className='table-cell'>Admin</TableHeaderCell>
-                    <TableHeaderCell className='table-cell'>Active</TableHeaderCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {
-                    data.map(item=>
-                        (
-                        <TableRow className='table-row'key={item.fullname}>
-                            <TableCell className='table-cell'>{item.fullname}</TableCell>
-                            <TableCell className='table-cell'>{item.email}</TableCell>
-                            <TableCell className='table-cell'>{item.country}</TableCell>
-                            <TableCell className='table-cell'>{item.address}</TableCell>
-                            <TableCell className='table-cell'>{item.tel}</TableCell>
-                            <TableCell className='table-cell'>{item.isAdmin===true?"True":"False"}</TableCell>
-                            <TableCell className='table-cell'> 
-                            {
-                             item.active===true? <Badge color="emerald" icon={CheckIcon}>
-                              {item.active}
-                            </Badge> :
-                            <Badge color="red" icon={CheckIcon}>
-                              {item.active}
-                            </Badge>
-                            }
-                            </TableCell>
-                        </TableRow>
-                        )
-                      
-                    )
-                }
-            </TableBody>
-             </Table>
-        </Card>
-
-    </div>
-            
-        </>
-    )
-} */
