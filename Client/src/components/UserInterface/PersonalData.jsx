@@ -6,8 +6,6 @@ const MyData = ({user, updateUser}) => {
     const handleChange = (e) => {
       const { name, value } = e.target;
       const newUserData = { ...userData, [name]: value };
-      console.log(name)
-      console.log(value);
       setUserData(newUserData);
       updateUser(newUserData);
     };
