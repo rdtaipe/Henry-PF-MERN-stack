@@ -30,7 +30,7 @@ function Authorize() {
 
       const getUserMetadata = async () => {
         const token = await getAccessTokenSilently();
-
+        console.log(token)
         try {
           await authorize(token, user.sub, url)
           Navigate("/home")
@@ -112,6 +112,11 @@ const TryAgain=({message})=>{
     </FlexCenterCenter>
   )
   }
+
+
+const WaitVerifyEmail=()=>{
+  
+}
 
 const FlexCenterCenter=styled.div`
 display: flex;
