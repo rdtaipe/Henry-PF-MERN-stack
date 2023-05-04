@@ -8,7 +8,7 @@ export const InitialState = {
     server: {
         url: "http://localhost:5000/",
         dashboardUrl: "http://localhost:3001/",
-        clientUrl: "http://localhost:3000/",
+        clientUrl: "https://dashboard-26d12.web.app/",
         //routes action   
         get: (url) => axios.get(url),
         post: (url, data) => axios.post(url, data),
