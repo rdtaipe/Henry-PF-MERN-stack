@@ -22,10 +22,40 @@ export const getSales = async (req, res) => {
   const endDate = new Date(year, month, 0, 23);
 
   try {
-    const data = await purchaseModel.find({
-      createdAt: { $gte: startDate, $lt: endDate },
+    const data = await purchaseModel.find({}, { products: 1 });
+
+    const products = [];
+    data.map((el) => {
+      el.products.map((el) =>
+        products.push({ date: el.date, total: el.price * el.total })
+      );
     });
 
+    const filterForMonth = products.filter(
+      (product) => new Date(product.date).getMonth() === month - 1
+    );
+
+    const totalForDay = {};
+    filterForMonth.forEach((obj) => {
+      const date = new Date(obj.date).getDate();
+      if (date in totalForDay) {
+        totalForDay[date] += obj.total;
+      } else {
+        totalForDay[date] = obj.total;
+      }
+    });
+
+    for (let i = 1; i <= endDate.getDate(); i++) {
+      if (!totalForDay[i]) {
+        totalForDay[i] = 0;
+      }
+    }
+
+    res.json(totalForDay);
+    /*     const data = await purchaseModel.find({
+      createdAt: { $gte: startDate, $lt: endDate },
+    });
+   console.log(data);
     const formatData = data.map((el) => {
       const total = el.products.reduce((accumulator, product) => {
         return accumulator + product.price * product.total;
@@ -55,7 +85,7 @@ export const getSales = async (req, res) => {
       }
     }
 
-    res.json(salesByDay);
+    res.json(salesByDay); */
   } catch (error) {
     res.status(400).json(error.message);
   }
@@ -159,6 +189,43 @@ export const getProductWithoutStock = async (req, res) => {
   try {
     const products = await productModel.find({ stock: { $eq: 0 } });
     res.json(products);
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+};
+
+/*  */ /*  */ /*  */
+export const getProductMoreSold = async (req, res) => {
+  try {
+    const data = await purchaseModel.find({}, { products: 1 });
+
+    const products = [];
+    data.map((el) => {
+      el.products.map((el) => products.push(el));
+    });
+
+    const countSold = {};
+    products.forEach((el) => {
+      if (countSold[el.productId]) {
+        countSold[el.productId] = {
+          total: countSold[el.productId].total + el.total,
+          name: el.name,
+          image: el.image,
+          id: el.productId
+        };
+      } else {
+        countSold[el.productId] = {
+          total: el.total,
+          name: el.name,
+          image: el.image,
+          id: el.productId
+        };
+      }
+    });
+
+    const resp = Object.values(countSold).sort((a, b) => b.total - a.total)
+
+    res.json(resp.slice(0, 5));
   } catch (error) {
     res.status(400).json(error.message);
   }
