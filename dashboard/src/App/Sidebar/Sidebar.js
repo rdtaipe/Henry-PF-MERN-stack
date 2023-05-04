@@ -26,11 +26,11 @@ const Icons = [
     { type: "Dashboard", component: <GridViewOutlinedIcon /> },
     { type: "Products", component: <CategoryOutlinedIcon /> },
     { type: "Users", component: <PermIdentityOutlinedIcon /> },
-    { type: "Sales", component: <StorefrontOutlinedIcon /> },
-    { type: "Projects", component: <WorkOutlineOutlinedIcon /> },
-    { type: "Employees", component: <AdminPanelSettingsOutlinedIcon /> },
-    { type: "Roles", component: <VpnKeyOutlinedIcon /> },
-    { type: "Permissions", component: <RouteOutlinedIcon /> },
+    // { type: "Sales", component: <StorefrontOutlinedIcon /> },
+    // { type: "Projects", component: <WorkOutlineOutlinedIcon /> },
+    // { type: "Employees", component: <AdminPanelSettingsOutlinedIcon /> },
+    // { type: "Roles", component: <VpnKeyOutlinedIcon /> },
+    // { type: "Permissions", component: <RouteOutlinedIcon /> },
 ]
 
 export default function Sidebar() {
