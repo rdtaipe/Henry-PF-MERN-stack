@@ -4,10 +4,11 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import Box from '@mui/material/Box';
 import { DataGrid, GridCellModes, GridCellEditStopReasons, GridEventListener } from '@mui/x-data-grid';
-import PropTypes, { object } from 'prop-types';
+import PropTypes, { number, object } from 'prop-types';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
-
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 // import {Button} from '../../Components/Button'
 
 const urls = {
@@ -20,6 +21,12 @@ const urls = {
     delete: "/products/",
     clone: "/products/"
 }
+
+
+
+const useFakeMutation = () => {
+    return React.useCallback((user) => user);
+};
 
 function EditToolbar(props) {
     const { selectedCellParams, cellMode, cellModesModel, setCellModesModel } = props;
@@ -145,20 +152,10 @@ export default function Products(props) {
         { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
     ]
     )
-    const [edit, setEdit] = useState({ last: "", now: "" })
-
 
     const [selectedCellParams, setSelectedCellParams] = React.useState(null);
     const [cellModesModel, setCellModesModel] = React.useState({});
 
-    const handleCellFocus = React.useCallback((event) => {
-        const value = event.currentTarget.querySelector('input')
-        // console.log(value)
-        const row = event.currentTarget.parentElement;
-        const id = row.dataset.id;
-        const field = event.currentTarget.dataset.field;
-        setSelectedCellParams({ id, field });
-    }, []);
 
     const cellMode = React.useMemo(() => {
         if (!selectedCellParams) {
@@ -168,15 +165,11 @@ export default function Products(props) {
         return cellModesModel[id]?.[field]?.mode || 'view';
     }, [cellModesModel, selectedCellParams]);
 
-    const handleCellKeyDown = (params, event) => {
-        const value = event.target.value
 
-        // console.log(value)
-        /*   if (cellMode === 'edit') {
-              // Prevents calling event.preventDefault() if Tab is pressed on a cell in edit mode
-              event.defaultMuiPrevented = true;
-          } */
-    }
+    const mutateRow = useFakeMutation();
+
+    const [snackbar, setSnackbar] = React.useState(null);
+
 
     useEffect(() => {
         get(url + "dev/module/product").then(res => {
@@ -194,7 +187,8 @@ export default function Products(props) {
 
                 field: '_id',
                 headerName: 'ID',
-                width: 90
+                width: 90,
+                editable:false
             }
             columns.unshift(id)
             setColumns(columns)
@@ -204,6 +198,7 @@ export default function Products(props) {
             var rows = data.map((item, index) => {
                 return {
                     id: index,
+                    f: () => { console.log(item) },
                     ...item
                 }
             }
@@ -215,43 +210,62 @@ export default function Products(props) {
     }, [])
 
 
-    const onCellEditStop = (p, e, a, b) => {
-        const data = p.row
-        const value = e
-        // console.log(p)
-        // put(`${url}products/${data._id}`,data).then((res)=>{
-        //     console.log(res.data)
-        // })
-        // console.log(e,"onCellEditStop")
-    }
-    const onStateChange = (e) => {
-        const roeData = e.rows.dataRowIdToModelLookup
-        if (selectedCellParams) {
-            const objTarget = roeData[selectedCellParams.id][selectedCellParams.field]
-            // console.log(objTarget)
-        }
 
-    }
-    const onCellEditStart = (e) => {
-        const data = e.row
-        console.log(data, "onCellEditStart")
-    }
+    const handleCellFocus = React.useCallback((event) => {
+
+        const row = event.currentTarget.parentElement;
+        const id = row.dataset.id;
+        const field = event.currentTarget.dataset.field
+        setSelectedCellParams({ id, field });
+    }, []);
+    const handleCellKeyDown = React.useCallback(
+        (params, event) => {
+            if (cellMode === 'edit') {
+                // Prevents calling event.preventDefault() if Tab is pressed on a cell in edit mode
+                event.defaultMuiPrevented = true;
+            }
+        },
+        [cellMode],
+    );
+
+
+
+
+
     const onCellKeyDown = (e) => {
-        const chip = e.currentTarget
-        const input = e.currentTarget.querySelector('input').value
-        console.log(chip, "onCellKeyDown")
     }
     const onCellMouseDown = (e) => {
-        /*  const chip = e.currentTarget*/
-        const input = e.currentTarget.querySelector('input')
-        if(input){
-            const type = input.hasAttribute("type")?input.type:false
-            /*.checked */
-    
-            console.log(type, "onCellKeyDown")
+        /* const inputs = {
+            string: "value",
+            number: "value",
+            boolean: "checked",
+            array: "value",
+            object: "value"
         }
-      
+        console.log(e)
+        const input = e.currentTarget.querySelector('input')
+
+        if (input && columns && selectedCellParams) {
+            const type = columns.filter((item) => item.field === selectedCellParams.field)[0].type
+
+            if (type && input) {
+                const attributes = input.attributes[inputs[type]]
+                console.log(attributes.value)
+            }
+        } */
+
     }
+
+    const processRowUpdate = React.useCallback(async (newRow) => {
+
+        await put(`${url}products/${newRow._id}`, newRow)
+        return (newRow)
+
+    });
+
+    const handleProcessRowUpdateError = React.useCallback((error) => {
+        setSnackbar({ children: error.message, severity: 'error' });
+    }, []);
 
     return (
         <Container>
@@ -269,10 +283,9 @@ export default function Products(props) {
                     }}
 
                     pageSizeOptions={[10]}
-                    // checkboxSelection
-                    onCellEditStop={onCellEditStop}
+                    processRowUpdate={processRowUpdate}
+                    onProcessRowUpdateError={handleProcessRowUpdateError}
                     onCellKeyDown={handleCellKeyDown}
-                    onStateChange={onStateChange}
                     cellModesModel={cellModesModel}
                     onCellModesModelChange={(model) => setCellModesModel(model)}
                     slots={{
@@ -293,6 +306,7 @@ export default function Products(props) {
 
                         },
                     }}
+
 
                 />
             </Box>
