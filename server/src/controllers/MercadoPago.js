@@ -108,25 +108,30 @@ export async function success(req, res) {
 
           // Actualiza los modelos de carrito y compra
           const updating = await Promise.all(newProducts.map(async (item, i) => {
+            const productId = item._id.toString()
 
             // Elimina los productos antiguos del carrito
-            await CartModel.findOneAndUpdate({ id: id }, { $pull: { products: { id: item._id } } });
+            await CartModel.findOneAndUpdate({ id: id }, { $pull: { products: { id: productId } } });
 
             // Crea un nuevo objeto de compra
             const newPurchaseModel = {
-              productId: item._id, // ID del producto
+              productId: productId, // ID del producto
               name: item.name,
               image: item.image,
               price: item.price,
               description: item.description,
               brand: item.brand,
+              stock: item.stock,
               color: item.color,
               date: Date.now(), // Fecha actual
               total: findCardProducts[i].total,
             };
 
+            await ProductModel.findByIdAndUpdate({ _id: item._id }, { $set: { stock: item.stock } })
             // Verifica si ya existe un modelo de compra para el usuario
             const filter = { userId: id };
+
+
             const update = { $push: { products: newPurchaseModel } };
             const options = { upsert: true, new: true, setDefaultsOnInsert: true };
             const updatePurchase = await PurchaseModel.findOneAndUpdate(filter, update, options);
@@ -136,6 +141,7 @@ export async function success(req, res) {
 
           if (updating) {
 
+
             const findUser = await UserModel.findById(id)
             const { origin } = findUser
 
@@ -144,6 +150,8 @@ export async function success(req, res) {
 
             res.redirect(`${origin ? origin : "http://localhost:3000"}/payment/success`)
 
+          } else {
+            res.status(403).json({ message: "Not found Updating" })
           }
         }
       }
