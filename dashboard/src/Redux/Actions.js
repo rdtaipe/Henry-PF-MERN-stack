@@ -48,10 +48,10 @@ export const InitialState = {
             { id: "Dashboard", type: "item", name: "Dashboard", active: false },
             { id: "Products", type: "item", name: "Products", active: false },
             { id: "Users", type: "item", name: "Users", active: false },
-            { id: "Sales", type: "item", name: "Sales", active: false },
-            { id: "Employees", type: "item", name: "Employees", active: false },
-            { id: "Roles", type: "item", name: "Roles", active: false },
-            { id: "Permissions", type: "item", name: "Permissions", active: false },
+            // { id: "Sales", type: "item", name: "Sales", active: false },
+            // { id: "Employees", type: "item", name: "Employees", active: false },
+            // { id: "Roles", type: "item", name: "Roles", active: false },
+            // { id: "Permissions", type: "item", name: "Permissions", active: false },
         ]
     },
     user: {
