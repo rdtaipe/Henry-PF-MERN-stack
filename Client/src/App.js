@@ -31,8 +31,8 @@ function App() {
   const { data } = useSelector(({ state }) => state.user);
   const { isAuthenticated, logout,getAccessTokenSilently} = useAuth0();
   const href = useHref();
-  dispatch(setter({ keys: "state.server.url", value: server.local}));
-  const [page, setPage] = useState("/");
+  dispatch(setter({ keys: "state.server.url", value: server.production}));
+  const [page, setPage] = useState("/")
   useEffect(() => {
     setPage(href);
   }, [href]);

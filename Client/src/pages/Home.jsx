@@ -89,7 +89,9 @@ const Home = () => {
         <div className='px-4 py-8 relative w-fit mx-auto sm:mx-0 sm:w-auto'>
           <Grid childHeight={260} childWidth={200}>
             {products.map((item, index) => {
-              return <Card key={index} data={item} />
+              if(item.active){
+                return <Card key={index} data={item} />
+              }
             })}
           </Grid>
           <Pagination page={page} count={count} setPage={n => { setPage(n) }} />
