@@ -19,8 +19,8 @@ const config = {
 }
 
 const server = {
-  local: "http://localhost:5000",
-  production: "https://wgxjjo-5000.csb.app",
+  local: "http://localhost:5000/",
+  production: "https://wgxjjo-5000.csb.app/",
 };
 
 const ActionsProvider = () => {

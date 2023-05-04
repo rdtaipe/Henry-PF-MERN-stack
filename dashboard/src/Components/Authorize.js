@@ -40,7 +40,7 @@ function Authorize() {
           const res = await authorize(token, user.sub, url)
           if (res) {
             console.log(res.role)
-            if (res.role == "admin") {
+            if (res.role === "admin") {
               Navigate("/dashboard")
             } else {
               unauthorize({ message: "You_not_admin" })
@@ -83,10 +83,10 @@ const Await = () => {
     if (status) {
       const serverSay = status()
       if (userData) {
+        console.log(userData)
         if (userData.role == "admin") {
-          Navigate("/dashboard")
           setMessage(serverSay.message)
-
+          // Navigate("/dashboard")
         } else {
           setMessage("you not admin")
         }
@@ -97,7 +97,7 @@ const Await = () => {
 
   return (
     <FlexCenterCenter style={{ height: "100vh" }}>
-      {message.length === 0 || message === "Authorized" ?
+      {message.length === 0 ?
         <Loading /> : <TryAgain message={message} />}
     </FlexCenterCenter>
   )
@@ -119,7 +119,7 @@ const TryAgain = ({ message }) => {
 
       <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
         <Button onClick={handleTryAgain}>try again</Button>
-        <Button onClick={handleExit} variant="contained">Go home</Button>
+        <Button onClick={handleExit} variant="contained">Out</Button>
       </Box>
     </FlexCenterCenter>
   )
