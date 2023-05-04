@@ -28,7 +28,7 @@ export default function Users(props) {
   //let users=selector(state=>state.server)
 
   const loadUser = async () => {
-    const res = await axios.get("http://localhost:5000/users");
+    const res = await axios.get("https://wgxjjo-5000.csb.app/users");
 
     //await setUsers(res.data);
     // return res.data;

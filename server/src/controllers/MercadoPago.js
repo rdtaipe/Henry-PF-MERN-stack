@@ -148,7 +148,7 @@ export async function success(req, res) {
 
             await sendEmail({ user: findUser, body: { type: "order", issue: "Thank you for purchase", data: findCardProducts } })//send welcome email
 
-            res.redirect(`${origin ? origin : "http://localhost:3000"}/payment/success`)
+            res.redirect(`https://chiccloset-service.web.app/payment/success`)
 
           } else {
             res.status(403).json({ message: "Not found Updating" })
@@ -219,7 +219,7 @@ export async function failure(req, res) {
   const { origin } = findUser
 
   // await sendEmail({ user: findUser, body: { type: "orderFailure", issue: "Thank you for purchase",data:findCardProducts}})//send welcome email
-  res.redirect(`${origin ? origin : "http://localhost:3000"}/payment/failure`)
+  res.redirect(`https://chiccloset-service.web.app/payment/success`)
 
 
 }
@@ -229,7 +229,7 @@ export async function pending(req, res) {
   const { origin } = findUser
 
   // await sendEmail({ user: findUser, body: { type: "orderPending", issue: "Thank you for purchase",data:findCardProducts}})//send welcome email
-  res.redirect(`${origin ? origin : "http://localhost:3000"}/payment/pending`)
+  res.redirect(`https://chiccloset-service.web.app/payment/success`)
 
 
 }
