@@ -40,35 +40,42 @@ router.get("/:id", async (req, res) => {
 
 router.post("/send", async (req, res) => {
   try {
-    const { name, picture, productId, userId, body, score, date, promScore } =
-      req.body.data;
+    const { name, picture, productId, userId, body, score, date } = req.body.data;
+    var findComment = await commentModel.findOne({ productId: productId, userId: userId })
 
-    var findComment = await commentModel.findOne({
-      productId: productId,
-      userId: userId,
-    });
-
-    if (findComment) {
-      res.status(406).send("You already commented this product");
-    }
     if ((name, picture, productId, userId, body, score, date)) {
-      await commentModel.create({
-        name,
-        picture,
-        productId,
-        userId,
-        body,
-        score,
-        date,
-      });
+      if (findComment) {
+        const deliteComment = await commentModel.findByIdAndDelete(findComment._id)
+        if (deliteComment) {
+          await commentModel.create({
+            name,
+            picture,
+            productId,
+            userId,
+            body,
+            score,
+            date,
+          });
+        }
+      } else {
+        await commentModel.create({
+          name,
+          picture,
+          productId,
+          userId,
+          body,
+          score,
+          date,
+        });
+      }
+
+
+
       /* add new score to product */
       const comments = await commentModel.find({ productId: productId })
-      const promScore = comments.length
-      ? (comments.reduce((acc, el) => acc + el.score, 0)) /
-        (comments.length)
-      : stars;
-      await productModel.findByIdAndUpdate(
-        { _id: productId },
+      const promScore = comments.length ? (comments.reduce((acc, el) => acc + el.score, 0)) / (comments.length) : stars;
+
+      await productModel.findByIdAndUpdate({ _id: productId },
         { $set: { stars: promScore } }
       );
       /* *** */
@@ -78,7 +85,7 @@ router.post("/send", async (req, res) => {
     console.log("Error sending the comment");
     res.status(500).json({ message: error.message });
   }
-});
+})
 
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
