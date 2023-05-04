@@ -12,7 +12,7 @@ import User from "./pages/User";
 import Payment from "./pages/Payment/Payment";
 import { useSelector, useDispatch } from "react-redux";
 import ScrollAnimate from "./components/ScrollAnimate";
-
+////////////////////////////////////////////
 import NavBar from "./components/NavBar";
 import Questions from "./pages/Questions";
 
@@ -27,8 +27,8 @@ function App() {
   const dispatch = useDispatch();
   const { setter } = useSelector(({ state }) => state.server);
   const href = useHref();
-  dispatch(setter({ keys: "state.server.url", value: server.production }));
-  const [page, setPage] = useState("");
+  dispatch(setter({ keys: "state.server.url", value: server.local }));
+  const [page, setPage] = useState("/");
   useEffect(() => {
     setPage(href);
   }, [href]);

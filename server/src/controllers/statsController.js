@@ -13,10 +13,9 @@ function sumByDay(purchases) {
     }
   });
   return result;
-}
+} /*  */ /*  */
 
-/*  */ /*  */ /*  */
-export const getSales = async (req, res) => {
+/*  */ export const getSales = async (req, res) => {
   const { month, year } = req.query;
   const startDate = new Date(year, month - 1, 1);
   const endDate = new Date(year, month, 0, 23);
@@ -89,10 +88,9 @@ export const getSales = async (req, res) => {
   } catch (error) {
     res.status(400).json(error.message);
   }
-};
+}; /*  */ /*  */
 
-/*  */ /*  */ /*  */
-export const getPurchases = async (req, res) => {
+/*  */ export const getPurchases = async (req, res) => {
   const { month, year } = req.query;
   const startDate = new Date(year, month - 1, 1);
   const endDate = new Date(year, month, 0);
@@ -135,10 +133,9 @@ export const getPurchases = async (req, res) => {
   } catch (error) {
     res.status(400).json(error.message);
   }
-};
+}; /*  */ /*  */
 
-/*  */ /*  */ /*  */
-export const getUsersGenres = async (req, res) => {
+/*  */ export const getUsersGenres = async (req, res) => {
   const {} = req.body;
 
   const data = await userModel.find();
@@ -152,10 +149,9 @@ export const getUsersGenres = async (req, res) => {
   };
 
   res.json(resp);
-};
+}; /*  */ /*  */
 
-/*  */ /*  */ /*  */
-export const getProductsBestValued = async (req, res) => {
+/*  */ export const getProductsBestValued = async (req, res) => {
   try {
     const data = await productModel.find();
     const resp = data.sort((a, b) => b.stars - a.stars);
@@ -163,10 +159,9 @@ export const getProductsBestValued = async (req, res) => {
   } catch (error) {
     res.status(400).json(error.message);
   }
-};
+}; /*  */ /*  */
 
-/*  */ /*  */ /*  */
-export const getProductsGenres = async (req, res) => {
+/*  */ export const getProductsGenres = async (req, res) => {
   try {
     const male = await productModel.find({ genre: "male" });
     const female = await productModel.find({ genre: "female" });
@@ -182,10 +177,9 @@ export const getProductsGenres = async (req, res) => {
   } catch (error) {
     res.status(400).json(error.message);
   }
-};
+}; /*  */ /*  */
 
-/*  */ /*  */ /*  */
-export const getProductWithoutStock = async (req, res) => {
+/*  */ export const getProductWithoutStock = async (req, res) => {
   try {
     const products = await productModel.find({ stock: { $eq: 0 } });
     res.json(products);
