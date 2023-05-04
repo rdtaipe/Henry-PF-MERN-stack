@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product,string,dato }) => {
   return (
     <Card sx={{ maxWidth: 120 }}>
       <CardActionArea>
@@ -27,7 +27,7 @@ const ProductCard = ({ product }) => {
               component="div"
               color={"blue"}
             >
-              {product.stars} stars
+              {dato} {string}
             </Typography>
           </CardContent>
         </a>

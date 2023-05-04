@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import Home from "./pages/Home";
 import InicialPage from "./pages/InicialPage";
@@ -12,11 +11,11 @@ import User from "./pages/User";
 import Payment from "./pages/Payment/Payment";
 import { useSelector, useDispatch } from "react-redux";
 import ScrollAnimate from "./components/ScrollAnimate";
+import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react'
 ////////////////////////////////////////////
 import NavBar from "./components/NavBar";
 import Questions from "./pages/Questions";
-
-
+import Button from '@mui/material/Button'
 
 const server = {
   local: "http://localhost:5000",
@@ -24,22 +23,33 @@ const server = {
 };
 
 function App() {
+  const [userStatus, setUserStatus] = useState()
   const dispatch = useDispatch();
-  const { setter } = useSelector(({ state }) => state.server);
+  const { setter, auth, url } = useSelector(({ state }) => state.server);
+  const { data } = useSelector(({ state }) => state.user);
+  const { isAuthenticated, logout,getAccessTokenSilently} = useAuth0();
   const href = useHref();
   dispatch(setter({ keys: "state.server.url", value: server.local }));
   const [page, setPage] = useState("/");
   useEffect(() => {
     setPage(href);
   }, [href]);
-  console.log("back=",useSelector(({ state }) => state.server.url),"front=",page);
-  
 
+  useEffect(() => {
+    const userData = data()
+    if(userData._id){
+      auth.get(`${url}/users/find/${userData._id}`).then(res => setUserStatus(res.data.status))
+    }
+    if(userStatus === "inactive"){
+      alert("user ban")
+      logout()
+    }
+
+  }, [userStatus]);
 
   return (
     <div>
       {page !== "/" && <NavBar />}
-
       <Routes>
         <Route path="/" element={<InicialPage />} />
         <Route path="/home" element={<Home />} />
@@ -50,12 +60,10 @@ function App() {
         <Route path="/products/:productId" element={<Detail />} />
         <Route path="/authorize" element={<Authorize />} />
         <Route path="/user" element={<User />} />
-        <Route path="/questions" element={<Questions/>} />
-     
+        <Route path="/questions" element={<Questions />} />
       </Routes>
 
       {page !== "/" && <ScrollAnimate footer={<Footer />} />}
-
     </div>
   );
 }

@@ -10,7 +10,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-
+import { useSelector } from 'react-redux'
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -32,17 +32,18 @@ const Sales = () => {
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [sold, setSold] = useState();
   const [purchase, setPurchase] = useState();
+  const { url } = useSelector((state) => state.server);
 
   function fetchSold() {
     axios
-      .get(`http://localhost:5000/stats/sales?month=${month}&year=${year}`)
+      .get(`${url}stats/sales?month=${month}&year=${year}`)
       .then((res) => {
         setSold(res.data);
       });
   }
   function fetchPurchase() {
     axios
-      .get(`http://localhost:5000/stats/purchases?month=${month}&year=${year}`)
+      .get(`${url}stats/purchases?month=${month}&year=${year}`)
       .then((res) => {
         setPurchase(res.data);
       });
