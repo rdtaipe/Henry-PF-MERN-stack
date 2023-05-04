@@ -68,9 +68,6 @@ router.post("/send", async (req, res) => {
           date,
         });
       }
-
-
-
       /* add new score to product */
       const comments = await commentModel.find({ productId: productId })
       const promScore = comments.length ? (comments.reduce((acc, el) => acc + el.score, 0)) / (comments.length) : stars;
