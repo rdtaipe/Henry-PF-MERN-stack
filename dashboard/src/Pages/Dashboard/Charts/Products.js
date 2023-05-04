@@ -2,24 +2,25 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ProductCard from "../../../Components/ProductCard";
 import { Box, Container, Stack, Typography } from "@mui/material";
+import { useSelector } from 'react-redux'
 
 const Products = () => {
   const [bestproducts, setBestproducts] = useState();
   const [whitoutstock, setWhitoutstock] = useState();
   const [moresold, setMoreSold] = useState();
-
+  const { url } = useSelector((state) => state.server);
   function fetchUsersGenres() {
-    axios.get(`http://localhost:5000/stats/bestproducts`).then((res) => {
+    axios.get(`${url}stats/bestproducts`).then((res) => {
       setBestproducts(res.data);
     });
   }
   function fetchWhitoutStock() {
-    axios.get(`http://localhost:5000/stats/whitoutstock`).then((res) => {
+    axios.get(`${url}stats/whitoutstock`).then((res) => {
       setWhitoutstock(res.data);
     });
   }
   function fetchMoreSold() {
-    axios.get(`http://localhost:5000/stats/moresold`).then((res) => {
+    axios.get(`${url}stats/moresold`).then((res) => {
       setMoreSold(res.data);
     });
   }
