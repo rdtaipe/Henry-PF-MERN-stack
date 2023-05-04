@@ -71,7 +71,7 @@ export const InitialState = {
             utils.saveLocal("autorized", true)
             utils.saveLocal("userData", data)
             utils.saveCookie("token", token)
-            console.log(utils.getLocal("userData"), "user data")
+
             return data
         },
         unauthorize: ({ message }) => {

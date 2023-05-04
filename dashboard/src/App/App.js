@@ -18,16 +18,18 @@ export default function App() {
   const navigate = useNavigate()
   const { isAuthenticated } = useAuth0();
   const { width, top } = useSelector(state => state.sidebar)
-  const { isAutorized } = useSelector(state => state.user)
+  const { isAutorized, data } = useSelector(state => state.user)
   const userAuth = isAutorized()
+  const userData=data()
 
   useEffect(() => {
-    if (userAuth, isAuthenticated) {
+    if (userAuth && isAuthenticated) {
       navigate('/dashboard')
     } else {
       navigate('/authorize')
       console.log("unauthorized")
     }
+    // console.log(userData)
 
   }, [userAuth, isAuthenticated])
 
