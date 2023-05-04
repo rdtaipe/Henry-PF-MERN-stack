@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 
 import Box from '@mui/material/Box';
-import { DataGrid, GridCellModes, GridCellEditStopReasons } from '@mui/x-data-grid';
-import PropTypes from 'prop-types';
+import { DataGrid, GridCellModes, GridCellEditStopReasons, GridEventListener } from '@mui/x-data-grid';
+import PropTypes, { object } from 'prop-types';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
@@ -20,6 +20,7 @@ const urls = {
     delete: "/products/",
     clone: "/products/"
 }
+
 function EditToolbar(props) {
     const { selectedCellParams, cellMode, cellModesModel, setCellModesModel } = props;
 
@@ -142,22 +143,17 @@ export default function Products(props) {
     ])
     const [rows, setRows] = useState([
         { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-        { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-        { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-        { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-        { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-        { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-        { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-        { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-        { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
     ]
     )
+    const [edit, setEdit] = useState({ last: "", now: "" })
 
 
     const [selectedCellParams, setSelectedCellParams] = React.useState(null);
     const [cellModesModel, setCellModesModel] = React.useState({});
 
     const handleCellFocus = React.useCallback((event) => {
+        const value = event.currentTarget.querySelector('input')
+        // console.log(value)
         const row = event.currentTarget.parentElement;
         const id = row.dataset.id;
         const field = event.currentTarget.dataset.field;
@@ -172,15 +168,15 @@ export default function Products(props) {
         return cellModesModel[id]?.[field]?.mode || 'view';
     }, [cellModesModel, selectedCellParams]);
 
-    const handleCellKeyDown = React.useCallback(
-        (params, event) => {
-            if (cellMode === 'edit') {
-                // Prevents calling event.preventDefault() if Tab is pressed on a cell in edit mode
-                event.defaultMuiPrevented = true;
-            }
-        },
-        [cellMode],
-    );
+    const handleCellKeyDown = (params, event) => {
+        const value = event.target.value
+
+        // console.log(value)
+        /*   if (cellMode === 'edit') {
+              // Prevents calling event.preventDefault() if Tab is pressed on a cell in edit mode
+              event.defaultMuiPrevented = true;
+          } */
+    }
 
     useEffect(() => {
         get(url + "dev/module/product").then(res => {
@@ -217,23 +213,44 @@ export default function Products(props) {
 
 
     }, [])
-    console.log(cellModesModel)
 
-    const onCellEditStop = (p, e) => {
+
+    const onCellEditStop = (p, e, a, b) => {
         const data = p.row
-
+        const value = e
+        // console.log(p)
         // put(`${url}products/${data._id}`,data).then((res)=>{
         //     console.log(res.data)
         // })
         // console.log(e,"onCellEditStop")
+    }
+    const onStateChange = (e) => {
+        const roeData = e.rows.dataRowIdToModelLookup
+        if (selectedCellParams) {
+            const objTarget = roeData[selectedCellParams.id][selectedCellParams.field]
+            // console.log(objTarget)
+        }
+
     }
     const onCellEditStart = (e) => {
         const data = e.row
         console.log(data, "onCellEditStart")
     }
     const onCellKeyDown = (e) => {
-        const data = e.row
-        console.log(data, "onCellKeyDown")
+        const chip = e.currentTarget
+        const input = e.currentTarget.querySelector('input').value
+        console.log(chip, "onCellKeyDown")
+    }
+    const onCellMouseDown = (e) => {
+        /*  const chip = e.currentTarget*/
+        const input = e.currentTarget.querySelector('input')
+        if(input){
+            const type = input.hasAttribute("type")?input.type:false
+            /*.checked */
+    
+            console.log(type, "onCellKeyDown")
+        }
+      
     }
 
     return (
@@ -250,9 +267,12 @@ export default function Products(props) {
                             },
                         },
                     }}
+
                     pageSizeOptions={[10]}
                     // checkboxSelection
+                    onCellEditStop={onCellEditStop}
                     onCellKeyDown={handleCellKeyDown}
+                    onStateChange={onStateChange}
                     cellModesModel={cellModesModel}
                     onCellModesModelChange={(model) => setCellModesModel(model)}
                     slots={{
@@ -268,6 +288,9 @@ export default function Products(props) {
                         },
                         cell: {
                             onFocus: handleCellFocus,
+                            onKeyDown: onCellKeyDown,
+                            onMouseDown: onCellMouseDown,
+
                         },
                     }}
 
