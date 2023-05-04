@@ -94,8 +94,6 @@ export const createProducts = async (req, res, next) => {
 export const updateProduct = async (req, res) => {
   const { id } = req.params;
   // console.log(id);
-
-  const fix1=()=>{}
   try {
     const product = await productsModel.findById(id);
     if (!product) {
