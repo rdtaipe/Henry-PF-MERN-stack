@@ -11,10 +11,11 @@ import User from "./pages/User";
 import Payment from "./pages/Payment/Payment";
 import { useSelector, useDispatch } from "react-redux";
 import ScrollAnimate from "./components/ScrollAnimate";
-import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react'
-////////////////////////////////////////////
 import NavBar from "./components/NavBar";
 import Questions from "./pages/Questions";
+
+import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react'
+
 import Button from '@mui/material/Button'
 import Error from "./pages/ErrorComponent/Error";
 const server = {
@@ -30,7 +31,7 @@ function App() {
   const { data } = useSelector(({ state }) => state.user);
   const { isAuthenticated, logout,getAccessTokenSilently} = useAuth0();
   const href = useHref();
-  dispatch(setter({ keys: "state.server.url", value: server.local }));
+  dispatch(setter({ keys: "state.server.url", value: server.local}));
   const [page, setPage] = useState("/");
   useEffect(() => {
     setPage(href);

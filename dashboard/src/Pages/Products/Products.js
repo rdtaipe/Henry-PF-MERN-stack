@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
-import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
-import Button from '@mui/material/Button'
-import { Link } from 'react-router-dom';
 
+import Box from '@mui/material/Box';
+import { DataGrid, GridCellModes, GridCellEditStopReasons, GridEventListener } from '@mui/x-data-grid';
+import PropTypes, { number, object } from 'prop-types';
+import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 // import {Button} from '../../Components/Button'
 
 const urls = {
@@ -19,12 +22,101 @@ const urls = {
     clone: "/products/"
 }
 
+
+
+const useFakeMutation = () => {
+    return React.useCallback((user) => user);
+};
+
+function EditToolbar(props) {
+    const { selectedCellParams, cellMode, cellModesModel, setCellModesModel } = props;
+
+    const handleSaveOrEdit = () => {
+        if (!selectedCellParams) {
+            return;
+        }
+        const { id, field } = selectedCellParams;
+        if (cellMode === 'edit') {
+            setCellModesModel({
+                ...cellModesModel,
+                [id]: { ...cellModesModel[id], [field]: { mode: GridCellModes.View } },
+            });
+        } else {
+            setCellModesModel({
+                ...cellModesModel,
+                [id]: { ...cellModesModel[id], [field]: { mode: GridCellModes.Edit } },
+            });
+        }
+    };
+
+    const handleCancel = () => {
+        if (!selectedCellParams) {
+            return;
+        }
+        const { id, field } = selectedCellParams;
+        setCellModesModel({
+            ...cellModesModel,
+            [id]: {
+                ...cellModesModel[id],
+                [field]: { mode: GridCellModes.View, ignoreModifications: true },
+            },
+        });
+    };
+
+    const handleMouseDown = (event) => {
+        // Keep the focus in the cell
+        event.preventDefault();
+    };
+
+    return (
+        <Box
+            sx={{
+                borderBottom: 1,
+                borderColor: 'divider',
+                p: 1,
+            }}
+        >
+            <Button
+                onClick={handleSaveOrEdit}
+                onMouseDown={handleMouseDown}
+                disabled={!selectedCellParams}
+                variant="outlined"
+            >
+                {cellMode === 'edit' ? 'Save' : 'Edit'}
+            </Button>
+            <Button
+                onClick={handleCancel}
+                onMouseDown={handleMouseDown}
+                disabled={cellMode === 'view'}
+                variant="outlined"
+                sx={{ ml: 1 }}
+            >
+                Cancel
+            </Button>
+
+            <Button variant="contained" color="primary" sx={{ width: 200, margin: 2 }}>
+                <Link to="/products/addproduct">add Product</Link>
+            </Button>
+
+        </Box>
+    );
+}
+
+EditToolbar.propTypes = {
+    cellMode: PropTypes.oneOf(['edit', 'view']).isRequired,
+    cellModesModel: PropTypes.object.isRequired,
+    selectedCellParams: PropTypes.shape({
+        field: PropTypes.string.isRequired,
+        id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+    }),
+    setCellModesModel: PropTypes.func.isRequired,
+};
 export default function Products(props) {
     const dispatch = useDispatch()
 
     const actions = useSelector(state => state.actions)
-    const {top,width} = useSelector(state => state.sidebar)
-    const {get,url} = useSelector(state => state.server)
+    const { top, width } = useSelector(state => state.sidebar)
+    const { get, url, put } = useSelector(state => state.server)
     const [columns, setColumns] = useState([
         { field: 'id', headerName: 'ID', width: 90 },
         {
@@ -58,27 +150,36 @@ export default function Products(props) {
     ])
     const [rows, setRows] = useState([
         { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-        { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-        { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-        { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-        { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-        { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-        { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-        { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-        { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
     ]
     )
 
+    const [selectedCellParams, setSelectedCellParams] = React.useState(null);
+    const [cellModesModel, setCellModesModel] = React.useState({});
 
-    useEffect(()=>{
-        get(url+"dev/module/product").then(res=>{
-            var data= res.data
-            var columns = data.map((item,index)=>{
+
+    const cellMode = React.useMemo(() => {
+        if (!selectedCellParams) {
+            return 'view';
+        }
+        const { id, field } = selectedCellParams;
+        return cellModesModel[id]?.[field]?.mode || 'view';
+    }, [cellModesModel, selectedCellParams]);
+
+
+    const mutateRow = useFakeMutation();
+
+    const [snackbar, setSnackbar] = React.useState(null);
+
+
+    useEffect(() => {
+        get(url + "dev/module/product").then(res => {
+            var data = res.data
+            var columns = data.map((item, index) => {
                 return {
                     field: item.key,
                     headerName: item.key,
                     type: item.type,
-                    width: item.type==="number"?50:150,
+                    width: item.type === "number" ? 50 : 150,
                     editable: true,
                 }
             })
@@ -86,32 +187,89 @@ export default function Products(props) {
 
                 field: '_id',
                 headerName: 'ID',
-                width: 90
+                width: 90,
+                editable:false
             }
             columns.unshift(id)
             setColumns(columns)
         })
-        get(url+"products").then(res=>{
-            var data= res.data
-            var rows = data.map((item,index)=>{
+        get(url + "products").then(res => {
+            var data = res.data
+            var rows = data.map((item, index) => {
                 return {
                     id: index,
+                    f: () => { console.log(item) },
                     ...item
                 }
             }
             )
             setRows(rows)
         })
-   
 
-    },[])
 
+    }, [])
+
+
+
+    const handleCellFocus = React.useCallback((event) => {
+
+        const row = event.currentTarget.parentElement;
+        const id = row.dataset.id;
+        const field = event.currentTarget.dataset.field
+        setSelectedCellParams({ id, field });
+    }, []);
+    const handleCellKeyDown = React.useCallback(
+        (params, event) => {
+            if (cellMode === 'edit') {
+                // Prevents calling event.preventDefault() if Tab is pressed on a cell in edit mode
+                event.defaultMuiPrevented = true;
+            }
+        },
+        [cellMode],
+    );
+
+
+
+
+
+    const onCellKeyDown = (e) => {
+    }
+    const onCellMouseDown = (e) => {
+        /* const inputs = {
+            string: "value",
+            number: "value",
+            boolean: "checked",
+            array: "value",
+            object: "value"
+        }
+        console.log(e)
+        const input = e.currentTarget.querySelector('input')
+
+        if (input && columns && selectedCellParams) {
+            const type = columns.filter((item) => item.field === selectedCellParams.field)[0].type
+
+            if (type && input) {
+                const attributes = input.attributes[inputs[type]]
+                console.log(attributes.value)
+            }
+        } */
+
+    }
+
+    const processRowUpdate = React.useCallback(async (newRow) => {
+
+        await put(`${url}products/${newRow._id}`, newRow)
+        return (newRow)
+
+    });
+
+    const handleProcessRowUpdateError = React.useCallback((error) => {
+        setSnackbar({ children: error.message, severity: 'error' });
+    }, []);
 
     return (
         <Container>
-            <Button variant="contained" color="primary" sx={{width: 200,margin: 2}}>
-              <Link to="/products/addproduct">add Product</Link> 
-            </Button>
+
             <Box sx={{ height: window.innerHeight - top, width: '100%' }}>
                 <DataGrid
                     rows={rows}
@@ -123,13 +281,32 @@ export default function Products(props) {
                             },
                         },
                     }}
+
                     pageSizeOptions={[10]}
-                    checkboxSelection
-                    // disableRowSelectionOnClick
-                    //get changes
-                    onSelectionModelChange={(newSelection) => {
-                        console.log(newSelection)
+                    processRowUpdate={processRowUpdate}
+                    onProcessRowUpdateError={handleProcessRowUpdateError}
+                    onCellKeyDown={handleCellKeyDown}
+                    cellModesModel={cellModesModel}
+                    onCellModesModelChange={(model) => setCellModesModel(model)}
+                    slots={{
+                        toolbar: EditToolbar,
                     }}
+                    slotProps={{
+                        toolbar: {
+                            cellMode,
+                            selectedCellParams,
+                            setSelectedCellParams,
+                            cellModesModel,
+                            setCellModesModel,
+                        },
+                        cell: {
+                            onFocus: handleCellFocus,
+                            onKeyDown: onCellKeyDown,
+                            onMouseDown: onCellMouseDown,
+
+                        },
+                    }}
+
 
                 />
             </Box>
