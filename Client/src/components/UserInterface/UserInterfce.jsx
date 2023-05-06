@@ -30,9 +30,6 @@ const UserInterface = () => {
     
     const [user, setUser] = useState({});
     const [originalUser, setOriginalUser] = useState({});
-
-    console.log(user)
-    console.log(originalUser)
     
     const [saveStatus, setSaveStatus] = useState(true)
     
