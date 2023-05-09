@@ -8,12 +8,12 @@ export const InitialState = {
     server: {
         url: "http://localhost:5000/",
         dashboardUrl: "http://localhost:3001/",
-        clientUrl: "http://localhost:3000/",
+        clientUrl: "https://dashboard-26d12.web.app/",
         //routes action   
         get: (url) => axios.get(url),
-        post: (url, house) => axios.post(url, house),
-        put: (url, id, house) => axios.put(url + id, house),
-        delete: (url, id) => axios.delete(url + id),
+        post: (url, data) => axios.post(url, data),
+        put: (url, data) => axios.put(url, data),
+        delete: (url) => axios.delete(url),
         find: (url, query) => axios.get(url + query),
         auth: {
             get: (url) => {
@@ -48,10 +48,10 @@ export const InitialState = {
             { id: "Dashboard", type: "item", name: "Dashboard", active: false },
             { id: "Products", type: "item", name: "Products", active: false },
             { id: "Users", type: "item", name: "Users", active: false },
-            { id: "Sales", type: "item", name: "Sales", active: false },
-            { id: "Employees", type: "item", name: "Employees", active: false },
-            { id: "Roles", type: "item", name: "Roles", active: false },
-            { id: "Permissions", type: "item", name: "Permissions", active: false },
+            // { id: "Sales", type: "item", name: "Sales", active: false },
+            // { id: "Employees", type: "item", name: "Employees", active: false },
+            // { id: "Roles", type: "item", name: "Roles", active: false },
+            // { id: "Permissions", type: "item", name: "Permissions", active: false },
         ]
     },
     user: {
@@ -61,19 +61,21 @@ export const InitialState = {
         isAutorized: () => !utils.getLocal("autorized") ? false : utils.getLocal("autorized"),
         data: () => !utils.getLocal("userData") ? {} : utils.getLocal("userData"),
         authorize: async (token, user, url) => {
-            const domain = url + "users/authorize"
-            const headers = { authorization: `Bearer ${token}`, user: user }// for every request
-            const getUserMetadataResponse = await axios.get(domain, {
+            console.log(user, url)
+              const domain = url + "users/authorize"
+              const headers = { authorization: `Bearer ${token}`, user: user }// for every request
+              const getUserMetadataResponse = await axios.get(domain, {
                 headers: headers,
-            });
-            const data = getUserMetadataResponse.data.user
-            utils.saveLocal("userStatus", { error: false, message: "Authorized" })
-            utils.saveLocal("autorized", true)
-            utils.saveLocal("userData", data)
-            utils.saveCookie("token", token)
-            console.log(utils.getLocal("userData"), "user data")
-            return data
-        },
+              });
+              const data = getUserMetadataResponse.data.user
+              console.log(data)
+              utils.saveLocal("userStatus", { error: false, message: "Authorized" })
+              utils.saveLocal("autorized", true)
+              utils.saveLocal("userData", data)
+              utils.saveCookie("token", token)
+              return data
+           
+          },
         unauthorize: ({ message }) => {
             var newMessage = message ? message : "Unauthorized"
             utils.saveLocal("userStatus", { error: true, message: newMessage })

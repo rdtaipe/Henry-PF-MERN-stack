@@ -110,7 +110,7 @@ export function Detail() {
       setStatus({comment:true,myComment:true})
     } else {
       setUserComment(null)
-      setStatus({comment:true,myComment:null})
+      setStatus({comment:false,myComment:null})
     }
     });
   };

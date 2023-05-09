@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react'
 import styled from 'styled-components'
-import { Button } from '@mui/material'
+import { Button, Box } from '@mui/material'
 
 import Loading from '../Components/Loading';
 const messages = {
+  "Authorized_Not_admin": "Authorized, You not admin",
   "Authorized": "Authorized, please wait",
   "Network Error": "Network Error, please try again later",
   "Unauthorized": "Unauthorized, please try again later",
@@ -24,21 +25,32 @@ function Authorize() {
   const dispatch = useDispatch()
   const { user, isAuthenticated, isLoading, getAccessTokenSilently, logout, error } = useAuth0();
   const { url, clientUrl, dashboardUrl, get, post } = useSelector(state => state.server)
-  const { unauthorize, authorize, status, setStatus } = useSelector(state => state.user)
+  const { unauthorize, authorize, } = useSelector(state => state.user)
 
   useEffect(() => {
     if (isAuthenticated) {
       const getUserMetadata = async () => {
         const token = await getAccessTokenSilently();
 
-       if (!token) {
-          logout({ returnTo: dashboardUrl+"/authorize" })
+        if (!token) {
+          logout({ returnTo: dashboardUrl + "/authorize" })
           unauthorize({ message: "invalid_token" })
-        } 
+        }
         try {
           const res = await authorize(token, user.sub, url)
-         // const res = await authorize( user.sub, url)
-          Navigate("/")
+          if (res) {
+            console.log(res.role)
+            if (res.role === "admin") {
+              Navigate("/dashboard")
+            } else {
+              unauthorize({ message: "You_not_admin" })
+            }
+          } else {
+            Navigate("/authorize")
+            unauthorize({ message: "Fail_getting_data" })
+          }
+
+
 
         } catch (error) {
           Navigate("/authorize")
@@ -63,25 +75,25 @@ const Await = () => {
   const Navigate = useNavigate()
   const { user, isAuthenticated, getAccessTokenSilently, logout, error } = useAuth0();
   const { url } = useSelector((state) => state.server)
-  const { unauthorize, authorize, status } = useSelector((state) => state.user)
+  const { unauthorize, authorize, status, data } = useSelector((state) => state.user)
   const [message, setMessage] = useState("")
+  const userData = data()
 
   useEffect(() => {
-    if (isAuthenticated) {
-      const auth = async () => {
-        try {
-          const token = await getAccessTokenSilently();
-          await authorize(token, user.sub, url)
-          Navigate("/home")
-        } catch (error) {
-          setMessage(status().message)
+    if (status) {
+      const serverSay = status()
+      if (userData) {
+        console.log(userData)
+        if (userData.role == "admin") {
+          setMessage(serverSay.message)
+          // Navigate("/dashboard")
+        } else {
+          setMessage("you not admin")
         }
-
       }
-      auth()
     }
 
-  }, [isAuthenticated])
+  }, [userData])
 
   return (
     <FlexCenterCenter style={{ height: "100vh" }}>
@@ -100,7 +112,6 @@ const TryAgain = ({ message }) => {
   }
   const handleExit = () => {
     logout()
-    Navigate("/home")
   }
 
   return (
@@ -108,7 +119,7 @@ const TryAgain = ({ message }) => {
 
       <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
         <Button onClick={handleTryAgain}>try again</Button>
-        <Button onClick={handleExit}  variant="contained">Go home</Button>
+        <Button onClick={handleExit} variant="contained">Out</Button>
       </Box>
     </FlexCenterCenter>
   )

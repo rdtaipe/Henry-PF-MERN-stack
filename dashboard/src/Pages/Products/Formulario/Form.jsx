@@ -111,7 +111,7 @@ const Form = () => {
       formData.append("feactured", feactured);
       formData.append("cost", cost);
       console.log(data);
-      post(url + "products", formData).then((res) => res.status == 201 && Notification('success', 'product added successfully', 'top-end', 3000))
+      post(url + "products", formData).then((res) => res.status == 201 && Notification('success', 'product added successfully', 'bottom-start', 3000))
 
       /*             console.log(formData.get('name'));
             console.log(formData.get('description'));

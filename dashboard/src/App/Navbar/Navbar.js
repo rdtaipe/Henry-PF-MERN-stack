@@ -57,7 +57,7 @@ const Navbar = () => {
     </Box>
     <Box display="flex" position={"absolute"} sx={{right:"1.5%"}}>
       <Box p={2} >
-      <IconButton 
+      {/* <IconButton 
        onClick={handleChangeTheme}
       >
         {mode === "dark" ? (
@@ -72,7 +72,7 @@ const Navbar = () => {
       </IconButton>
       <IconButton>
         <SettingsOutlinedIcon />
-      </IconButton>
+      </IconButton> */}
       </Box>
      <Profile anchorElUser={anchorElUser} setAnchorElUser={setAnchorElUser}/>
       </Box>

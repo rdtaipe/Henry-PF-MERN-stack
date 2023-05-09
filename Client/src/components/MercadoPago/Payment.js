@@ -53,11 +53,11 @@ const Payment = () => {
   }
 
   return (step === 2 &&
-    <div className={`mt-[200px] min-h-screen `}>
-      <div className="container_payment">
+    <div className={`mt-[200px] min-h-screen flex justify-center`}>
+      <div className="container_payment w-[800px]">
         <div className="block-heading">
-          <h2>Checkout Payment</h2>
-          <p>ChicCloset 2023 | All rights reserved. </p>
+          <h2 className="text-center">Checkout Payment</h2>
+          <p className="text-center">ChicCloset 2023 | All rights reserved. </p>
         </div>
         <div className="form-payment">
           <div className="products">
@@ -90,7 +90,7 @@ const Payment = () => {
           </div>
           <div className="payment-details">
             <div className="form-group flex justify-center items-center w-full">
-              <button className="btn btn-primary btn-block btn-lg bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-full w-1/2"
+              <button className="btn btn-primary btn-block btn-lg bg-[#323232] hover:bg-[#000000] text-white font-bold py-2 px-4 rounded-full w-1/2"
                 onClick={(e) => { handlePay(preferenceId) }}>
                 Go to payment
               </button>

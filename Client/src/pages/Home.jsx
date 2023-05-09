@@ -78,12 +78,6 @@ const Home = () => {
     });
   };
 
-  const [open, setOpen] = useState(false);
-
-  const sidebarMenu = () => {
-    setOpen(!open);
-  };
-
   return (
     <div className='bg-stone-100'>
 
@@ -92,11 +86,12 @@ const Home = () => {
         sidebar={<Sidebar setFilter={(e) => { setFilter(e) }} />}
         navbar={<SortBar setSort={(e) => { setSort(e) }} />}
       >
-        
-        <div className='px-4 py-8 relative'>
+        <div className='px-4 py-8 relative w-fit mx-auto sm:mx-0 sm:w-auto'>
           <Grid childHeight={260} childWidth={200}>
             {products.map((item, index) => {
-              return <Card key={index} data={item} />
+              if(item.active){
+                return <Card key={index} data={item} />
+              }
             })}
           </Grid>
           <Pagination page={page} count={count} setPage={n => { setPage(n) }} />

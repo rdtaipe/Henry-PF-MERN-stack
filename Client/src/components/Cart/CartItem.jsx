@@ -17,7 +17,7 @@ const CartItem = ({
       <div
         onClick={onClick}
         style={{ borderRadius: "10px" }}
-        className=" flex flex-col lg:flex-row justify-between items-center pl-2 pr-4 py-4 mb-5 bg-white w-[350px] sm:w-[250px] md:w-[350px] lg:w-auto"
+        className=" flex flex-col lg:flex-row justify-between items-center pl-2 pr-4 py-4 mb-5 bg-white w-[300px] sm:w-[250px] md:w-[350px] lg:w-auto"
       >
         <div className="flex flex-col md:flex-row items-center md:mr-8">
           <div

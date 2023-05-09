@@ -18,15 +18,15 @@ const config = {
   scope: "read:current_user update:current_user_metadata",
 }
 
-const url = {
+const server = {
   local: "http://localhost:5000/",
-  production: "https://api.localhost.com/"
-}
+  production: "https://wgxjjo-5000.csb.app/",
+};
 
 const ActionsProvider = () => {
   const dispatch = useDispatch()
   dispatch(actions.addActions(actions))
-  dispatch(actions.setUrlBase(url.local))
+  dispatch(actions.setUrlBase(server.production))
   return <></>
 }
 

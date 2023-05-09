@@ -17,10 +17,19 @@ module.exports = {
           '40%': {
             transform: 'rotate(-15deg)'
           }
+        },
+        'spin': {
+          '0': {
+            transform: 'rotate(0deg)'
+          },
+          '100': {
+            transform: 'rotate(360deg)'
+          }
         }
       },
       animation: {
-        'shake': 'shake 0.25s'
+        'shake': 'shake 0.25s',
+        'spin': 'spin 1s linear infinite',
       }
     },
   },

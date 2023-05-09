@@ -93,63 +93,40 @@ export const createProducts = async (req, res, next) => {
 
 export const updateProduct = async (req, res) => {
   const { id } = req.params;
-  const {
-    name,
-    description,
-    stock,
-    color,
-    size,
-    category,
-    image,
-    genre,
-    brand,
-    price,
-    active,
-    featured,
-  } = req.body;
-
-  if (
-    !name ||
-    !description ||
-    !stock ||
-    !color ||
-    !size ||
-    !category ||
-    !genre ||
-    !brand ||
-    !price
-  ) {
-    res.status(400).json({ message: "All fields are required" });
-  } else {
-    try {
-      await productsModel
-        .findByIdAndUpdate(
-          id,
-          {
-            name: name,
-            description: description,
-            stock: stock,
-            color: color,
-            size: size,
-            category: category,
-            image: image,
-            genre: genre,
-            brand: brand,
-            price: price,
-            active: active,
-            featured: featured,
-          },
-          { new: true } // este ultimo parámetro hace que nos devuelva el doc actualizado
-        )
-        .then(() => {
-          res.status(200).json({ message: "Product Successfully Updated" });
-        });
-    } catch (err) {
-      console.log(err);
-      res.status(400).json({ message: "The Current Product does not exist" });
+  // console.log(id);
+  try {
+    const product = await productsModel.findById(id);
+    if (!product) {
+      return res.status(400).json({ message: "The Current Product does not exist" });
     }
+
+    const updatedProduct = {};
+    Object.keys(req.body).forEach((key) => {
+     
+      if(key!=="_id"&&key!=="createdAt"&&key!=="updatedAt"){
+        
+        if (req.body[key] !== product[key]) {
+          console.log(product[key])
+          updatedProduct[key] = req.body[key];
+        }
+      }
+     
+    });
+    // console.log(updatedProduct)
+
+    if (Object.keys(updatedProduct).length === 0) {
+      return res.status(400).json({ message: "No fields were updated" });
+    }
+
+    const updating = await productsModel.findByIdAndUpdate(id, updatedProduct, { new: true });
+
+    res.status(200).json({ message: "Product Successfully Updated", data: updating });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
 
 export const deleteProduct = async (req, res) => {
   try {
